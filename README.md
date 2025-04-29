@@ -1,42 +1,34 @@
 # HabitHive - Your Smart Habit Tracker
 
-**HabitHive** is a Kotlin-based Android fitness habit tracker application with gamification and community features using Firebase integration.
+HabitHive is a mobile application designed to help users track their physical exercise and engage in a community-driven fitness experience. It allows users to log their workouts, monitor progress, and earn points based on their activities.
 
-![HabitHive Logo](generated-icon.png)
+## Features
 
-## Application Overview
+- **User Authentication**: Login, registration, and profile management using Firebase
+- **Habit Tracking**: Create, update, and delete fitness habits
+- **Gamification**: Points system, achievements, and leaderboards
+- **Goals**: Set and track fitness goals with progress indicators
+- **Community**: Social features including friend system and community challenges
+- **Analytics**: Visual progress tracking and fitness insights
+- **Notifications**: Reminders and achievement notifications
 
-HabitHive helps users build and maintain fitness habits through a gamified experience, tracking progress, awarding achievements, and providing social features for motivation.
+## Technology Stack
 
-### Key Features
-
-- **Habit Tracking**: Create, track, and manage your daily fitness habits
-- **Gamification**: Earn points, badges, and achievements as you complete habits
-- **Community**: Compete with friends on leaderboards and share goals
-- **Analytics**: Track progress with detailed statistics and insights
-- **Personalization**: Customize your profile and habit preferences
-
-## Technical Architecture
-
-HabitHive is built with modern Android development practices:
-
-- **Languages**: Kotlin, XML
-- **Architecture**: MVVM (Model-View-ViewModel)
-- **Backend**: Firebase (Authentication, Firestore)
+- **Frontend**: Android with Kotlin
+- **Backend**: Firebase (Authentication, Firestore, Storage)
+- **Architecture**: MVVM with Clean Architecture principles
 - **Dependency Injection**: Hilt
 - **UI Framework**: Jetpack Compose with Material Design
 - **Asynchronous Programming**: Kotlin Coroutines & Flow
 
 ## Project Structure
 
-The application follows a clean, modular structure:
-
 ```
 HabitHive/
 ├── app/
 │   ├── src/
 │   │   ├── main/
-│   │   │   ├── java/com/example/habithive/
+│   │   │   ├── java/com/habithive/app/
 │   │   │   │   ├── analytics/          # Analytics and statistics tracking
 │   │   │   │   ├── auth/               # Authentication related code
 │   │   │   │   ├── data/               # Data models and repositories
@@ -78,8 +70,17 @@ HabitHive implements a comprehensive gamification system to keep users motivated
 To run the HabitHive application:
 
 1. Clone the repository
-2. Set up Firebase project and add google-services.json
-3. Build and run the application using Android Studio or Gradle
+2. Set up Firebase project and add google-services.json to the app/ directory
+3. Open the project in Android Studio
+4. Build and run the application
+
+## Troubleshooting
+
+If you encounter package name issues during build, ensure:
+
+1. The Firebase google-services.json file has the correct package name (com.example.habithive)
+2. The namespace in app/build.gradle matches your code structure (com.habithive.app)
+3. The package attribute is removed from AndroidManifest.xml
 
 ## Future Enhancements
 
