@@ -70,8 +70,11 @@ dependencies {
     implementation 'com.google.firebase:firebase-firestore-ktx'
     
     // Hilt
+    
     implementation 'com.google.dagger:hilt-android:2.48'
+    
     kapt 'com.google.dagger:hilt-compiler:2.48'
+    
     implementation 'androidx.hilt:hilt-navigation-compose:1.1.0'
 
     // Retrofit & Serialization
@@ -100,3 +103,7 @@ dependencies {
     debugImplementation 'androidx.compose.ui:ui-tooling'
     debugImplementation 'androidx.compose.ui:ui-test-manifest'
 } 
+    // Data Binding
+    kapt "androidx.databinding:databinding-compiler:8.1.0"
+    kapt "com.android.databinding:compiler:8.1.0"
+    kapt "com.android.databinding:compiler:8.1.0"
