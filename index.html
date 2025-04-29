@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HabitHive Android App Viewer</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            padding-top: 20px;
+            background-color: #f8f9fa;
+        }
+        .app-container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .app-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .app-logo {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 10px;
+        }
+        .feature-card {
+            border: none;
+            box-shadow: 0 0 5px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+            transition: transform 0.3s;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        .code-container {
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            padding: 15px;
+            margin-top: 20px;
+            overflow-x: auto;
+        }
+        .file-tree {
+            font-family: monospace;
+            line-height: 1.5;
+        }
+        .medal-icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="app-container">
+            <div class="app-header">
+                <img src="generated-icon.png" alt="HabitHive Logo" class="app-logo">
+                <h1>HabitHive</h1>
+                <p class="lead">Your Smart Habit Tracker</p>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card feature-card">
+                        <div class="card-body">
+                            <h5 class="card-title">📱 Application Structure</h5>
+                            <p class="card-text">HabitHive is built using modern Android development practices with Kotlin and Jetpack Compose.</p>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">MVVM Architecture</li>
+                                <li class="list-group-item">Dependency Injection with Hilt</li>
+                                <li class="list-group-item">Firebase Integration</li>
+                                <li class="list-group-item">Kotlin Coroutines & Flow</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card feature-card">
+                        <div class="card-body">
+                            <h5 class="card-title">🏆 Gamification System</h5>
+                            <p class="card-text">HabitHive uses gamification to keep users motivated and engaged.</p>
+                            <div class="d-flex align-items-center mb-2">
+                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%23FFC107' d='M12,2C8.13,2 5,5.13 5,9c0,5.25 7,13 7,13s7,-7.75 7,-13C19,5.13 15.87,2 12,2zM12,11.5c-1.38,0 -2.5,-1.12 -2.5,-2.5s1.12,-2.5 2.5,-2.5 2.5,1.12 2.5,2.5 -1.12,2.5 -2.5,2.5z'/%3E%3C/svg%3E" class="medal-icon">
+                                <span>Gold Medal: 100+ consecutive days</span>
+                            </div>
+                            <div class="d-flex align-items-center mb-2">
+                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%23C0C0C0' d='M12,2C8.13,2 5,5.13 5,9c0,5.25 7,13 7,13s7,-7.75 7,-13C19,5.13 15.87,2 12,2zM12,11.5c-1.38,0 -2.5,-1.12 -2.5,-2.5s1.12,-2.5 2.5,-2.5 2.5,1.12 2.5,2.5 -1.12,2.5 -2.5,2.5z'/%3E%3C/svg%3E" class="medal-icon">
+                                <span>Silver Medal: 50+ consecutive days</span>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%23CD7F32' d='M12,2C8.13,2 5,5.13 5,9c0,5.25 7,13 7,13s7,-7.75 7,-13C19,5.13 15.87,2 12,2zM12,11.5c-1.38,0 -2.5,-1.12 -2.5,-2.5s1.12,-2.5 2.5,-2.5 2.5,1.12 2.5,2.5 -1.12,2.5 -2.5,2.5z'/%3E%3C/svg%3E" class="medal-icon">
+                                <span>Bronze Medal: 25+ consecutive days</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <div class="card feature-card">
+                        <div class="card-body">
+                            <h5 class="card-title">🤝 Community Features</h5>
+                            <p class="card-text">Connect with friends and compete on leaderboards.</p>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">User Profiles</li>
+                                <li class="list-group-item">Friend Systems</li>
+                                <li class="list-group-item">Global Leaderboards</li>
+                                <li class="list-group-item">Shared Goals</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card feature-card">
+                        <div class="card-body">
+                            <h5 class="card-title">📊 Analytics</h5>
+                            <p class="card-text">Track your progress with detailed analytics.</p>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">Daily, Weekly, Monthly Reports</li>
+                                <li class="list-group-item">Habit Completion Rates</li>
+                                <li class="list-group-item">Streak Tracking</li>
+                                <li class="list-group-item">Performance Insights</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="code-container mt-4">
+                <h4>Project Structure</h4>
+                <pre class="file-tree">
+HabitHive/
+├── app/
+│   ├── src/
+│   │   ├── main/
+│   │   │   ├── java/com/example/habithive/
+│   │   │   │   ├── analytics/          # Analytics and statistics tracking
+│   │   │   │   ├── auth/               # Authentication related code
+│   │   │   │   ├── data/               # Data models and repositories
+│   │   │   │   ├── di/                 # Dependency injection modules
+│   │   │   │   ├── domain/             # Business logic and use cases
+│   │   │   │   ├── ui/                 # UI components and screens
+│   │   │   │   │   ├── achievements/   # Achievements screen
+│   │   │   │   │   ├── exercise/       # Exercise tracking screens
+│   │   │   │   │   ├── goals/          # Goal setting and tracking
+│   │   │   │   │   ├── home/           # Home dashboard
+│   │   │   │   │   ├── leaderboard/    # Leaderboard screen
+│   │   │   │   │   ├── profile/        # User profile
+│   │   │   │   │   └── theme/          # App theming
+│   │   │   │   └── utils/              # Utility functions
+│   │   │   ├── res/                    # Android resources
+│   │   │   │   ├── drawable/           # Images and vectors
+│   │   │   │   ├── layout/             # XML layouts
+│   │   │   │   ├── navigation/         # Navigation graphs
+│   │   │   │   └── values/             # Strings, colors, styles
+│   │   │   └── AndroidManifest.xml
+│   │   └── test/                       # Unit tests
+├── build.gradle                        # Project-level build config
+├── gradle/                             # Gradle wrapper and config
+└── settings.gradle                     # Project settings
+                </pre>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Function to load project structure dynamically
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('HabitHive app viewer initialized');
+            
+            // Check Firebase status
+            fetch('/api/firebase-status')
+                .then(response => response.json())
+                .then(data => {
+                    const statusContainer = document.createElement('div');
+                    statusContainer.className = data.configured ? 'alert alert-success' : 'alert alert-warning';
+                    statusContainer.innerHTML = `<strong>Firebase Status:</strong> ${data.message}`;
+                    document.querySelector('.app-container').prepend(statusContainer);
+                })
+                .catch(error => console.error('Error fetching Firebase status:', error));
+            
+            // Load project structure
+            fetch('/api/project-structure')
+                .then(response => response.json())
+                .then(data => {
+                    const container = document.createElement('div');
+                    container.className = 'mt-4';
+                    container.innerHTML = `
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>Project Files</h5>
+                            </div>
+                            <div class="card-body" style="max-height: 400px; overflow-y: auto;">
+                                <div class="list-group">
+                                    ${data.files.map(file => `
+                                        <button type="button" class="list-group-item list-group-item-action file-item" 
+                                                data-file-path="${file}">
+                                            ${file}
+                                        </button>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card mt-3" id="file-content-card" style="display: none;">
+                            <div class="card-header">
+                                <h5 id="file-title">File Content</h5>
+                            </div>
+                            <div class="card-body">
+                                <pre id="file-content" style="max-height: 500px; overflow-y: auto;"></pre>
+                            </div>
+                        </div>
+                    `;
+                    
+                    document.querySelector('.code-container').after(container);
+                    
+                    // Add event listeners to file items
+                    document.querySelectorAll('.file-item').forEach(item => {
+                        item.addEventListener('click', function() {
+                            const filePath = this.getAttribute('data-file-path');
+                            loadFileContent(filePath);
+                        });
+                    });
+                })
+                .catch(error => console.error('Error fetching project structure:', error));
+        });
+        
+        // Function to load file content
+        function loadFileContent(filePath) {
+            fetch(`/api/file-content?path=${encodeURIComponent(filePath)}`)
+                .then(response => response.json())
+                .then(data => {
+                    const fileContentCard = document.getElementById('file-content-card');
+                    const fileTitle = document.getElementById('file-title');
+                    const fileContent = document.getElementById('file-content');
+                    
+                    fileTitle.textContent = filePath;
+                    fileContent.textContent = data.content;
+                    fileContent.className = `language-${data.fileType}`;
+                    
+                    fileContentCard.style.display = 'block';
+                    
+                    // Scroll to file content
+                    fileContentCard.scrollIntoView({ behavior: 'smooth' });
+                })
+                .catch(error => console.error('Error fetching file content:', error));
+        }
+    </script>
+</body>
+</html>
