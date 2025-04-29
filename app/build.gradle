@@ -84,6 +84,8 @@ dependencies {
     
     // Kotlin DateTime
     implementation 'org.jetbrains.kotlinx:kotlinx-datetime:0.4.1'
+    // Charts
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
     // Coroutines
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3'

@@ -4,6 +4,7 @@ buildscript {
         kotlin_version = '1.9.0'
     }
     repositories {
+        maven { url "https://jitpack.io" }
         google()
         mavenCentral()
     }
