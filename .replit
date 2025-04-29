@@ -1,0 +1,29 @@
+modules = ["kotlin"]
+
+[nix]
+channel = "stable-24_05"
+packages = ["unzip"]
+
+[workflows]
+runButton = "Project"
+
+[[workflows.workflow]]
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "HabitHive Android App"
+
+[[workflows.workflow]]
+name = "HabitHive Android App"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd app && ./gradlew build && ./gradlew run"
+waitForPort = 5000
+
+[deployment]
+run = ["sh", "-c", "cd app && ./gradlew build && ./gradlew run"]

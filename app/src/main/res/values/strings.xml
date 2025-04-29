@@ -1,0 +1,84 @@
+<resources>
+    <string name="app_name">HabitHive</string>
+    
+    <!-- Common -->
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="loading">Loading…</string>
+    <string name="empty_list">No items to display</string>
+    
+    <!-- Authentication -->
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="logout">Logout</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="name">Name</string>
+    <string name="register_account">Don\'t have an account? Register</string>
+    <string name="login_account">Already have an account? Login</string>
+    
+    <!-- Navigation -->
+    <string name="title_home">Dashboard</string>
+    <string name="title_habits">Habits</string>
+    <string name="title_leaderboard">Leaderboard</string>
+    <string name="title_profile">Profile</string>
+    <string name="title_goals">Goals</string>
+    
+    <!-- Home Fragment -->
+    <string name="stats_title">Your Stats</string>
+    <string name="total_points">Total Points</string>
+    <string name="calories_burned">Calories Burned</string>
+    <string name="daily_score">Daily Score</string>
+    <string name="weekly_score">Weekly Score</string>
+    <string name="habits_count">Habits</string>
+    <string name="completed_habits">Completed</string>
+    <string name="completion_rate">Completion Rate</string>
+    <string name="progress_chart">Weekly Progress</string>
+    
+    <!-- Habits Fragment -->
+    <string name="add_habit">Add Habit</string>
+    <string name="habit_title">Title</string>
+    <string name="habit_description">Description</string>
+    <string name="habit_type">Type</string>
+    <string name="habit_frequency">Frequency</string>
+    <string name="habit_points">Points</string>
+    <string name="habit_calories">Calories</string>
+    <string name="habit_completed">Completed</string>
+    <string name="empty_habits">You haven\'t added any habits yet. Tap + to add your first habit!</string>
+    
+    <!-- Leaderboard Fragment -->
+    <string name="daily_leaderboard">Daily</string>
+    <string name="weekly_leaderboard">Weekly</string>
+    <string name="rank">Rank</string>
+    <string name="user">User</string>
+    <string name="score">Score</string>
+    <string name="empty_leaderboard">No users on the leaderboard yet. Complete habits to earn points!</string>
+    
+    <!-- Profile Fragment -->
+    <string name="edit_profile">Edit Profile</string>
+    <string name="gender">Gender</string>
+    <string name="health">Health</string>
+    <string name="height">Height (cm)</string>
+    <string name="weight">Weight (kg)</string>
+    
+    <!-- Goals Fragment -->
+    <string name="add_goal">Add Goal</string>
+    <string name="goal_title">Title</string>
+    <string name="goal_description">Description</string>
+    <string name="goal_target_points">Target Points</string>
+    <string name="goal_target_calories">Target Calories</string>
+    <string name="goal_duration">Duration</string>
+    <string name="goal_share">Share with Community</string>
+    <string name="goal_completed">Completed</string>
+    <string name="goal_shared">Shared</string>
+    <string name="empty_goals">You haven\'t set any goals yet. Tap + to set your first goal!</string>
+    
+    <!-- Notifications -->
+    <string name="channel_name">HabitHive Notifications</string>
+    <string name="channel_description">Notifications for HabitHive app</string>
+    <string name="reminder_title">Daily Reminder</string>
+    <string name="reminder_message">Don\'t forget to track your habits today!</string>
+</resources>
