@@ -9,7 +9,9 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import androidx.databinding.DataBindingUtil
 import com.habithive.app.databinding.ActivityMainBinding
+import com.habithive.app.ui.MainViewModel
 import com.habithive.app.utils.setupNotifications
 
 class MainActivity : AppCompatActivity() {
@@ -17,12 +19,15 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var auth: FirebaseAuth
     private lateinit var firestore: FirebaseFirestore
+    private lateinit var viewModel: MainViewModel
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        viewModel = MainViewModel()
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = this
         
         // Initialize Firebase
         auth = FirebaseAuth.getInstance()
