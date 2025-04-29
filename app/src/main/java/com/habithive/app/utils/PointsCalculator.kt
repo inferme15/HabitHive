@@ -1,101 +1,91 @@
 package com.habithive.app.utils
 
 import com.habithive.app.model.Habit
+import kotlin.math.max
+import kotlin.math.pow
+import kotlin.math.roundToInt
 
 /**
- * Utility class for calculating points and calories for different activities
- * Uses formula: weight×activity-specific coefficient×duration
+ * Utility class for calculating calories burned, fitness points, and achievement bonuses
  */
 object PointsCalculator {
     
-    // Activity type constants
-    const val ACTIVITY_RUNNING = "running"
-    const val ACTIVITY_CYCLING = "cycling"
-    const val ACTIVITY_WEIGHTLIFTING = "weightlifting"
-    const val ACTIVITY_OTHER = "other"
+    // Calorie calculation multipliers based on exercise type (per kg of body weight per minute)
+    private const val RUNNING_MULTIPLIER = 0.076
+    private const val CYCLING_MULTIPLIER = 0.064
+    private const val WEIGHTLIFTING_MULTIPLIER = 0.039
+    private const val OTHER_EXERCISE_MULTIPLIER = 0.035
     
-    // Coefficients for calorie calculation
-    private const val COEFFICIENT_RUNNING = 0.076
-    private const val COEFFICIENT_CYCLING = 0.064
-    private const val COEFFICIENT_WEIGHTLIFTING = 0.039
-    private const val COEFFICIENT_OTHER = 0.035
+    // Base points per calorie burned
+    private const val POINTS_PER_CALORIE = 0.1
     
     /**
-     * Calculate calories burned based on activity type, weight (kg), and duration (minutes)
-     * 
-     * @param activityType Type of exercise
-     * @param weightKg User's weight in kilograms
-     * @param durationMinutes Duration of exercise in minutes
-     * @return Estimated calories burned
+     * Calculate calories burned based on exercise type, user weight, and duration
      */
-    fun calculateCaloriesBurned(activityType: String, weightKg: Int, durationMinutes: Int): Int {
-        val coefficient = when (activityType) {
-            ACTIVITY_RUNNING -> COEFFICIENT_RUNNING
-            ACTIVITY_CYCLING -> COEFFICIENT_CYCLING
-            ACTIVITY_WEIGHTLIFTING -> COEFFICIENT_WEIGHTLIFTING
-            else -> COEFFICIENT_OTHER
+    fun calculateCaloriesBurned(exerciseType: String, weightKg: Int, durationMinutes: Int): Int {
+        val multiplier = when (exerciseType) {
+            Habit.EXERCISE_RUNNING -> RUNNING_MULTIPLIER
+            Habit.EXERCISE_CYCLING -> CYCLING_MULTIPLIER
+            Habit.EXERCISE_WEIGHTLIFTING -> WEIGHTLIFTING_MULTIPLIER
+            else -> OTHER_EXERCISE_MULTIPLIER
         }
         
-        return (weightKg * coefficient * durationMinutes).toInt()
+        return (multiplier * weightKg * durationMinutes).roundToInt()
     }
     
     /**
-     * Calculate points based on calories burned
-     * 
-     * @param caloriesBurned Calories burned during activity
-     * @return Reward points (1 point per 10 calories)
+     * Calculate fitness points based on calories burned
      */
     fun calculatePointsFromCalories(caloriesBurned: Int): Int {
-        return caloriesBurned / 10
+        return (caloriesBurned * POINTS_PER_CALORIE).roundToInt()
     }
     
     /**
-     * Calculate habit streak (consecutive days of completion)
-     * 
-     * @param habit The habit to calculate streak for
-     * @return Current streak length
+     * Calculate streak for habit
      */
     fun calculateStreak(habit: Habit): Int {
-        val completionDates = habit.completions
-            .map { it.toDate() }
-            .sortedDescending() // Sort from most recent to oldest
-        
-        if (completionDates.isEmpty()) {
-            return 0
-        }
-        
-        var streak = 1
-        var previousDate = completionDates[0]
-        
-        for (i in 1 until completionDates.size) {
-            val currentDate = completionDates[i]
-            val daysDifference = (previousDate.time - currentDate.time) / (1000 * 60 * 60 * 24)
-            
-            if (daysDifference == 1L) {
-                // Consecutive day
-                streak++
-                previousDate = currentDate
-            } else {
-                // Streak broken
-                break
-            }
-        }
-        
-        return streak
+        return habit.calculateCurrentStreak()
     }
     
     /**
-     * Calculate achievement points based on streak length
-     * 
-     * @param streakLength Length of current streak
-     * @return Bonus points for achievement
+     * Calculate bonus points for achievements based on streak length
+     * Uses a progressive reward system: longer streaks give exponentially more points
      */
-    fun calculateAchievementPoints(streakLength: Int): Int {
-        return when {
-            streakLength >= 30 -> 500  // Monthly achiever
-            streakLength >= 7 -> 100   // Weekly achiever
-            streakLength >= 3 -> 30    // Getting started
-            else -> 0
-        }
+    fun calculateAchievementPoints(streak: Int): Int {
+        // No bonus for streaks less than 3
+        if (streak < 3) return 0
+        
+        // Base points for achieving a 3-day streak
+        val basePoints = 10
+        
+        // Calculate using a power function to reward longer streaks exponentially
+        val bonus = basePoints * (1.1).pow(streak - 3)
+        
+        return max(bonus.roundToInt(), 0)
+    }
+    
+    /**
+     * Calculate level based on total points
+     * Levels increase logarithmically, making higher levels harder to achieve
+     */
+    fun calculateLevel(totalPoints: Int): Int {
+        if (totalPoints <= 0) return 1
+        
+        // Points required for level 2
+        val basePointsForLevel2 = 100
+        
+        // Calculate level using a logarithmic function
+        // Each level requires progressively more points
+        val level = 1 + (kotlin.math.ln(totalPoints.toDouble() / basePointsForLevel2) / kotlin.math.ln(1.5)).toInt()
+        
+        return max(level, 1)
+    }
+    
+    /**
+     * Calculate points needed for next level
+     */
+    fun pointsForNextLevel(currentLevel: Int): Int {
+        val basePointsForLevel2 = 100
+        return (basePointsForLevel2 * (1.5).pow(currentLevel - 1)).roundToInt()
     }
 }

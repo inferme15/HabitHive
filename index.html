@@ -3,253 +3,569 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HabitHive Android App Viewer</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>HabitHive - Fitness Habit Tracker</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary-color: #FFC107;
+            --secondary-color: #4CAF50;
+            --dark-color: #333;
+            --light-color: #f4f4f4;
+            --danger-color: #dc3545;
+            --success-color: #28a745;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
         body {
-            padding-top: 20px;
+            font-family: 'Nunito', sans-serif;
+            line-height: 1.6;
             background-color: #f8f9fa;
+            color: var(--dark-color);
+            min-height: 100vh;
         }
-        .app-container {
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        header {
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--dark-color);
+        }
+        
+        .logo span {
+            color: var(--primary-color);
+        }
+        
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+        }
+        
+        .level-badge {
+            background-color: var(--primary-color);
+            color: #fff;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        .user-name {
+            font-weight: 600;
+        }
+        
+        .user-stats {
+            font-size: 0.8rem;
+            color: #666;
+        }
+        
+        /* Main content */
+        .main-content {
+            padding: 40px 0;
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid var(--primary-color);
+            display: inline-block;
+        }
+        
+        .dashboard {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .card-header {
+            background-color: var(--primary-color);
+            color: #fff;
+            padding: 15px;
+            font-weight: 700;
+        }
+        
+        .card-body {
             padding: 20px;
-            margin-bottom: 20px;
         }
-        .app-header {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .app-logo {
-            width: 80px;
-            height: 80px;
+        
+        .big-stat {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--dark-color);
             margin-bottom: 10px;
         }
-        .feature-card {
-            border: none;
-            box-shadow: 0 0 5px rgba(0,0,0,0.05);
-            margin-bottom: 20px;
-            transition: transform 0.3s;
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
         }
-        .feature-card:hover {
-            transform: translateY(-5px);
+        
+        .streak-card .big-stat {
+            color: var(--danger-color);
         }
-        .code-container {
-            background-color: #f8f9fa;
+        
+        .points-card .big-stat {
+            color: var(--primary-color);
+        }
+        
+        .calories-card .big-stat {
+            color: var(--secondary-color);
+        }
+        
+        /* Habits section */
+        .habits-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .habit-card {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .habit-card .card-body {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .habit-title {
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .habit-description {
+            color: #666;
+            margin-bottom: 15px;
+            flex-grow: 1;
+        }
+        
+        .habit-meta {
+            font-size: 0.9rem;
+            color: #666;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .habit-streak {
+            color: var(--danger-color);
+            font-weight: 700;
+        }
+        
+        .habit-type {
+            background-color: #f0f0f0;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+        }
+        
+        .habit-type.exercise {
+            background-color: #ffecb3;
+            color: #996600;
+        }
+        
+        .habit-type.water {
+            background-color: #bbdefb;
+            color: #0d47a1;
+        }
+        
+        .habit-type.mindfulness {
+            background-color: #e1bee7;
+            color: #4a148c;
+        }
+        
+        .habit-stats {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .habit-stat {
+            text-align: center;
+        }
+        
+        .habit-stat-value {
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+        
+        .habit-stat-label {
+            font-size: 0.8rem;
+            color: #666;
+        }
+        
+        .progress-bar {
+            height: 10px;
+            background-color: #f0f0f0;
             border-radius: 5px;
-            padding: 15px;
-            margin-top: 20px;
-            overflow-x: auto;
+            margin-top: 15px;
+            overflow: hidden;
         }
-        .file-tree {
-            font-family: monospace;
-            line-height: 1.5;
+        
+        .progress-fill {
+            height: 100%;
+            background-color: var(--secondary-color);
+            border-radius: 5px;
         }
-        .medal-icon {
-            width: 24px;
-            height: 24px;
-            margin-right: 5px;
+        
+        .complete-button {
+            background-color: var(--secondary-color);
+            color: #fff;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            font-weight: 700;
+            margin-top: 15px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .complete-button:hover {
+            background-color: #388e3c;
+        }
+        
+        /* Achievements section */
+        .achievements-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+        }
+        
+        .achievement-card {
+            text-align: center;
+        }
+        
+        .achievement-icon {
+            width: 80px;
+            height: 80px;
+            background-color: #f0f0f0;
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+        
+        .unlocked .achievement-icon {
+            background-color: var(--primary-color);
+            color: #fff;
+        }
+        
+        .achievement-title {
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+        
+        .achievement-description {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        
+        .achievement-points {
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+        
+        .achievement-progress {
+            font-size: 0.8rem;
+            color: #666;
+            margin-top: 10px;
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: #fff;
+            padding: 30px 0;
+            margin-top: 40px;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .footer-links a {
+            color: #fff;
+            text-decoration: none;
+            margin-left: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .dashboard {
+                flex-direction: column;
+            }
+            
+            .habits-list, .achievements-list {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .footer-links {
+                margin-top: 20px;
+            }
+            
+            .footer-links a {
+                margin: 0 10px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="app-container">
-            <div class="app-header">
-                <img src="generated-icon.png" alt="HabitHive Logo" class="app-logo">
-                <h1>HabitHive</h1>
-                <p class="lead">Your Smart Habit Tracker</p>
-            </div>
-
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="card feature-card">
-                        <div class="card-body">
-                            <h5 class="card-title">📱 Application Structure</h5>
-                            <p class="card-text">HabitHive is built using modern Android development practices with Kotlin and Jetpack Compose.</p>
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item">MVVM Architecture</li>
-                                <li class="list-group-item">Dependency Injection with Hilt</li>
-                                <li class="list-group-item">Firebase Integration</li>
-                                <li class="list-group-item">Kotlin Coroutines & Flow</li>
-                            </ul>
-                        </div>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="generated-icon.png" alt="HabitHive Logo">
+                    <h1>Habit<span>Hive</span></h1>
+                </div>
+                <div class="user-info">
+                    <div class="level-badge" id="user-level">7</div>
+                    <div>
+                        <div class="user-name" id="user-name">Alex Johnson</div>
+                        <div class="user-stats" id="user-stats">3,250 points • Member since March 2024</div>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="card feature-card">
-                        <div class="card-body">
-                            <h5 class="card-title">🏆 Gamification System</h5>
-                            <p class="card-text">HabitHive uses gamification to keep users motivated and engaged.</p>
-                            <div class="d-flex align-items-center mb-2">
-                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%23FFC107' d='M12,2C8.13,2 5,5.13 5,9c0,5.25 7,13 7,13s7,-7.75 7,-13C19,5.13 15.87,2 12,2zM12,11.5c-1.38,0 -2.5,-1.12 -2.5,-2.5s1.12,-2.5 2.5,-2.5 2.5,1.12 2.5,2.5 -1.12,2.5 -2.5,2.5z'/%3E%3C/svg%3E" class="medal-icon">
-                                <span>Gold Medal: 100+ consecutive days</span>
-                            </div>
-                            <div class="d-flex align-items-center mb-2">
-                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%23C0C0C0' d='M12,2C8.13,2 5,5.13 5,9c0,5.25 7,13 7,13s7,-7.75 7,-13C19,5.13 15.87,2 12,2zM12,11.5c-1.38,0 -2.5,-1.12 -2.5,-2.5s1.12,-2.5 2.5,-2.5 2.5,1.12 2.5,2.5 -1.12,2.5 -2.5,2.5z'/%3E%3C/svg%3E" class="medal-icon">
-                                <span>Silver Medal: 50+ consecutive days</span>
-                            </div>
-                            <div class="d-flex align-items-center">
-                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%23CD7F32' d='M12,2C8.13,2 5,5.13 5,9c0,5.25 7,13 7,13s7,-7.75 7,-13C19,5.13 15.87,2 12,2zM12,11.5c-1.38,0 -2.5,-1.12 -2.5,-2.5s1.12,-2.5 2.5,-2.5 2.5,1.12 2.5,2.5 -1.12,2.5 -2.5,2.5z'/%3E%3C/svg%3E" class="medal-icon">
-                                <span>Bronze Medal: 25+ consecutive days</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row mt-4">
-                <div class="col-md-6">
-                    <div class="card feature-card">
-                        <div class="card-body">
-                            <h5 class="card-title">🤝 Community Features</h5>
-                            <p class="card-text">Connect with friends and compete on leaderboards.</p>
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item">User Profiles</li>
-                                <li class="list-group-item">Friend Systems</li>
-                                <li class="list-group-item">Global Leaderboards</li>
-                                <li class="list-group-item">Shared Goals</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="card feature-card">
-                        <div class="card-body">
-                            <h5 class="card-title">📊 Analytics</h5>
-                            <p class="card-text">Track your progress with detailed analytics.</p>
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item">Daily, Weekly, Monthly Reports</li>
-                                <li class="list-group-item">Habit Completion Rates</li>
-                                <li class="list-group-item">Streak Tracking</li>
-                                <li class="list-group-item">Performance Insights</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="code-container mt-4">
-                <h4>Project Structure</h4>
-                <pre class="file-tree">
-HabitHive/
-├── app/
-│   ├── src/
-│   │   ├── main/
-│   │   │   ├── java/com/example/habithive/
-│   │   │   │   ├── analytics/          # Analytics and statistics tracking
-│   │   │   │   ├── auth/               # Authentication related code
-│   │   │   │   ├── data/               # Data models and repositories
-│   │   │   │   ├── di/                 # Dependency injection modules
-│   │   │   │   ├── domain/             # Business logic and use cases
-│   │   │   │   ├── ui/                 # UI components and screens
-│   │   │   │   │   ├── achievements/   # Achievements screen
-│   │   │   │   │   ├── exercise/       # Exercise tracking screens
-│   │   │   │   │   ├── goals/          # Goal setting and tracking
-│   │   │   │   │   ├── home/           # Home dashboard
-│   │   │   │   │   ├── leaderboard/    # Leaderboard screen
-│   │   │   │   │   ├── profile/        # User profile
-│   │   │   │   │   └── theme/          # App theming
-│   │   │   │   └── utils/              # Utility functions
-│   │   │   ├── res/                    # Android resources
-│   │   │   │   ├── drawable/           # Images and vectors
-│   │   │   │   ├── layout/             # XML layouts
-│   │   │   │   ├── navigation/         # Navigation graphs
-│   │   │   │   └── values/             # Strings, colors, styles
-│   │   │   └── AndroidManifest.xml
-│   │   └── test/                       # Unit tests
-├── build.gradle                        # Project-level build config
-├── gradle/                             # Gradle wrapper and config
-└── settings.gradle                     # Project settings
-                </pre>
             </div>
         </div>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    </header>
+    
+    <main class="main-content">
+        <div class="container">
+            <h2 class="section-title">Dashboard</h2>
+            <div class="dashboard">
+                <div class="card streak-card">
+                    <div class="card-header">Current Streak</div>
+                    <div class="card-body">
+                        <div class="big-stat" id="streak-count">14</div>
+                        <div class="stat-label">days in a row</div>
+                    </div>
+                </div>
+                <div class="card points-card">
+                    <div class="card-header">Total Points</div>
+                    <div class="card-body">
+                        <div class="big-stat" id="points-count">3,250</div>
+                        <div class="stat-label">fitness points earned</div>
+                    </div>
+                </div>
+                <div class="card calories-card">
+                    <div class="card-header">Calories Burned</div>
+                    <div class="card-body">
+                        <div class="big-stat" id="calories-count">5,820</div>
+                        <div class="stat-label">total calories</div>
+                    </div>
+                </div>
+            </div>
+            
+            <h2 class="section-title">Your Habits</h2>
+            <div class="habits-list" id="habits-container">
+                <!-- Habits will be loaded here -->
+            </div>
+            
+            <h2 class="section-title">Achievements</h2>
+            <div class="achievements-list" id="achievements-container">
+                <!-- Achievements will be loaded here -->
+            </div>
+        </div>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <div class="logo">
+                        <h1>Habit<span>Hive</span></h1>
+                    </div>
+                    <p>© 2025 HabitHive. All rights reserved.</p>
+                </div>
+                <div class="footer-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Contact</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
     <script>
-        // Function to load project structure dynamically
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('HabitHive app viewer initialized');
-            
-            // Check Firebase status
-            fetch('/api/firebase-status')
-                .then(response => response.json())
-                .then(data => {
-                    const statusContainer = document.createElement('div');
-                    statusContainer.className = data.configured ? 'alert alert-success' : 'alert alert-warning';
-                    statusContainer.innerHTML = `<strong>Firebase Status:</strong> ${data.message}`;
-                    document.querySelector('.app-container').prepend(statusContainer);
-                })
-                .catch(error => console.error('Error fetching Firebase status:', error));
-            
-            // Load project structure
-            fetch('/api/project-structure')
-                .then(response => response.json())
-                .then(data => {
-                    const container = document.createElement('div');
-                    container.className = 'mt-4';
-                    container.innerHTML = `
-                        <div class="card">
-                            <div class="card-header">
-                                <h5>Project Files</h5>
+        // Format large numbers with commas
+        function formatNumber(num) {
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+        
+        // Format date to readable format
+        function formatDate(date) {
+            const options = { year: 'numeric', month: 'long' };
+            return new Date(date).toLocaleDateString(undefined, options);
+        }
+        
+        // Load user data
+        fetch('/api/user')
+            .then(response => response.json())
+            .then(user => {
+                document.getElementById('user-name').textContent = user.name;
+                document.getElementById('user-level').textContent = user.level;
+                document.getElementById('user-stats').textContent = `${formatNumber(user.totalPoints)} points • Member since ${formatDate(user.joinDate)}`;
+                document.getElementById('streak-count').textContent = user.streak;
+                document.getElementById('points-count').textContent = formatNumber(user.totalPoints);
+                document.getElementById('calories-count').textContent = formatNumber(user.totalCalories);
+            });
+        
+        // Load habits
+        fetch('/api/habits')
+            .then(response => response.json())
+            .then(habits => {
+                const habitsContainer = document.getElementById('habits-container');
+                habitsContainer.innerHTML = '';
+                
+                habits.forEach(habit => {
+                    // Calculate completion percentage
+                    const completionPercent = Math.min(Math.round((habit.completions / habit.goal) * 100), 100);
+                    
+                    // Determine habit type class for styling
+                    let typeClass = '';
+                    if (habit.type === 'exercise') typeClass = 'exercise';
+                    else if (habit.type === 'water') typeClass = 'water';
+                    else if (habit.type === 'mindfulness') typeClass = 'mindfulness';
+                    
+                    const habitCard = document.createElement('div');
+                    habitCard.className = 'card habit-card';
+                    habitCard.innerHTML = `
+                        <div class="card-header">${habit.title}</div>
+                        <div class="card-body">
+                            <div class="habit-description">${habit.description}</div>
+                            
+                            <div class="habit-meta">
+                                <span class="habit-streak">🔥 ${habit.streak} day streak</span>
+                                <span class="habit-type ${typeClass}">${habit.type}</span>
                             </div>
-                            <div class="card-body" style="max-height: 400px; overflow-y: auto;">
-                                <div class="list-group">
-                                    ${data.files.map(file => `
-                                        <button type="button" class="list-group-item list-group-item-action file-item" 
-                                                data-file-path="${file}">
-                                            ${file}
-                                        </button>
-                                    `).join('')}
+                            
+                            <div class="habit-stats">
+                                <div class="habit-stat">
+                                    <div class="habit-stat-value">${habit.points}</div>
+                                    <div class="habit-stat-label">points</div>
+                                </div>
+                                <div class="habit-stat">
+                                    <div class="habit-stat-value">${habit.completions}</div>
+                                    <div class="habit-stat-label">completions</div>
+                                </div>
+                                <div class="habit-stat">
+                                    <div class="habit-stat-value">${habit.caloriesBurnedPerCompletion}</div>
+                                    <div class="habit-stat-label">calories</div>
                                 </div>
                             </div>
-                        </div>
-                        
-                        <div class="card mt-3" id="file-content-card" style="display: none;">
-                            <div class="card-header">
-                                <h5 id="file-title">File Content</h5>
+                            
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: ${completionPercent}%"></div>
                             </div>
-                            <div class="card-body">
-                                <pre id="file-content" style="max-height: 500px; overflow-y: auto;"></pre>
+                            
+                            <button class="complete-button">Complete Now</button>
+                        </div>
+                    `;
+                    habitsContainer.appendChild(habitCard);
+                });
+            });
+        
+        // Load achievements
+        fetch('/api/achievements')
+            .then(response => response.json())
+            .then(achievements => {
+                const achievementsContainer = document.getElementById('achievements-container');
+                achievementsContainer.innerHTML = '';
+                
+                achievements.forEach(achievement => {
+                    // Calculate progress percentage
+                    const progressPercent = Math.min(Math.round((achievement.currentProgress / achievement.threshold) * 100), 100);
+                    
+                    // Set icon based on type
+                    let icon = '🏆';
+                    if (achievement.type === 'streak') icon = '🔥';
+                    else if (achievement.type === 'completion') icon = '✅';
+                    else if (achievement.type === 'calories') icon = '🔥';
+                    
+                    const achievementCard = document.createElement('div');
+                    achievementCard.className = `card achievement-card ${achievement.isUnlocked ? 'unlocked' : ''}`;
+                    achievementCard.innerHTML = `
+                        <div class="card-body">
+                            <div class="achievement-icon">${icon}</div>
+                            <div class="achievement-title">${achievement.title}</div>
+                            <div class="achievement-description">${achievement.description}</div>
+                            <div class="achievement-points">+${achievement.points} points</div>
+                            
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: ${progressPercent}%"></div>
+                            </div>
+                            
+                            <div class="achievement-progress">
+                                ${achievement.currentProgress}/${achievement.threshold} ${achievement.isUnlocked ? '(Unlocked)' : ''}
                             </div>
                         </div>
                     `;
-                    
-                    document.querySelector('.code-container').after(container);
-                    
-                    // Add event listeners to file items
-                    document.querySelectorAll('.file-item').forEach(item => {
-                        item.addEventListener('click', function() {
-                            const filePath = this.getAttribute('data-file-path');
-                            loadFileContent(filePath);
-                        });
-                    });
-                })
-                .catch(error => console.error('Error fetching project structure:', error));
-        });
-        
-        // Function to load file content
-        function loadFileContent(filePath) {
-            fetch(`/api/file-content?path=${encodeURIComponent(filePath)}`)
-                .then(response => response.json())
-                .then(data => {
-                    const fileContentCard = document.getElementById('file-content-card');
-                    const fileTitle = document.getElementById('file-title');
-                    const fileContent = document.getElementById('file-content');
-                    
-                    fileTitle.textContent = filePath;
-                    fileContent.textContent = data.content;
-                    fileContent.className = `language-${data.fileType}`;
-                    
-                    fileContentCard.style.display = 'block';
-                    
-                    // Scroll to file content
-                    fileContentCard.scrollIntoView({ behavior: 'smooth' });
-                })
-                .catch(error => console.error('Error fetching file content:', error));
-        }
+                    achievementsContainer.appendChild(achievementCard);
+                });
+            });
     </script>
 </body>
 </html>
