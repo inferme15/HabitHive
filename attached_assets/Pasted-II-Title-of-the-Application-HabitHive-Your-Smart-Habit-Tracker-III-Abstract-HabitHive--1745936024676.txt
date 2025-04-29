@@ -1,0 +1,94 @@
+II. Title of the Application
+HabitHive – “Your Smart Habit Tracker”
+
+
+III. Abstract 
+HabitHive is a mobile application designed to help users track their physical exercise and engage in a community-driven fitness experience. Developed using Android Studio with Kotlin, the app allows users to log their workouts, monitor progress, and earn points based on their activities. These points can be compared with others in the community, fostering motivation and healthy competition. The application provides an intuitive user interface for logging exercise routines, viewing personal achievements, and accessing leaderboards. By integrating habit-building principles with gamification, Habithive encourages users to maintain consistency in their fitness journey.
+
+
+IV.  Existing System
+Google Fit – Tracks various physical activities and provides health insights but lacks a community leaderboard for competition.
+MyFitnessPal – Focuses on calorie tracking and workouts but does not emphasize a point-based reward system for motivation.
+Nike Training Club – Offers workout routines and professional guidance but lacks a habit-building approach with community comparisons.
+Strava – Ideal for runners and cyclists, providing leaderboards, but does not support diverse workout types.
+Habitica – Gamifies habit-building but is not specialized for fitness tracking.
+
+
+V. Proposed System 
+      The proposed system includes as follows:
+Gamified Point System – Users earn points based on exercise completion, which can be compared with the community leaderboard.
+Community Goal Sharing – Users can set goals and share them with the community for motivation and accountability.
+Personalized Profile & Interests – Users can input their hobbies and fitness interests to receive tailored suggestions.
+Interactive Leaderboard – Dynamic rankings based on points scored, encouraging friendly competition.
+Push Notifications & Reminders – Customizable notifications to remind users of their daily exercise goals.
+Seamless Firebase Integration – Real-time syncing of user progress, leaderboard updates, and community engagement.
+
+
+VI. Objectives of the Proposed Application
+
+Develop a user-friendly mobile application for tracking physical exercise.
+Provide an intuitive interface for logging and monitoring workout activities.
+Implement a point-based system to encourage consistency in exercise habits.
+Enable users to set and achieve personalized fitness goals.
+Integrate a leaderboard to allow users to compare progress with the community.
+Offer detailed analytics and progress tracking for motivation.
+Send timely reminders and notifications to keep users engaged.
+Ensure data security and privacy for user information.
+Foster a supportive fitness community through interactive features.
+
+
+
+
+
+
+
+
+
+VII. Scope / Use
+
+Habit Hive is designed for individuals who want to track their physical exercise and build consistent fitness habits.
+The app provides a structured approach to monitoring workouts, setting goals, and comparing progress with others.
+It supports various exercise types, including running, cycling, weightlifting, and custom workouts.
+The leaderboard system encourages healthy competition and community engagement.
+Users receive notifications and reminders to stay on track with their fitness routines.
+The application will be developed using Android Studio with Kotlin and XML for UI design.
+Can be expanded for corporate wellness programs and gym-based challenges.
+
+
+
+VIII. 	Technology to be used (Specific Framework etc.) 
+
+Front end:
+Android Studio – Official IDE for Android app development.
+Kotlin – Primary programming language for Android development.
+XML – UI development for modern and interactive designs.
+Back end: 
+Firebase Firestore – Cloud-based NoSQL database for real-time data sync.
+
+
+
+IX. Functional Requirements of the Application
+
+User Authentication – Register, log in, and manage profiles.
+Exercise Tracking – Log different workout activities manually.
+Points System – Earn points based on completed exercises.
+Leaderboard – Compare points with the community and friends.
+Goal Setting – Set daily, weekly, or monthly fitness goals.
+Reminders & Notifications – Get alerts for workouts and achievements.
+Progress Analytics – View charts and reports of fitness progress.
+
+
+
+
+X. Non-Functional Requirements of the Application
+
+Performance – The app should load and process data quickly.
+Scalability – Should support multiple users without performance issues.
+Security – User data must be encrypted and securely stored.
+Usability – Simple, user-friendly interface for easy navigation.
+Reliability – The app should function without crashes or errors.
+Compatibility – Should run on various Android versions and screen sizes.
+Maintainability – Code should be modular for easy updates and bug fixes.
+Data Synchronization – data should sync properly when online.
+Extensibility – Future features like AI recommendations can be integrated.
+
