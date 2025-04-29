@@ -102,8 +102,7 @@ dependencies {
     androidTestImplementation 'androidx.compose.ui:ui-test-junit4'
     debugImplementation 'androidx.compose.ui:ui-tooling'
     debugImplementation 'androidx.compose.ui:ui-test-manifest'
-} 
     // Data Binding
     kapt "androidx.databinding:databinding-compiler:8.1.0"
     kapt "com.android.databinding:compiler:8.1.0"
-    kapt "com.android.databinding:compiler:8.1.0"
+}
