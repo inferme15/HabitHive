@@ -5,32 +5,29 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
-import com.habithive.app.auth.LoginActivity
-import com.habithive.app.databinding.FragmentProfileBinding
-import com.habithive.app.model.User
+import androidx.lifecycle.ViewModelProvider
+import com.example.habithive.R
+import com.example.habithive.databinding.FragmentProfileBinding
+import com.habithive.app.ui.auth.LoginActivity
 
 class ProfileFragment : Fragment() {
     
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
     
-    private lateinit var auth: FirebaseAuth
-    private lateinit var firestore: FirebaseFirestore
+    private lateinit var viewModel: ProfileViewModel
     
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentProfileBinding.inflate(inflater, container, false)
+        viewModel = ViewModelProvider(this)[ProfileViewModel::class.java]
         
-        // Initialize Firebase
-        auth = FirebaseAuth.getInstance()
-        firestore = FirebaseFirestore.getInstance()
+        _binding = FragmentProfileBinding.inflate(inflater, container, false)
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
         
         return binding.root
     }
@@ -38,78 +35,56 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         
-        // Load user profile
-        loadUserProfile()
-        
-        // Setup edit profile button
-        binding.buttonEditProfile.setOnClickListener {
-            startActivity(Intent(requireContext(), EditProfileActivity::class.java))
-        }
-        
-        // Setup logout button
+        setupUI()
+        observeViewModel()
+    }
+    
+    private fun setupUI() {
         binding.buttonLogout.setOnClickListener {
-            logoutUser()
+            viewModel.logout()
+            navigateToLogin()
+        }
+        
+        binding.buttonEditProfile.setOnClickListener {
+            // Navigate to edit profile screen
+            // TODO: Implement edit profile functionality
         }
     }
     
-    private fun loadUserProfile() {
-        val userId = auth.currentUser?.uid ?: return
+    private fun observeViewModel() {
+        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+        }
         
-        binding.progressBar.visibility = View.VISIBLE
+        viewModel.userName.observe(viewLifecycleOwner) { name ->
+            binding.textName.text = name
+        }
         
-        firestore.collection("users")
-            .document(userId)
-            .get()
-            .addOnSuccessListener { document ->
-                binding.progressBar.visibility = View.GONE
-                
-                if (document != null && document.exists()) {
-                    val user = document.toObject(User::class.java)
-                    user?.let {
-                        binding.textName.text = it.name
-                        binding.textEmail.text = it.email
-                        
-                        if (it.gender.isNotEmpty()) {
-                            binding.textGender.text = it.gender
-                        } else {
-                            binding.textGender.text = "Not specified"
-                        }
-                        
-                        if (it.health.isNotEmpty()) {
-                            binding.textHealth.text = it.health
-                        } else {
-                            binding.textHealth.text = "Not specified"
-                        }
-                        
-                        if (it.height > 0) {
-                            binding.textHeight.text = "${it.height} cm"
-                        } else {
-                            binding.textHeight.text = "Not specified"
-                        }
-                        
-                        if (it.weight > 0) {
-                            binding.textWeight.text = "${it.weight} kg"
-                        } else {
-                            binding.textWeight.text = "Not specified"
-                        }
-                    }
-                }
-            }
-            .addOnFailureListener { e ->
-                binding.progressBar.visibility = View.GONE
-                Toast.makeText(requireContext(), "Error loading profile: ${e.message}", Toast.LENGTH_SHORT).show()
-            }
+        viewModel.email.observe(viewLifecycleOwner) { email ->
+            binding.textEmail.text = email
+        }
+        
+        viewModel.gender.observe(viewLifecycleOwner) { gender ->
+            binding.textGender.text = gender
+        }
+        
+        viewModel.health.observe(viewLifecycleOwner) { health ->
+            binding.textHealth.text = health
+        }
+        
+        viewModel.height.observe(viewLifecycleOwner) { height ->
+            binding.textHeight.text = height
+        }
+        
+        viewModel.weight.observe(viewLifecycleOwner) { weight ->
+            binding.textWeight.text = weight
+        }
     }
     
-    private fun logoutUser() {
-        auth.signOut()
-        startActivity(Intent(requireContext(), LoginActivity::class.java))
-        requireActivity().finish()
-    }
-    
-    override fun onResume() {
-        super.onResume()
-        loadUserProfile()
+    private fun navigateToLogin() {
+        val intent = Intent(requireContext(), LoginActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
     }
     
     override fun onDestroyView() {

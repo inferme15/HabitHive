@@ -1,87 +1,101 @@
 package com.habithive.app.utils
 
 import com.habithive.app.model.Habit
-import java.util.Calendar
 
-// Calculate points for a habit based on type, frequency, etc.
-fun calculatePoints(habit: Habit): Int {
-    // Base points from the habit
-    var points = habit.points
+/**
+ * Utility class for calculating points and calories for different activities
+ * Uses formula: weight×activity-specific coefficient×duration
+ */
+object PointsCalculator {
     
-    // Add bonus points based on habit type
-    points += when (habit.type) {
-        "Running" -> 5
-        "Cycling" -> 4
-        "Weightlifting" -> 3
-        else -> 2
-    }
+    // Activity type constants
+    const val ACTIVITY_RUNNING = "running"
+    const val ACTIVITY_CYCLING = "cycling"
+    const val ACTIVITY_WEIGHTLIFTING = "weightlifting"
+    const val ACTIVITY_OTHER = "other"
     
-    // Add frequency bonus
-    points += when (habit.frequency) {
-        "Daily" -> 3
-        "Weekly" -> 7
-        else -> 1
-    }
+    // Coefficients for calorie calculation
+    private const val COEFFICIENT_RUNNING = 0.076
+    private const val COEFFICIENT_CYCLING = 0.064
+    private const val COEFFICIENT_WEIGHTLIFTING = 0.039
+    private const val COEFFICIENT_OTHER = 0.035
     
-    // Add streak bonus (if applicable)
-    val streakBonus = calculateStreakBonus(habit)
-    points += streakBonus
-    
-    return points
-}
-
-// Calculate streak bonus based on consecutive completions
-private fun calculateStreakBonus(habit: Habit): Int {
-    val completedDates = habit.completedDates
-    if (completedDates.isEmpty()) return 0
-    
-    // Sort dates
-    val sortedDates = completedDates.sortedBy { it.seconds }
-    
-    // Check for streak (consecutive days)
-    var currentStreak = 1
-    var maxStreak = 1
-    
-    for (i in 1 until sortedDates.size) {
-        val prevDate = Calendar.getInstance().apply {
-            timeInMillis = sortedDates[i - 1].seconds * 1000
+    /**
+     * Calculate calories burned based on activity type, weight (kg), and duration (minutes)
+     * 
+     * @param activityType Type of exercise
+     * @param weightKg User's weight in kilograms
+     * @param durationMinutes Duration of exercise in minutes
+     * @return Estimated calories burned
+     */
+    fun calculateCaloriesBurned(activityType: String, weightKg: Int, durationMinutes: Int): Int {
+        val coefficient = when (activityType) {
+            ACTIVITY_RUNNING -> COEFFICIENT_RUNNING
+            ACTIVITY_CYCLING -> COEFFICIENT_CYCLING
+            ACTIVITY_WEIGHTLIFTING -> COEFFICIENT_WEIGHTLIFTING
+            else -> COEFFICIENT_OTHER
         }
         
-        val currentDate = Calendar.getInstance().apply {
-            timeInMillis = sortedDates[i].seconds * 1000
-        }
-        
-        // Calculate days difference
-        val daysDiff = (currentDate.timeInMillis - prevDate.timeInMillis) / (24 * 60 * 60 * 1000)
-        
-        if (daysDiff == 1L) {
-            // Consecutive day
-            currentStreak++
-            maxStreak = maxOf(currentStreak, maxStreak)
-        } else if (daysDiff > 1) {
-            // Streak broken
-            currentStreak = 1
-        }
+        return (weightKg * coefficient * durationMinutes).toInt()
     }
     
-    // Return bonus based on streak length
-    return when {
-        maxStreak >= 30 -> 50  // 30+ day streak
-        maxStreak >= 14 -> 25  // 14+ day streak
-        maxStreak >= 7 -> 15   // 7+ day streak
-        maxStreak >= 3 -> 5    // 3+ day streak
-        else -> 0
-    }
-}
-
-// Calculate calories burned based on activity type and duration
-fun calculateCaloriesBurned(type: String, durationMinutes: Int, weightKg: Double): Int {
-    val caloriesPerMinute = when (type) {
-        "Running" -> 0.076 * weightKg  // ~11.4 cal/min for 70kg person
-        "Cycling" -> 0.064 * weightKg  // ~9.6 cal/min for 70kg person
-        "Weightlifting" -> 0.039 * weightKg  // ~5.9 cal/min for 70kg person
-        else -> 0.035 * weightKg  // ~5.3 cal/min for 70kg person
+    /**
+     * Calculate points based on calories burned
+     * 
+     * @param caloriesBurned Calories burned during activity
+     * @return Reward points (1 point per 10 calories)
+     */
+    fun calculatePointsFromCalories(caloriesBurned: Int): Int {
+        return caloriesBurned / 10
     }
     
-    return (caloriesPerMinute * durationMinutes).toInt()
+    /**
+     * Calculate habit streak (consecutive days of completion)
+     * 
+     * @param habit The habit to calculate streak for
+     * @return Current streak length
+     */
+    fun calculateStreak(habit: Habit): Int {
+        val completionDates = habit.completions
+            .map { it.toDate() }
+            .sortedDescending() // Sort from most recent to oldest
+        
+        if (completionDates.isEmpty()) {
+            return 0
+        }
+        
+        var streak = 1
+        var previousDate = completionDates[0]
+        
+        for (i in 1 until completionDates.size) {
+            val currentDate = completionDates[i]
+            val daysDifference = (previousDate.time - currentDate.time) / (1000 * 60 * 60 * 24)
+            
+            if (daysDifference == 1L) {
+                // Consecutive day
+                streak++
+                previousDate = currentDate
+            } else {
+                // Streak broken
+                break
+            }
+        }
+        
+        return streak
+    }
+    
+    /**
+     * Calculate achievement points based on streak length
+     * 
+     * @param streakLength Length of current streak
+     * @return Bonus points for achievement
+     */
+    fun calculateAchievementPoints(streakLength: Int): Int {
+        return when {
+            streakLength >= 30 -> 500  // Monthly achiever
+            streakLength >= 7 -> 100   // Weekly achiever
+            streakLength >= 3 -> 30    // Getting started
+            else -> 0
+        }
+    }
 }
