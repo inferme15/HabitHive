@@ -45,7 +45,7 @@
 
         <!-- Firebase Messaging Service -->
         <service
-            android:name=".utils.FirebaseMessagingService"
+            android:name=".utils.NotificationUtils$FirebaseMessagingService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
@@ -54,7 +54,7 @@
 
         <!-- Notification Receiver -->
         <receiver
-            android:name=".utils.NotificationReceiver"
+            android:name=".utils.NotificationUtils$NotificationReceiver"
             android:enabled="true"
             android:exported="false">
             <intent-filter>
