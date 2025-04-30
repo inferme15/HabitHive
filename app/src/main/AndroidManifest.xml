@@ -28,10 +28,10 @@
         <activity android:name=".MainActivity"
             android:exported="true" />
 
-        <activity android:name=".auth.LoginActivity"
+        <activity android:name=".ui.auth.LoginActivity"
             android:exported="false" />
 
-        <activity android:name=".auth.RegisterActivity"
+        <activity android:name=".ui.auth.RegisterActivity"
             android:exported="false" />
 
         <activity android:name=".ui.habits.AddHabitActivity"

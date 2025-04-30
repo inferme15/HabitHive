@@ -6,7 +6,7 @@ import android.os.Handler
 import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
-import com.habithive.app.auth.LoginActivity
+import com.habithive.app.ui.auth.LoginActivity
 
 class SplashActivity : AppCompatActivity() {
     

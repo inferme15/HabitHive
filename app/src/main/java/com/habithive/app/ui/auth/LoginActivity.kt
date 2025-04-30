@@ -9,6 +9,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.habithive.app.MainActivity
 import com.habithive.app.R
 import com.habithive.app.databinding.ActivityLoginBinding
+import com.habithive.app.ui.auth.RegisterActivity
 
 class LoginActivity : AppCompatActivity() {
     
