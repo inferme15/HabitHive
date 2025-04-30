@@ -167,16 +167,42 @@ class AddGoalActivity : AppCompatActivity() {
     
     /**
      * Updates the quote display with a new random goal-setting quote
+     * Uses the goal title and description to generate a contextually appropriate quote
      */
     private fun updateQuoteDisplay(tvQuoteText: TextView, tvQuoteAuthor: TextView) {
-        // Use the ViewModel to get a new quote, which keeps it in sync if the goal is saved
-        val quote = viewModel.refreshQuote()
+        // Get current goal title and description for context-aware quote generation
+        val goalTitle = binding.editTextTitle.text.toString()
+        val goalDescription = binding.editTextDescription.text.toString()
         
-        // Update UI
-        tvQuoteText.text = "\"${quote.text}\""
-        tvQuoteAuthor.text = "- ${quote.author}"
+        // Generate a contextually appropriate quote based on goal content
+        val fullQuote = if (goalTitle.isNotEmpty() || goalDescription.isNotEmpty()) {
+            // Use contextual quote if goal has content
+            QuotesUtil.getQuoteForGoal(goalTitle, goalDescription)
+        } else {
+            // Use motivation quote if no goal content yet
+            QuotesUtil.getRandomQuote(QuotesUtil.QuoteCategory.MOTIVATION)
+        }
         
-        // Add animation (optional)
+        // Store in ViewModel for persistence
+        viewModel.updateQuote(fullQuote)
+        
+        // Split quote into text and author
+        val parts = fullQuote.split(" - ", limit = 2)
+        
+        if (parts.size == 2) {
+            // Update UI with separated components
+            val quoteText = parts[0].trim().let { 
+                if (!it.startsWith("\"") && !it.endsWith("\"")) "\"$it\"" else it 
+            }
+            tvQuoteText.text = quoteText
+            tvQuoteAuthor.text = "- ${parts[1].trim()}"
+        } else {
+            // Just show the whole quote in the text field
+            tvQuoteText.text = "\"${fullQuote}\""
+            tvQuoteAuthor.text = ""
+        }
+        
+        // Add animation for better UX
         tvQuoteText.alpha = 0f
         tvQuoteAuthor.alpha = 0f
         

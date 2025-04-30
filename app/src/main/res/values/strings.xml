@@ -81,4 +81,12 @@
     <string name="channel_description">Notifications for HabitHive app</string>
     <string name="reminder_title">Daily Reminder</string>
     <string name="reminder_message">Don\'t forget to track your habits today!</string>
+    
+    <!-- Quotes -->
+    <string name="quote_title">Daily Inspiration</string>
+    <string name="quote_icon">Quote Icon</string>
+    <string name="refresh_quote">Refresh Quote</string>
+    <string name="quote_refresh_success">New quote loaded!</string>
+    <string name="quote_empty">No inspirational quotes available</string>
+    <string name="quote_tap_to_expand">Tap to expand</string>
 </resources>
