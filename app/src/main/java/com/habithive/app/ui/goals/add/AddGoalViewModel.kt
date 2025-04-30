@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.habithive.app.utils.QuotesUtil
 import java.util.Date
 
 class AddGoalViewModel : ViewModel() {
@@ -25,10 +26,17 @@ class AddGoalViewModel : ViewModel() {
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
     
+    // Motivational quote functionality
+    private val _currentQuote = MutableLiveData<QuotesUtil.Quote>()
+    val currentQuote: LiveData<QuotesUtil.Quote> = _currentQuote
+    
     init {
         // Initialize default values
         durationPosition.value = 0
         isShared.value = false
+        
+        // Initialize with a random motivational quote
+        refreshQuote()
     }
     
     fun saveGoal() {
@@ -68,9 +76,12 @@ class AddGoalViewModel : ViewModel() {
             "completedAt" to null
         )
         
+        // Include the motivational quote with the goal data
+        val goalWithQuote = includeQuoteWithGoal(goal)
+        
         // Save to Firestore
         firestore.collection("goals")
-            .add(goal)
+            .add(goalWithQuote)
             .addOnSuccessListener {
                 _saveStatus.value = SaveStatus.SUCCESS
                 _isLoading.value = false
@@ -96,5 +107,27 @@ class AddGoalViewModel : ViewModel() {
         object ERROR_EMPTY_TITLE : SaveStatus()
         object ERROR_NOT_AUTHENTICATED : SaveStatus()
         object ERROR_SAVE_FAILED : SaveStatus()
+    }
+    
+    /**
+     * Updates the current quote with a new random quote from the goal-setting category
+     * @return The new quote that was selected
+     */
+    fun refreshQuote(): QuotesUtil.Quote {
+        val quote = QuotesUtil.getRandomQuoteByCategory(QuotesUtil.QuoteCategory.GOAL_SETTING)
+        _currentQuote.value = quote
+        return quote
+    }
+    
+    /**
+     * Include the inspirational quote with the goal when saving
+     * This updates the goal creation process to save the quote that inspired the user
+     */
+    private fun includeQuoteWithGoal(goalData: HashMap<String, Any>): HashMap<String, Any> {
+        val currentQuoteValue = _currentQuote.value
+        if (currentQuoteValue != null) {
+            goalData["inspirationalQuote"] = "${currentQuoteValue.text} - ${currentQuoteValue.author}"
+        }
+        return goalData
     }
 }

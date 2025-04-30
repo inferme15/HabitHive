@@ -169,8 +169,8 @@ class AddGoalActivity : AppCompatActivity() {
      * Updates the quote display with a new random goal-setting quote
      */
     private fun updateQuoteDisplay(tvQuoteText: TextView, tvQuoteAuthor: TextView) {
-        // Get a random quote specifically from the GOAL_SETTING category
-        val quote = QuotesUtil.getRandomQuoteByCategory(QuotesUtil.QuoteCategory.GOAL_SETTING)
+        // Use the ViewModel to get a new quote, which keeps it in sync if the goal is saved
+        val quote = viewModel.refreshQuote()
         
         // Update UI
         tvQuoteText.text = "\"${quote.text}\""

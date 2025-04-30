@@ -17,7 +17,8 @@ data class Goal(
     val progress: Double = 0.0,
     val createdAt: Timestamp = Timestamp.now(),
     val completedAt: Timestamp? = null,
-    val completed: Boolean = false
+    val completed: Boolean = false,
+    val inspirationalQuote: String = "" // Motivational quote that inspired this goal
 ) {
     // No-arg constructor for Firestore
     constructor() : this(
