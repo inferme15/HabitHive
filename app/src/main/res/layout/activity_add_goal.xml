@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.habithive.ui.goals.AddGoalViewModel" />
+            type="com.habithive.app.ui.goals.AddGoalViewModel" />
     </data>
 
     <ScrollView
