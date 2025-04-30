@@ -40,7 +40,7 @@
         <activity android:name=".ui.profile.EditProfileActivity"
             android:exported="false" />
 
-        <activity android:name=".ui.goals.AddGoalActivity"
+        <activity android:name=".ui.goals.add.AddGoalActivity"
             android:exported="false" />
 
         <!-- Firebase Messaging Service -->
