@@ -39,6 +39,7 @@ class GoalAdapter(
         private val targetCaloriesTextView: TextView = itemView.findViewById(R.id.text_goal_target_calories)
         private val completedCheckbox: CheckBox = itemView.findViewById(R.id.checkbox_goal_completed)
         private val sharedLabel: TextView = itemView.findViewById(R.id.text_goal_shared)
+        private val quoteTextView: TextView = itemView.findViewById(R.id.text_goal_quote)
         
         fun bind(goal: Goal) {
             titleTextView.text = goal.title
@@ -69,6 +70,14 @@ class GoalAdapter(
             
             // Show/hide shared label
             sharedLabel.visibility = if (goal.shared) View.VISIBLE else View.GONE
+            
+            // Show inspirational quote if available
+            if (goal.inspirationalQuote.isNotEmpty()) {
+                quoteTextView.text = goal.inspirationalQuote
+                quoteTextView.visibility = View.VISIBLE
+            } else {
+                quoteTextView.visibility = View.GONE
+            }
         }
     }
 }

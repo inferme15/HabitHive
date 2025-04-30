@@ -112,6 +112,20 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@string/goal_completed" />
+            
+        <!-- Motivational Quote Section -->
+        <TextView
+            android:id="@+id/text_goal_quote"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textStyle="italic"
+            android:textColor="#673AB7"
+            android:textSize="14sp"
+            android:gravity="center"
+            android:background="#F5F5F5"
+            android:padding="8dp"
+            android:visibility="gone" />
 
     </LinearLayout>
 
