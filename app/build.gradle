@@ -8,11 +8,11 @@ plugins {
 }
 
 android {
-    namespace 'com.example.habithive'
+    namespace 'com.habithive.app'
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.example.habithive"
+        applicationId "com.habithive.app"
         minSdk 24
         targetSdk 34
         versionCode 1

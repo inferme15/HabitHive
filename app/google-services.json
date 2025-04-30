@@ -1,44 +1,26 @@
 {
   "project_info": {
-    "project_number": "194337086487",
-    "project_id": "habithive-2db36",
-    "storage_bucket": "habithive-2db36.firebasestorage.app"
+    "project_number": "318709033357",
+    "project_id": "habithive-a5d16",
+    "storage_bucket": "habithive-a5d16.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:194337086487:android:396891ccc4ccb2d856d052",
+        "mobilesdk_app_id": "1:318709033357:android:fe19e2e9eaa2ee00b5f5c4",
         "android_client_info": {
-          "package_name": "com.example.habithive"
+          "package_name": "com.habithive.app"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "194337086487-sdllv7p0gp2dnau2v8m8tvtnet3sg6al.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.habithive",
-            "certificate_hash": "c09496c7fb5e1140a950d6473168c724a6373aa2"
-          }
-        },
-        {
-          "client_id": "194337086487-6dqou4q34m53nrantr211sunbhs54256.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCmwDLIpsgVpsSCdu3VWUGFDoI4ogRXCSs"
+          "current_key": "AIzaSyAznn_eVeMaxFcMJPWmhFtWKREOs4Q_VtY"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "194337086487-6dqou4q34m53nrantr211sunbhs54256.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }
