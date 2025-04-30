@@ -125,6 +125,8 @@
             android:gravity="center"
             android:background="#F5F5F5"
             android:padding="8dp"
+            android:maxLines="2"
+            android:ellipsize="end"
             android:visibility="gone" />
 
     </LinearLayout>

@@ -29,6 +29,17 @@
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+            
+        <!-- Include motivational quote widget -->
+        <include
+            android:id="@+id/quote_widget"
+            layout="@layout/widget_motivational_quote"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textWelcome" />
 
         <TextView
             android:id="@+id/textStatsTitle"
@@ -39,7 +50,7 @@
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textWelcome" />
+            app:layout_constraintTop_toBottomOf="@+id/quote_widget" />
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardStats"

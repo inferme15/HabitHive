@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.habithive.app.R
 import com.habithive.app.model.Goal
+import com.habithive.app.utils.QuoteDisplayHelper
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -71,10 +72,21 @@ class GoalAdapter(
             // Show/hide shared label
             sharedLabel.visibility = if (goal.shared) View.VISIBLE else View.GONE
             
-            // Show inspirational quote if available
+            // Show inspirational quote if available using the helper
             if (goal.inspirationalQuote.isNotEmpty()) {
-                quoteTextView.text = goal.inspirationalQuote
+                // Format and display quote with proper formatting
+                val formattedQuote = QuoteDisplayHelper.formatQuoteForDisplay(goal.inspirationalQuote)
+                quoteTextView.text = formattedQuote
                 quoteTextView.visibility = View.VISIBLE
+                
+                // Add click listener to expand/collapse the quote if it's long
+                quoteTextView.setOnClickListener {
+                    if (quoteTextView.maxLines == 2) {
+                        quoteTextView.maxLines = 10
+                    } else {
+                        quoteTextView.maxLines = 2
+                    }
+                }
             } else {
                 quoteTextView.visibility = View.GONE
             }
