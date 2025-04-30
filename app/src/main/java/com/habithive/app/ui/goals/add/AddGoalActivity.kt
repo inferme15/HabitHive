@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -11,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.habithive.app.R
 import com.habithive.app.databinding.ActivityAddGoalBinding
 import com.habithive.app.ui.goals.add.AddGoalViewModel
+import com.habithive.app.utils.QuotesUtil
 
 class AddGoalActivity : AppCompatActivity() {
 
@@ -35,6 +38,9 @@ class AddGoalActivity : AppCompatActivity() {
         
         // Setup duration spinner
         setupDurationSpinner()
+        
+        // Setup motivational quotes
+        setupMotivationalQuote()
         
         // Setup Save button
         binding.buttonSave.setOnClickListener {
@@ -137,5 +143,44 @@ class AddGoalActivity : AppCompatActivity() {
                 // Do nothing
             }
         }
+    }
+    
+    /**
+     * Sets up the motivational quote component on the goal creation screen
+     * Displays a random goal-setting quote and allows user to refresh for a new quote
+     */
+    private fun setupMotivationalQuote() {
+        // Find views within the included layout
+        val quoteView = binding.root.findViewById<View>(R.id.quoteCard)
+        val tvQuoteText = quoteView.findViewById<TextView>(R.id.tvQuoteText)
+        val tvQuoteAuthor = quoteView.findViewById<TextView>(R.id.tvQuoteAuthor)
+        val btnNewQuote = quoteView.findViewById<Button>(R.id.btnNewQuote)
+        
+        // Set initial quote
+        updateQuoteDisplay(tvQuoteText, tvQuoteAuthor)
+        
+        // Set up new quote button
+        btnNewQuote.setOnClickListener {
+            updateQuoteDisplay(tvQuoteText, tvQuoteAuthor)
+        }
+    }
+    
+    /**
+     * Updates the quote display with a new random goal-setting quote
+     */
+    private fun updateQuoteDisplay(tvQuoteText: TextView, tvQuoteAuthor: TextView) {
+        // Get a random quote specifically from the GOAL_SETTING category
+        val quote = QuotesUtil.getRandomQuoteByCategory(QuotesUtil.QuoteCategory.GOAL_SETTING)
+        
+        // Update UI
+        tvQuoteText.text = "\"${quote.text}\""
+        tvQuoteAuthor.text = "- ${quote.author}"
+        
+        // Add animation (optional)
+        tvQuoteText.alpha = 0f
+        tvQuoteAuthor.alpha = 0f
+        
+        tvQuoteText.animate().alpha(1f).setDuration(500).start()
+        tvQuoteAuthor.animate().alpha(1f).setDuration(500).setStartDelay(100).start()
     }
 }
