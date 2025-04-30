@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.habithive.auth.LoginViewModel" />
+            type="com.habithive.app.ui.auth.LoginViewModel" />
     </data>
 
     <ScrollView

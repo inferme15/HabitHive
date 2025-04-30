@@ -7,8 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.habithive.R
-import com.example.habithive.databinding.FragmentProfileBinding
+import com.habithive.app.R
+import com.habithive.app.databinding.FragmentProfileBinding
 import com.habithive.app.ui.auth.LoginActivity
 
 class ProfileFragment : Fragment() {
