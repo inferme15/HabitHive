@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="16dp"
+    android:elevation="2dp"
     app:cardCornerRadius="8dp"
-    app:cardElevation="4dp"
-    app:cardBackgroundColor="#FFF9E6">
+    app:cardBackgroundColor="#F5F5F5">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,41 +15,51 @@
         android:padding="16dp">
 
         <TextView
-            android:id="@+id/tvQuoteTitle"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Your Motivation For Today"
+            android:text="Motivation for Your Goal"
+            android:textColor="@color/colorPrimary"
             android:textSize="16sp"
-            android:textStyle="bold"
-            android:textColor="#FF6200EE"
-            android:layout_marginBottom="8dp" />
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="#DDDDDD" />
 
         <TextView
             android:id="@+id/tvQuoteText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="\"Setting goals is the first step in turning the invisible into the visible.\""
-            android:textSize="18sp"
+            android:textColor="#3F3F3F"
+            android:textSize="16sp"
             android:textStyle="italic"
-            android:textColor="#000000"
-            android:layout_marginBottom="4dp" />
+            android:gravity="center"
+            tools:text="The difference between try and triumph is just a little umph!" />
 
         <TextView
             android:id="@+id/tvQuoteAuthor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="- Tony Robbins"
-            android:textAlignment="textEnd"
+            android:layout_marginTop="8dp"
+            android:gravity="end"
+            android:textColor="#757575"
             android:textSize="14sp"
-            android:textColor="#555555" />
+            android:textStyle="italic"
+            tools:text="- Marvin Phillips" />
 
         <Button
             android:id="@+id/btnNewQuote"
-            android:layout_width="wrap_content"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="New Quote"
-            android:layout_gravity="end"
             android:layout_marginTop="8dp"
-            style="@style/Widget.MaterialComponents.Button.TextButton" />
+            android:drawableStart="@drawable/ic_refresh"
+            android:text="Refresh Quote"
+            android:textSize="14sp" />
+
     </LinearLayout>
-</androidx.cardview.widget.CardView>
+
+</com.google.android.material.card.MaterialCardView>

@@ -27,8 +27,8 @@ class AddGoalViewModel : ViewModel() {
     val isLoading: LiveData<Boolean> = _isLoading
     
     // Motivational quote functionality
-    private val _currentQuote = MutableLiveData<QuotesUtil.Quote>()
-    val currentQuote: LiveData<QuotesUtil.Quote> = _currentQuote
+    private val _currentQuote = MutableLiveData<String>()
+    val currentQuote: LiveData<String> = _currentQuote
     
     init {
         // Initialize default values
@@ -36,7 +36,7 @@ class AddGoalViewModel : ViewModel() {
         isShared.value = false
         
         // Initialize with a random motivational quote
-        refreshQuote()
+        _currentQuote.value = QuotesUtil.getRandomQuote(QuotesUtil.QuoteCategory.MOTIVATION)
     }
     
     fun saveGoal() {
@@ -110,13 +110,11 @@ class AddGoalViewModel : ViewModel() {
     }
     
     /**
-     * Updates the current quote with a new random quote from the goal-setting category
-     * @return The new quote that was selected
+     * Update the current quote with the provided quote
+     * @param quote The full quote string to store
      */
-    fun refreshQuote(): QuotesUtil.Quote {
-        val quote = QuotesUtil.getRandomQuoteByCategory(QuotesUtil.QuoteCategory.GOAL_SETTING)
+    fun updateQuote(quote: String) {
         _currentQuote.value = quote
-        return quote
     }
     
     /**
@@ -125,8 +123,8 @@ class AddGoalViewModel : ViewModel() {
      */
     private fun includeQuoteWithGoal(goalData: HashMap<String, Any>): HashMap<String, Any> {
         val currentQuoteValue = _currentQuote.value
-        if (currentQuoteValue != null) {
-            goalData["inspirationalQuote"] = "${currentQuoteValue.text} - ${currentQuoteValue.author}"
+        if (!currentQuoteValue.isNullOrEmpty()) {
+            goalData["inspirationalQuote"] = currentQuoteValue
         }
         return goalData
     }
