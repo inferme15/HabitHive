@@ -10,7 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.habithive.app.R
 import com.habithive.app.databinding.ActivityAddGoalBinding
-import com.habithive.app.ui.goals.AddGoalViewModel
+import com.habithive.app.ui.goals.add.AddGoalViewModel
 
 class AddGoalActivity : AppCompatActivity() {
 

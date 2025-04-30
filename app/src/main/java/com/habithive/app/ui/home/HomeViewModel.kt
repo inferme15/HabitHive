@@ -8,6 +8,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.habithive.app.model.Achievement
+import com.habithive.app.model.Goal
 import com.habithive.app.model.Habit
 import com.habithive.app.utils.PointsCalculator
 import java.util.Calendar
@@ -44,6 +45,12 @@ class HomeViewModel : ViewModel() {
     private val _recentAchievements = MutableLiveData<List<Achievement>>()
     val recentAchievements: LiveData<List<Achievement>> = _recentAchievements
     
+    private val _activeGoals = MutableLiveData<List<Goal>>()
+    val activeGoals: LiveData<List<Goal>> = _activeGoals
+    
+    private val _goalsCompletedCount = MutableLiveData<Int>()
+    val goalsCompletedCount: LiveData<Int> = _goalsCompletedCount
+    
     private val _streak = MutableLiveData<Int>()
     val streak: LiveData<Int> = _streak
     
@@ -69,6 +76,7 @@ class HomeViewModel : ViewModel() {
         loadUserData()
         loadHabits()
         loadRecentAchievements()
+        loadGoals()
     }
     
     private fun updateHabitsForSelectedDate(habits: List<Habit>, date: Calendar) {
@@ -296,9 +304,39 @@ class HomeViewModel : ViewModel() {
         return ((completedCount.toFloat() / habitsForDate.size.toFloat()) * 100).toInt()
     }
     
+    private fun loadGoals() {
+        val userId = auth.currentUser?.uid ?: return
+        
+        firestore.collection("goals")
+            .whereEqualTo("userId", userId)
+            .whereEqualTo("completed", false)
+            .orderBy("createdAt", Query.Direction.DESCENDING)
+            .get()
+            .addOnSuccessListener { documents ->
+                val goalsList = documents.mapNotNull { document ->
+                    val goal = document.toObject(Goal::class.java)
+                    goal.copy(id = document.id)
+                }
+                _activeGoals.value = goalsList
+                
+                // Count completed goals
+                firestore.collection("goals")
+                    .whereEqualTo("userId", userId)
+                    .whereEqualTo("completed", true)
+                    .get()
+                    .addOnSuccessListener { completedDocs ->
+                        _goalsCompletedCount.value = completedDocs.size()
+                    }
+            }
+            .addOnFailureListener { exception ->
+                _errorMessage.value = "Failed to load goals: ${exception.message}"
+            }
+    }
+    
     fun refreshData() {
         loadUserData()
         loadHabits()
         loadRecentAchievements()
+        loadGoals()
     }
 }
