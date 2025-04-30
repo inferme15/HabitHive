@@ -107,4 +107,7 @@ dependencies {
     // Data Binding
     kapt "androidx.databinding:databinding-compiler:8.1.0"
     kapt "com.android.databinding:compiler:8.1.0"
+    
+    // SwipeRefreshLayout
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
 }
