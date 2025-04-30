@@ -5,110 +5,90 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
+import com.habithive.app.R
 import com.habithive.app.adapters.GoalAdapter
-import com.habithive.app.databinding.FragmentGoalsBinding
 import com.habithive.app.model.Goal
+import com.habithive.app.ui.goals.add.AddGoalActivity
+import android.widget.ProgressBar
+import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class GoalsFragment : Fragment() {
-    
-    private var _binding: FragmentGoalsBinding? = null
-    private val binding get() = _binding!!
-    
-    private lateinit var auth: FirebaseAuth
-    private lateinit var firestore: FirebaseFirestore
-    private lateinit var goalAdapter: GoalAdapter
-    private val goalsList = mutableListOf<Goal>()
-    
+
+    private lateinit var goalsViewModel: GoalsViewModel
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var emptyTextView: TextView
+    private lateinit var progressBar: ProgressBar
+    private lateinit var addButton: FloatingActionButton
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentGoalsBinding.inflate(inflater, container, false)
+    ): View? {
+        val root = inflater.inflate(R.layout.fragment_goals, container, false)
         
-        // Initialize Firebase
-        auth = FirebaseAuth.getInstance()
-        firestore = FirebaseFirestore.getInstance()
-        
-        return binding.root
-    }
-    
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+        // Initialize views
+        recyclerView = root.findViewById(R.id.recycler_goals)
+        emptyTextView = root.findViewById(R.id.text_empty_goals)
+        progressBar = root.findViewById(R.id.progress_goals)
+        addButton = root.findViewById(R.id.fab_add_goal)
         
         // Setup RecyclerView
-        setupRecyclerView()
+        recyclerView.layoutManager = LinearLayoutManager(context)
         
-        // Load goals
-        loadGoals()
+        // Initialize ViewModel
+        goalsViewModel = ViewModelProvider(this).get(GoalsViewModel::class.java)
         
-        // Setup Add Goal button
-        binding.fabAddGoal.setOnClickListener {
-            startActivity(Intent(requireContext(), AddGoalActivity::class.java))
-        }
-    }
-    
-    private fun setupRecyclerView() {
-        goalAdapter = GoalAdapter(goalsList) { goal, isCompleted ->
-            updateGoalCompletion(goal, isCompleted)
+        // Observe goals data
+        goalsViewModel.goals.observe(viewLifecycleOwner) { goals ->
+            updateGoalsList(goals)
         }
         
-        binding.recyclerGoals.apply {
-            layoutManager = LinearLayoutManager(requireContext())
-            adapter = goalAdapter
+        // Observe loading state
+        goalsViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
         }
-    }
-    
-    private fun loadGoals() {
-        val userId = auth.currentUser?.uid ?: return
         
-        // Show loading
-        binding.progressBar.visibility = View.VISIBLE
-        
-        firestore.collection("goals")
-            .whereEqualTo("userId", userId)
-            .orderBy("duration", Query.Direction.ASCENDING)
-            .addSnapshotListener { snapshot, e ->
-                binding.progressBar.visibility = View.GONE
-                
-                if (e != null) {
-                    // Handle error
-                    return@addSnapshotListener
-                }
-                
-                if (snapshot != null) {
-                    goalsList.clear()
-                    for (document in snapshot.documents) {
-                        val goal = document.toObject(Goal::class.java)
-                        goal?.let { goalsList.add(it) }
-                    }
-                    
-                    goalAdapter.notifyDataSetChanged()
-                    
-                    // Update empty state
-                    if (goalsList.isEmpty()) {
-                        binding.textEmpty.visibility = View.VISIBLE
-                    } else {
-                        binding.textEmpty.visibility = View.GONE
-                    }
-                }
+        // Observe error messages
+        goalsViewModel.errorMessage.observe(viewLifecycleOwner) { message ->
+            message?.let {
+                Toast.makeText(context, it, Toast.LENGTH_LONG).show()
             }
-    }
-    
-    private fun updateGoalCompletion(goal: Goal, isCompleted: Boolean) {
-        val goalRef = firestore.collection("goals").document(goal.id)
+        }
         
-        // Update goal completion status
-        goalRef.update("completed", isCompleted)
+        // Setup add button
+        addButton.setOnClickListener {
+            val intent = Intent(context, AddGoalActivity::class.java)
+            startActivity(intent)
+        }
+        
+        return root
     }
     
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    override fun onResume() {
+        super.onResume()
+        // Reload goals when fragment becomes visible
+        goalsViewModel.loadGoals()
+    }
+    
+    private fun updateGoalsList(goals: List<Goal>) {
+        if (goals.isEmpty()) {
+            recyclerView.visibility = View.GONE
+            emptyTextView.visibility = View.VISIBLE
+        } else {
+            recyclerView.visibility = View.VISIBLE
+            emptyTextView.visibility = View.GONE
+            
+            val adapter = GoalAdapter(goals) { goal, completed ->
+                goalsViewModel.updateGoalCompletion(goal, completed)
+            }
+            recyclerView.adapter = adapter
+        }
     }
 }

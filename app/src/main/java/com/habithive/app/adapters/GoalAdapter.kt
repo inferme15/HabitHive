@@ -1,49 +1,74 @@
 package com.habithive.app.adapters
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
+import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.habithive.app.databinding.ItemGoalBinding
+import com.habithive.app.R
 import com.habithive.app.model.Goal
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class GoalAdapter(
     private val goals: List<Goal>,
-    private val onGoalCheckedListener: (Goal, Boolean) -> Unit
+    private val onCompletionChange: (Goal, Boolean) -> Unit
 ) : RecyclerView.Adapter<GoalAdapter.GoalViewHolder>() {
-    
-    inner class GoalViewHolder(val binding: ItemGoalBinding) : RecyclerView.ViewHolder(binding.root)
-    
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GoalViewHolder {
-        val binding = ItemGoalBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return GoalViewHolder(binding)
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.item_goal, parent, false)
+        return GoalViewHolder(view)
     }
-    
+
     override fun onBindViewHolder(holder: GoalViewHolder, position: Int) {
-        val goal = goals[position]
+        holder.bind(goals[position])
+    }
+
+    override fun getItemCount() = goals.size
+
+    inner class GoalViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val titleTextView: TextView = itemView.findViewById(R.id.text_goal_title)
+        private val descriptionTextView: TextView = itemView.findViewById(R.id.text_goal_description)
+        private val durationTextView: TextView = itemView.findViewById(R.id.text_goal_duration)
+        private val progressBar: ProgressBar = itemView.findViewById(R.id.progress_goal)
+        private val progressTextView: TextView = itemView.findViewById(R.id.text_goal_progress)
+        private val targetPointsTextView: TextView = itemView.findViewById(R.id.text_goal_target_points)
+        private val targetCaloriesTextView: TextView = itemView.findViewById(R.id.text_goal_target_calories)
+        private val completedCheckbox: CheckBox = itemView.findViewById(R.id.checkbox_goal_completed)
+        private val sharedLabel: TextView = itemView.findViewById(R.id.text_goal_shared)
         
-        with(holder.binding) {
-            textTitle.text = goal.title
-            textDescription.text = goal.description
-            textDuration.text = goal.duration
-            textTargets.text = "Target: ${goal.targetPoints} points / ${goal.targetCalories} calories"
+        fun bind(goal: Goal) {
+            titleTextView.text = goal.title
+            descriptionTextView.text = goal.description
             
-            // Set shared status
-            if (goal.shared) {
-                textShared.visibility = ViewGroup.VISIBLE
-            } else {
-                textShared.visibility = ViewGroup.GONE
+            // Format duration text
+            val remainingDays = goal.getRemainingDays()
+            durationTextView.text = when {
+                goal.isExpired() -> "Expired"
+                remainingDays == 1 -> "1 day left"
+                else -> "$remainingDays days left"
             }
             
-            // Set checkbox state without triggering listener
-            checkboxCompleted.setOnCheckedChangeListener(null)
-            checkboxCompleted.isChecked = goal.completed
+            // Set progress
+            val progress = goal.getProgressPercentage()
+            progressBar.progress = progress
+            progressTextView.text = "$progress%"
             
-            // Set up checkbox listener
-            checkboxCompleted.setOnCheckedChangeListener { _, isChecked ->
-                onGoalCheckedListener(goal, isChecked)
+            // Format targets
+            targetPointsTextView.text = "${goal.currentPoints}/${goal.targetPoints} points"
+            targetCaloriesTextView.text = "${goal.currentCalories}/${goal.targetCalories} calories"
+            
+            // Set completion status
+            completedCheckbox.isChecked = goal.completed
+            completedCheckbox.setOnCheckedChangeListener { _, isChecked ->
+                onCompletionChange(goal, isChecked)
             }
+            
+            // Show/hide shared label
+            sharedLabel.visibility = if (goal.shared) View.VISIBLE else View.GONE
         }
     }
-    
-    override fun getItemCount(): Int = goals.size
 }

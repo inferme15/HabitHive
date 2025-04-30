@@ -10,6 +10,11 @@
         android:id="@+id/navigation_habits"
         android:icon="@android:drawable/ic_menu_today"
         android:title="@string/title_habits" />
+        
+    <item
+        android:id="@+id/navigation_goals"
+        android:icon="@android:drawable/ic_menu_agenda"
+        android:title="@string/title_goals" />
 
     <item
         android:id="@+id/navigation_leaderboard"

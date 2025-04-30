@@ -16,6 +16,12 @@
         android:name="com.habithive.app.ui.habits.HabitsFragment"
         android:label="@string/title_habits"
         tools:layout="@layout/fragment_habits" />
+        
+    <fragment
+        android:id="@+id/navigation_goals"
+        android:name="com.habithive.app.ui.goals.GoalsFragment"
+        android:label="@string/title_goals"
+        tools:layout="@layout/fragment_goals" />
 
     <fragment
         android:id="@+id/navigation_leaderboard"
