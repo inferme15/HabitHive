@@ -13,8 +13,15 @@ data class Achievement(
     val threshold: Int = 0,
     val currentProgress: Int = 0,
     val isUnlocked: Boolean = false,
-    val unlockedAt: Timestamp? = null
-) {
+    val unlockedAt: Timestamp? = null,
+
+    // ➕ Add these fields for stats
+    val totalPoints: Int = 0,
+    val caloriesBurned: Int = 0,
+    val dailyScore: Int = 0,
+    val weeklyScore: Int = 0
+)
+{
     // No-arg constructor for Firestore
     constructor() : this(
         id = "",

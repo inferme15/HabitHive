@@ -25,7 +25,7 @@ class HabitAdapter(
             textTitle.text = habit.title
             textDescription.text = habit.description
             textType.text = habit.type
-            textFrequency.text = habit.frequency
+            textFrequency.text = habit.frequency.toString()
             textPoints.text = "${habit.points} points"
             
             // Set checkbox state without triggering listener

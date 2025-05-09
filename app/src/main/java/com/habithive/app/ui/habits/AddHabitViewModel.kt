@@ -9,7 +9,7 @@ import com.habithive.app.model.Habit
 import com.habithive.app.utils.PointsCalculator
 import java.util.UUID
 
-class AddHabitViewModel : ViewModel() {
+class AddHabitViewModel(val calories: Int) : ViewModel() {
     
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
     private val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
@@ -99,7 +99,8 @@ class AddHabitViewModel : ViewModel() {
             completions = emptyList(),
             goal = goal,
             reminderTime = reminderTime,
-            reminderDays = reminderDays
+            reminderDays = reminderDays,
+            caloriesBurned = calories,
         )
         
         firestore.collection("habits")

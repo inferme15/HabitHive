@@ -1,0 +1,202 @@
+[
+    {
+        "merged": "com.habithive.app-merged_res-83:/layout_activity_exercise_history.xml.flat",
+        "source": "com.habithive.app-main-85:/layout/activity_exercise_history.xml"
+    },
+    {
+        "merged": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-merged_res-83:\\drawable_rounded_label_bg.xml.flat",
+        "source": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-main-85:\\drawable\\rounded_label_bg.xml"
+    },
+    {
+        "merged": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-merged_res-83:\\layout_activity_register.xml.flat",
+        "source": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-main-85:\\layout\\activity_register.xml"
+    },
+    {
+        "merged": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-merged_res-83:\\layout_item_burn_rate_info.xml.flat",
+        "source": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-main-85:\\layout\\item_burn_rate_info.xml"
+    },
+    {
+        "merged": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-merged_res-83:\\drawable_ic_medal_silver.xml.flat",
+        "source": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-main-85:\\drawable\\ic_medal_silver.xml"
+    },
+    {
+        "merged": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-merged_res-83:\\layout_widget_motivational_quote.xml.flat",
+        "source": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-main-85:\\layout\\widget_motivational_quote.xml"
+    },
+    {
+        "merged": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-merged_res-83:\\mipmap-xhdpi_ic_launcher_round.png.flat",
+        "source": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-main-85:\\mipmap-xhdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-merged_res-83:\\drawable_ic_medal_gold.xml.flat",
+        "source": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-main-85:\\drawable\\ic_medal_gold.xml"
+    },
+    {
+        "merged": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-merged_res-83:\\layout_fragment_profile.xml.flat",
+        "source": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-main-85:\\layout\\fragment_profile.xml"
+    },
+    {
+        "merged": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-merged_res-83:\\mipmap-xhdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-main-85:\\mipmap-xhdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-merged_res-83:\\layout_activity_exercise_history.xml.flat",
+        "source": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-main-85:\\layout\\activity_exercise_history.xml"
+    },
+    {
+        "merged": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-merged_res-83:\\layout_item_leaderboard.xml.flat",
+        "source": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-main-85:\\layout\\item_leaderboard.xml"
+    },
+    {
+        "merged": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-merged_res-83:\\layout_activity_notification_settings.xml.flat",
+        "source": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-main-85:\\layout\\activity_notification_settings.xml"
+    },
+    {
+        "merged": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-merged_res-83:\\layout_fragment_home.xml.flat",
+        "source": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-main-85:\\layout\\fragment_home.xml"
+    },
+    {
+        "merged": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-merged_res-83:\\mipmap-hdpi_ic_launcher_round.png.flat",
+        "source": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-main-85:\\mipmap-hdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-merged_res-83:\\layout_activity_exercise.xml.flat",
+        "source": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-main-85:\\layout\\activity_exercise.xml"
+    },
+    {
+        "merged": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-merged_res-83:\\layout_fragment_leaderboard.xml.flat",
+        "source": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-main-85:\\layout\\fragment_leaderboard.xml"
+    },
+    {
+        "merged": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-merged_res-83:\\mipmap-hdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-main-85:\\mipmap-hdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-merged_res-83:\\layout_item_habit.xml.flat",
+        "source": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-main-85:\\layout\\item_habit.xml"
+    },
+    {
+        "merged": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-merged_res-83:\\drawable_ic_notification.xml.flat",
+        "source": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-main-85:\\drawable\\ic_notification.xml"
+    },
+    {
+        "merged": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-merged_res-83:\\layout_activity_add_habit.xml.flat",
+        "source": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-main-85:\\layout\\activity_add_habit.xml"
+    },
+    {
+        "merged": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-merged_res-83:\\drawable_ic_medal_bronze.xml.flat",
+        "source": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-main-85:\\drawable\\ic_medal_bronze.xml"
+    },
+    {
+        "merged": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-merged_res-83:\\layout_item_goal.xml.flat",
+        "source": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-main-85:\\layout\\item_goal.xml"
+    },
+    {
+        "merged": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-merged_res-83:\\menu_main_menu.xml.flat",
+        "source": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-main-85:\\menu\\main_menu.xml"
+    },
+    {
+        "merged": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-merged_res-83:\\layout_activity_burn_rate_info.xml.flat",
+        "source": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-main-85:\\layout\\activity_burn_rate_info.xml"
+    },
+    {
+        "merged": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-merged_res-83:\\drawable_ic_launcher_background.xml.flat",
+        "source": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-main-85:\\drawable\\ic_launcher_background.xml"
+    },
+    {
+        "merged": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-merged_res-83:\\menu_bottom_nav_menu.xml.flat",
+        "source": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-main-85:\\menu\\bottom_nav_menu.xml"
+    },
+    {
+        "merged": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-merged_res-83:\\drawable_ic_refresh.xml.flat",
+        "source": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-main-85:\\drawable\\ic_refresh.xml"
+    },
+    {
+        "merged": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-merged_res-83:\\layout_activity_main.xml.flat",
+        "source": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-main-85:\\layout\\activity_main.xml"
+    },
+    {
+        "merged": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-merged_res-83:\\layout_fragment_goals.xml.flat",
+        "source": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-main-85:\\layout\\fragment_goals.xml"
+    },
+    {
+        "merged": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-merged_res-83:\\layout_fragment_habits.xml.flat",
+        "source": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-main-85:\\layout\\fragment_habits.xml"
+    },
+    {
+        "merged": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-merged_res-83:\\drawable_ic_launcher_foreground.xml.flat",
+        "source": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-main-85:\\drawable\\ic_launcher_foreground.xml"
+    },
+    {
+        "merged": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-merged_res-83:\\mipmap-xxhdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-main-85:\\mipmap-xxhdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-merged_res-83:\\mipmap-mdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-main-85:\\mipmap-mdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-merged_res-83:\\drawable_bg_rounded_light.xml.flat",
+        "source": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-main-85:\\drawable\\bg_rounded_light.xml"
+    },
+    {
+        "merged": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-merged_res-83:\\mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-main-85:\\mipmap-anydpi-v26\\ic_launcher_round.xml"
+    },
+    {
+        "merged": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-merged_res-83:\\mipmap-xxhdpi_ic_launcher_round.png.flat",
+        "source": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-main-85:\\mipmap-xxhdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-merged_res-83:\\layout_layout_motivational_quote.xml.flat",
+        "source": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-main-85:\\layout\\layout_motivational_quote.xml"
+    },
+    {
+        "merged": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-merged_res-83:\\mipmap-xxxhdpi_ic_launcher_round.png.flat",
+        "source": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-main-85:\\mipmap-xxxhdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-merged_res-83:\\drawable_splash_background.xml.flat",
+        "source": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-main-85:\\drawable\\splash_background.xml"
+    },
+    {
+        "merged": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-merged_res-83:\\layout_activity_splash.xml.flat",
+        "source": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-main-85:\\layout\\activity_splash.xml"
+    },
+    {
+        "merged": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-merged_res-83:\\mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-main-85:\\mipmap-anydpi-v26\\ic_launcher.xml"
+    },
+    {
+        "merged": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-merged_res-83:\\layout_activity_edit_profile.xml.flat",
+        "source": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-main-85:\\layout\\activity_edit_profile.xml"
+    },
+    {
+        "merged": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-merged_res-83:\\layout_item_exercise_history.xml.flat",
+        "source": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-main-85:\\layout\\item_exercise_history.xml"
+    },
+    {
+        "merged": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-merged_res-83:\\layout_activity_login.xml.flat",
+        "source": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-main-85:\\layout\\activity_login.xml"
+    },
+    {
+        "merged": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-merged_res-83:\\mipmap-mdpi_ic_launcher_round.png.flat",
+        "source": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-main-85:\\mipmap-mdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-merged_res-83:\\navigation_mobile_navigation.xml.flat",
+        "source": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-main-85:\\navigation\\mobile_navigation.xml"
+    },
+    {
+        "merged": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-merged_res-83:\\layout_activity_add_goal.xml.flat",
+        "source": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-main-85:\\layout\\activity_add_goal.xml"
+    },
+    {
+        "merged": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-merged_res-83:\\mipmap-xxxhdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-main-85:\\mipmap-xxxhdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-merged_res-83:\\drawable_ic_quote.xml.flat",
+        "source": "C:\\Users\\drspk\\.gradle\\daemon\\8.2\\com.habithive.app-main-85:\\drawable\\ic_quote.xml"
+    }
+]

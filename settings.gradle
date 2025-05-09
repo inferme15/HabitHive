@@ -1,20 +1,20 @@
 pluginManagement {
     repositories {
-        maven { url "https://jitpack.io" }
+        gradlePluginPortal()
         google()
         mavenCentral()
-        gradlePluginPortal()
+        maven { url 'https://jitpack.io' }
     }
 }
 
 dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
     repositories {
-        maven { url "https://jitpack.io" }
         google()
         mavenCentral()
+        maven { url 'https://jitpack.io' }
     }
 }
 
-rootProject.name = "HabitHive"
-include ':app' 
+rootProject.name = 'HabitHive'
+include ':app'

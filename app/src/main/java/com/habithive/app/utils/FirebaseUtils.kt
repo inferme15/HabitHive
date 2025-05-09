@@ -1,111 +1,111 @@
 package com.habithive.app.utils
 
-import android.app.Activity
-import android.content.Context
 import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.messaging.FirebaseMessaging
-import com.habithive.app.model.Achievement
-import com.habithive.app.model.Habit
-import com.habithive.app.model.User
-import kotlinx.coroutines.tasks.await
+import com.google.firebase.firestore.SetOptions
+import com.habithive.app.data.model.Exercise
 import java.util.Date
 
-// Constants
-const val TAG = "FirebaseUtils"
 
-// Get user reference
-fun getUserReference(userId: String): DocumentReference {
-    return FirebaseFirestore.getInstance().collection("users").document(userId)
+/**
+ * Constants for user document field names
+ */
+object UserFields {
+    const val POINTS = "points"
+    const val UPDATED_AT = "updatedAt"
+    const val NAME = "name"
+    const val EMAIL = "email"
+    const val PHOTO_URL = "photoUrl"
+    const val GENDER = "gender"
+    const val HEIGHT = "height"
+    const val WEIGHT = "weight"
+    const val HEALTH = "health"
+    const val CREATED_AT = "createdAt"
 }
 
-// Get habits reference
-fun getHabitsReference(userId: String): DocumentReference {
-    return FirebaseFirestore.getInstance().collection("habits").document(userId)
-}
+/**
+ * Utility class for Firebase operations related to exercises and points
+ */
+object FirebaseUtils {
 
-// Get achievements reference
-fun getAchievementsReference(userId: String): DocumentReference {
-    return FirebaseFirestore.getInstance().collection("achievements").document(userId)
-}
+    private const val TAG = "FirebaseUtils"
 
-// Update user points
-suspend fun updateUserPoints(userId: String, pointsToAdd: Int) {
-    try {
-        val achievementRef = getAchievementsReference(userId)
-        val achievementDoc = achievementRef.get().await()
-        
-        if (achievementDoc.exists()) {
-            val achievement = achievementDoc.toObject(Achievement::class.java)
-            achievement?.let {
-                val updatedPoints = it.totalPoints + pointsToAdd
-                val updatedDailyScore = it.dailyScore + pointsToAdd
-                val updatedWeeklyScore = it.weeklyScore + pointsToAdd
-                
-                achievementRef.update(
-                    mapOf(
-                        "totalPoints" to updatedPoints,
-                        "dailyScore" to updatedDailyScore,
-                        "weeklyScore" to updatedWeeklyScore
+    /**
+     * Save exercise to Firestore and update user points
+     * @param exercise The exercise to save
+     * @param onSuccess Callback for successful operation
+     * @param onFailure Callback for failed operation
+     */
+    fun saveExerciseAndUpdatePoints(
+        exercise: Exercise,
+        onSuccess: () -> Unit,
+        onFailure: (String) -> Unit
+    ) {
+        val userId = FirebaseAuth.getInstance().currentUser?.uid
+
+        if (userId == null) {
+            onFailure("User not authenticated")
+            return
+        }
+
+        // Save exercise first
+        FirebaseFirestore.getInstance().collection(FirebaseCollections.EXERCISES)
+            .add(exercise)
+            .addOnSuccessListener { documentReference ->
+                Log.d(TAG, "Exercise saved with ID: ${documentReference.id}")
+
+                // Now update user points
+                updateUserPoints(userId, exercise.pointsEarned, onSuccess, onFailure)
+            }
+            .addOnFailureListener { e ->
+                Log.e(TAG, "Error saving exercise", e)
+                onFailure("Failed to save exercise: ${e.message}")
+            }
+    }
+
+    /**
+     * Update user points in Firestore
+     */
+    private fun updateUserPoints(
+        userId: String,
+        pointsToAdd: Int,
+        onSuccess: () -> Unit,
+        onFailure: (String) -> Unit
+    ) {
+        FirebaseFirestore.getInstance().collection(FirebaseCollections.USERS).document(userId)
+            .get()
+            .addOnSuccessListener { document ->
+                if (document != null && document.exists()) {
+                    // Get current points
+                    val currentPoints = document.getLong(UserFields.POINTS)?.toInt() ?: 0
+
+                    // Calculate new total
+                    val updatedPoints = currentPoints + pointsToAdd
+
+                    // Update in Firestore
+                    val updates = mapOf(
+                        UserFields.POINTS to updatedPoints,
+                        UserFields.UPDATED_AT to Date()
                     )
-                ).await()
+
+                    FirebaseFirestore.getInstance().collection(FirebaseCollections.USERS).document(userId)
+                        .set(updates, SetOptions.merge())
+                        .addOnSuccessListener {
+                            Log.d(TAG, "User points updated successfully to $updatedPoints")
+                            onSuccess()
+                        }
+                        .addOnFailureListener { e ->
+                            Log.e(TAG, "Error updating user points", e)
+                            onFailure("Failed to update points: ${e.message}")
+                        }
+                } else {
+                    onFailure("User document not found")
+                }
             }
-        }
-    } catch (e: Exception) {
-        Log.e(TAG, "Error updating user points: ${e.message}")
-    }
-}
-
-// Reset daily scores
-suspend fun resetDailyScores() {
-    try {
-        val achievementsCollection = FirebaseFirestore.getInstance().collection("achievements")
-        val documents = achievementsCollection.get().await()
-        
-        for (document in documents) {
-            achievementsCollection.document(document.id)
-                .update("dailyScore", 0)
-                .await()
-        }
-    } catch (e: Exception) {
-        Log.e(TAG, "Error resetting daily scores: ${e.message}")
-    }
-}
-
-// Reset weekly scores
-suspend fun resetWeeklyScores() {
-    try {
-        val achievementsCollection = FirebaseFirestore.getInstance().collection("achievements")
-        val documents = achievementsCollection.get().await()
-        
-        for (document in documents) {
-            achievementsCollection.document(document.id)
-                .update("weeklyScore", 0)
-                .await()
-        }
-    } catch (e: Exception) {
-        Log.e(TAG, "Error resetting weekly scores: ${e.message}")
-    }
-}
-
-// Subscribe to topic for notifications
-fun subscribeToTopic(userId: String) {
-    FirebaseMessaging.getInstance().subscribeToTopic("user_$userId")
-        .addOnCompleteListener { task ->
-            if (!task.isSuccessful) {
-                Log.e(TAG, "Failed to subscribe to topic")
+            .addOnFailureListener { e ->
+                Log.e(TAG, "Error getting user document", e)
+                onFailure("Failed to get user data: ${e.message}")
             }
-        }
-}
-
-// Unsubscribe from topic for notifications
-fun unsubscribeFromTopic(userId: String) {
-    FirebaseMessaging.getInstance().unsubscribeFromTopic("user_$userId")
-        .addOnCompleteListener { task ->
-            if (!task.isSuccessful) {
-                Log.e(TAG, "Failed to unsubscribe from topic")
-            }
-        }
+    }
 }
