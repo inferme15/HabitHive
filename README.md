@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # HabitHive - Your Smart Habit Tracker
 
 HabitHive is a mobile application designed to help users track their physical exercise and engage in a community-driven fitness experience. It allows users to log their workouts, monitor progress, and earn points based on their activities.
@@ -91,3 +92,6 @@ Planned features for future releases:
 - Social challenges and group goals
 - Integration with fitness tracking devices
 - Offline mode for tracking without internet connection
+=======
+# HabitHive
+>>>>>>> 4cbf6d084258bd37347ce5fd9aba8e0d7b65e5d7
