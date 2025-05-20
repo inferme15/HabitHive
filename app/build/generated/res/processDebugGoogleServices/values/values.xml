@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="gcm_defaultSenderId" translatable="false">318709033357</string>
-    <string name="google_api_key" translatable="false">AIzaSyAznn_eVeMaxFcMJPWmhFtWKREOs4Q_VtY</string>
-    <string name="google_app_id" translatable="false">1:318709033357:android:fe19e2e9eaa2ee00b5f5c4</string>
-    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyAznn_eVeMaxFcMJPWmhFtWKREOs4Q_VtY</string>
-    <string name="google_storage_bucket" translatable="false">habithive-a5d16.firebasestorage.app</string>
-    <string name="project_id" translatable="false">habithive-a5d16</string>
-</resources>
