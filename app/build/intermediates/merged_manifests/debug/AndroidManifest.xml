@@ -33,10 +33,12 @@
         android:supportsRtl="true"
         android:testOnly="true"
         android:theme="@style/AppTheme" >
+
+        <!-- SplashActivity - Entry point -->
         <activity
-            android:name="com.habithive.app.MainActivity"
+            android:name="com.habithive.app.SplashActivity"
             android:exported="true"
-            android:launchMode="singleTop" >
+            android:theme="@style/AppTheme.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -44,13 +46,21 @@
             </intent-filter>
         </activity>
 
+        <!-- Main Activity -->
+        <activity
+            android:name="com.habithive.app.MainActivity"
+            android:exported="true"
+            android:launchMode="singleTop" />
+
         <!-- Authentication Activities -->
         <activity
             android:name="com.habithive.app.ui.auth.LoginActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.habithive.app.ui.auth.RegisterActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <!-- Profile Activities -->
         <activity

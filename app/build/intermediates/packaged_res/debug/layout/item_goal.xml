@@ -104,14 +104,16 @@
                 android:layout_weight="1"
                 android:text="500/1000 calories" />
 
+            <ImageView
+                android:id="@+id/image_goal_status"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="end"
+                android:layout_marginTop="8dp"
+                android:contentDescription="@string/goal_status_indicator"
+                android:src="@drawable/ic_neutral" />
         </LinearLayout>
 
-        <CheckBox
-            android:id="@+id/checkbox_goal_completed"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/goal_completed" />
             
         <!-- Motivational Quote Section -->
         <TextView

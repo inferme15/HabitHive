@@ -5,17 +5,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ProgressBar;
+import android.widget.EditText;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.cardview.widget.CardView;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
-import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
 import com.habithive.app.R;
 import java.lang.NullPointerException;
 import java.lang.Override;
@@ -23,7 +20,10 @@ import java.lang.String;
 
 public final class ActivityExerciseBinding implements ViewBinding {
   @NonNull
-  private final ConstraintLayout rootView;
+  private final ScrollView rootView;
+
+  @NonNull
+  public final Button buttonBurnRateInfo;
 
   @NonNull
   public final Button buttonCalculate;
@@ -35,93 +35,54 @@ public final class ActivityExerciseBinding implements ViewBinding {
   public final Button buttonViewHistory;
 
   @NonNull
-  public final CardView cardCalculation;
+  public final EditText editTextDuration;
 
   @NonNull
-  public final TextInputEditText editTextDuration;
-
-  @NonNull
-  public final TextInputEditText editTextNotes;
-
-  @NonNull
-  public final TextInputLayout inputLayoutDuration;
-
-  @NonNull
-  public final TextInputLayout inputLayoutNotes;
-
-  @NonNull
-  public final ProgressBar progressBar;
+  public final EditText editTextNotes;
 
   @NonNull
   public final Spinner spinnerExerciseType;
 
   @NonNull
-  public final TextView textBurnRateLabel;
+  public final TextView textBmiInfo;
 
   @NonNull
-  public final TextView textBurnRateValue;
-
-  @NonNull
-  public final TextView textCalorieFormula;
-
-  @NonNull
-  public final TextView textCaloriesLabel;
+  public final TextView textBmiStatus;
 
   @NonNull
   public final TextView textCaloriesValue;
 
   @NonNull
-  public final TextView textPointsFormula;
-
-  @NonNull
-  public final TextView textPointsLabel;
-
-  @NonNull
   public final TextView textPointsValue;
 
   @NonNull
-  public final TextView textTitle;
+  public final TextView textViewTitle;
 
-  @NonNull
-  public final TextView textTypeLabel;
-
-  private ActivityExerciseBinding(@NonNull ConstraintLayout rootView,
+  private ActivityExerciseBinding(@NonNull ScrollView rootView, @NonNull Button buttonBurnRateInfo,
       @NonNull Button buttonCalculate, @NonNull Button buttonSave,
-      @NonNull Button buttonViewHistory, @NonNull CardView cardCalculation,
-      @NonNull TextInputEditText editTextDuration, @NonNull TextInputEditText editTextNotes,
-      @NonNull TextInputLayout inputLayoutDuration, @NonNull TextInputLayout inputLayoutNotes,
-      @NonNull ProgressBar progressBar, @NonNull Spinner spinnerExerciseType,
-      @NonNull TextView textBurnRateLabel, @NonNull TextView textBurnRateValue,
-      @NonNull TextView textCalorieFormula, @NonNull TextView textCaloriesLabel,
-      @NonNull TextView textCaloriesValue, @NonNull TextView textPointsFormula,
-      @NonNull TextView textPointsLabel, @NonNull TextView textPointsValue,
-      @NonNull TextView textTitle, @NonNull TextView textTypeLabel) {
+      @NonNull Button buttonViewHistory, @NonNull EditText editTextDuration,
+      @NonNull EditText editTextNotes, @NonNull Spinner spinnerExerciseType,
+      @NonNull TextView textBmiInfo, @NonNull TextView textBmiStatus,
+      @NonNull TextView textCaloriesValue, @NonNull TextView textPointsValue,
+      @NonNull TextView textViewTitle) {
     this.rootView = rootView;
+    this.buttonBurnRateInfo = buttonBurnRateInfo;
     this.buttonCalculate = buttonCalculate;
     this.buttonSave = buttonSave;
     this.buttonViewHistory = buttonViewHistory;
-    this.cardCalculation = cardCalculation;
     this.editTextDuration = editTextDuration;
     this.editTextNotes = editTextNotes;
-    this.inputLayoutDuration = inputLayoutDuration;
-    this.inputLayoutNotes = inputLayoutNotes;
-    this.progressBar = progressBar;
     this.spinnerExerciseType = spinnerExerciseType;
-    this.textBurnRateLabel = textBurnRateLabel;
-    this.textBurnRateValue = textBurnRateValue;
-    this.textCalorieFormula = textCalorieFormula;
-    this.textCaloriesLabel = textCaloriesLabel;
+    this.textBmiInfo = textBmiInfo;
+    this.textBmiStatus = textBmiStatus;
     this.textCaloriesValue = textCaloriesValue;
-    this.textPointsFormula = textPointsFormula;
-    this.textPointsLabel = textPointsLabel;
     this.textPointsValue = textPointsValue;
-    this.textTitle = textTitle;
-    this.textTypeLabel = textTypeLabel;
+    this.textViewTitle = textViewTitle;
   }
 
   @Override
   @NonNull
-  public ConstraintLayout getRoot() {
+  public ScrollView getRoot() {
     return rootView;
   }
 
@@ -146,6 +107,12 @@ public final class ActivityExerciseBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
+      id = R.id.buttonBurnRateInfo;
+      Button buttonBurnRateInfo = ViewBindings.findChildViewById(rootView, id);
+      if (buttonBurnRateInfo == null) {
+        break missingId;
+      }
+
       id = R.id.buttonCalculate;
       Button buttonCalculate = ViewBindings.findChildViewById(rootView, id);
       if (buttonCalculate == null) {
@@ -164,39 +131,15 @@ public final class ActivityExerciseBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.cardCalculation;
-      CardView cardCalculation = ViewBindings.findChildViewById(rootView, id);
-      if (cardCalculation == null) {
-        break missingId;
-      }
-
       id = R.id.editTextDuration;
-      TextInputEditText editTextDuration = ViewBindings.findChildViewById(rootView, id);
+      EditText editTextDuration = ViewBindings.findChildViewById(rootView, id);
       if (editTextDuration == null) {
         break missingId;
       }
 
       id = R.id.editTextNotes;
-      TextInputEditText editTextNotes = ViewBindings.findChildViewById(rootView, id);
+      EditText editTextNotes = ViewBindings.findChildViewById(rootView, id);
       if (editTextNotes == null) {
-        break missingId;
-      }
-
-      id = R.id.inputLayoutDuration;
-      TextInputLayout inputLayoutDuration = ViewBindings.findChildViewById(rootView, id);
-      if (inputLayoutDuration == null) {
-        break missingId;
-      }
-
-      id = R.id.inputLayoutNotes;
-      TextInputLayout inputLayoutNotes = ViewBindings.findChildViewById(rootView, id);
-      if (inputLayoutNotes == null) {
-        break missingId;
-      }
-
-      id = R.id.progressBar;
-      ProgressBar progressBar = ViewBindings.findChildViewById(rootView, id);
-      if (progressBar == null) {
         break missingId;
       }
 
@@ -206,27 +149,15 @@ public final class ActivityExerciseBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.textBurnRateLabel;
-      TextView textBurnRateLabel = ViewBindings.findChildViewById(rootView, id);
-      if (textBurnRateLabel == null) {
+      id = R.id.textBmiInfo;
+      TextView textBmiInfo = ViewBindings.findChildViewById(rootView, id);
+      if (textBmiInfo == null) {
         break missingId;
       }
 
-      id = R.id.textBurnRateValue;
-      TextView textBurnRateValue = ViewBindings.findChildViewById(rootView, id);
-      if (textBurnRateValue == null) {
-        break missingId;
-      }
-
-      id = R.id.textCalorieFormula;
-      TextView textCalorieFormula = ViewBindings.findChildViewById(rootView, id);
-      if (textCalorieFormula == null) {
-        break missingId;
-      }
-
-      id = R.id.textCaloriesLabel;
-      TextView textCaloriesLabel = ViewBindings.findChildViewById(rootView, id);
-      if (textCaloriesLabel == null) {
+      id = R.id.textBmiStatus;
+      TextView textBmiStatus = ViewBindings.findChildViewById(rootView, id);
+      if (textBmiStatus == null) {
         break missingId;
       }
 
@@ -236,41 +167,21 @@ public final class ActivityExerciseBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.textPointsFormula;
-      TextView textPointsFormula = ViewBindings.findChildViewById(rootView, id);
-      if (textPointsFormula == null) {
-        break missingId;
-      }
-
-      id = R.id.textPointsLabel;
-      TextView textPointsLabel = ViewBindings.findChildViewById(rootView, id);
-      if (textPointsLabel == null) {
-        break missingId;
-      }
-
       id = R.id.textPointsValue;
       TextView textPointsValue = ViewBindings.findChildViewById(rootView, id);
       if (textPointsValue == null) {
         break missingId;
       }
 
-      id = R.id.textTitle;
-      TextView textTitle = ViewBindings.findChildViewById(rootView, id);
-      if (textTitle == null) {
+      id = R.id.textViewTitle;
+      TextView textViewTitle = ViewBindings.findChildViewById(rootView, id);
+      if (textViewTitle == null) {
         break missingId;
       }
 
-      id = R.id.textTypeLabel;
-      TextView textTypeLabel = ViewBindings.findChildViewById(rootView, id);
-      if (textTypeLabel == null) {
-        break missingId;
-      }
-
-      return new ActivityExerciseBinding((ConstraintLayout) rootView, buttonCalculate, buttonSave,
-          buttonViewHistory, cardCalculation, editTextDuration, editTextNotes, inputLayoutDuration,
-          inputLayoutNotes, progressBar, spinnerExerciseType, textBurnRateLabel, textBurnRateValue,
-          textCalorieFormula, textCaloriesLabel, textCaloriesValue, textPointsFormula,
-          textPointsLabel, textPointsValue, textTitle, textTypeLabel);
+      return new ActivityExerciseBinding((ScrollView) rootView, buttonBurnRateInfo, buttonCalculate,
+          buttonSave, buttonViewHistory, editTextDuration, editTextNotes, spinnerExerciseType,
+          textBmiInfo, textBmiStatus, textCaloriesValue, textPointsValue, textViewTitle);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

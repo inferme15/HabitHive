@@ -13,8 +13,11 @@ import java.util.Locale
 
 /**
  * Adapter for displaying exercise history items in a RecyclerView
+ * Supports long-press deletion
  */
-class ExerciseHistoryAdapter : ListAdapter<Exercise, ExerciseHistoryAdapter.ExerciseViewHolder>(ExerciseDiffCallback()) {
+class ExerciseHistoryAdapter(
+    private val onDeleteExercise: (Exercise) -> Unit
+) : ListAdapter<Exercise, ExerciseHistoryAdapter.ExerciseViewHolder>(ExerciseDiffCallback()) {
 
     // Date format for display
     private val dateFormat = SimpleDateFormat("MMM dd, yyyy - HH:mm", Locale.getDefault())
@@ -64,6 +67,12 @@ class ExerciseHistoryAdapter : ListAdapter<Exercise, ExerciseHistoryAdapter.Exer
             } else {
                 binding.textNotes.visibility = android.view.View.GONE
                 binding.textNotesLabel.visibility = android.view.View.GONE
+            }
+
+            // Long press to delete
+            binding.root.setOnLongClickListener {
+                onDeleteExercise(exercise)
+                true
             }
         }
     }

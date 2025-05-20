@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-@kotlin.Metadata(mv = {1, 9, 0}, k = 1, xi = 48, d1 = {"\u0000>\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\b\u0002\n\u0002\u0018\u0002\n\u0002\u0010\u000e\n\u0002\b\u0004\n\u0002\u0010\u000b\n\u0002\b\u0003\n\u0002\u0018\u0002\n\u0000\n\u0002\u0018\u0002\n\u0002\b\u0003\n\u0002\u0018\u0002\n\u0002\b\f\n\u0002\u0010\u0002\n\u0002\b\u0002\u0018\u00002\u00020\u0001B\u0005\u00a2\u0006\u0002\u0010\u0002J\u0006\u0010 \u001a\u00020!J\u0006\u0010\"\u001a\u00020!R\u0014\u0010\u0003\u001a\b\u0012\u0004\u0012\u00020\u00050\u0004X\u0082\u0004\u00a2\u0006\u0002\n\u0000R\u0014\u0010\u0006\u001a\b\u0012\u0004\u0012\u00020\u00050\u0004X\u0082\u0004\u00a2\u0006\u0002\n\u0000R\u0014\u0010\u0007\u001a\b\u0012\u0004\u0012\u00020\u00050\u0004X\u0082\u0004\u00a2\u0006\u0002\n\u0000R\u0014\u0010\b\u001a\b\u0012\u0004\u0012\u00020\u00050\u0004X\u0082\u0004\u00a2\u0006\u0002\n\u0000R\u0014\u0010\t\u001a\b\u0012\u0004\u0012\u00020\n0\u0004X\u0082\u0004\u00a2\u0006\u0002\n\u0000R\u0014\u0010\u000b\u001a\b\u0012\u0004\u0012\u00020\u00050\u0004X\u0082\u0004\u00a2\u0006\u0002\n\u0000R\u0014\u0010\f\u001a\b\u0012\u0004\u0012\u00020\u00050\u0004X\u0082\u0004\u00a2\u0006\u0002\n\u0000R\u000e\u0010\r\u001a\u00020\u000eX\u0082\u0004\u00a2\u0006\u0002\n\u0000R\u0017\u0010\u000f\u001a\b\u0012\u0004\u0012\u00020\u00050\u0010\u00a2\u0006\b\n\u0000\u001a\u0004\b\u0011\u0010\u0012R\u000e\u0010\u0013\u001a\u00020\u0014X\u0082\u0004\u00a2\u0006\u0002\n\u0000R\u0017\u0010\u0015\u001a\b\u0012\u0004\u0012\u00020\u00050\u0010\u00a2\u0006\b\n\u0000\u001a\u0004\b\u0016\u0010\u0012R\u0017\u0010\u0017\u001a\b\u0012\u0004\u0012\u00020\u00050\u0010\u00a2\u0006\b\n\u0000\u001a\u0004\b\u0018\u0010\u0012R\u0017\u0010\u0019\u001a\b\u0012\u0004\u0012\u00020\u00050\u0010\u00a2\u0006\b\n\u0000\u001a\u0004\b\u001a\u0010\u0012R\u0017\u0010\u001b\u001a\b\u0012\u0004\u0012\u00020\n0\u0010\u00a2\u0006\b\n\u0000\u001a\u0004\b\u001b\u0010\u0012R\u0017\u0010\u001c\u001a\b\u0012\u0004\u0012\u00020\u00050\u0010\u00a2\u0006\b\n\u0000\u001a\u0004\b\u001d\u0010\u0012R\u0017\u0010\u001e\u001a\b\u0012\u0004\u0012\u00020\u00050\u0010\u00a2\u0006\b\n\u0000\u001a\u0004\b\u001f\u0010\u0012\u00a8\u0006#"}, d2 = {"Lcom/habithive/app/ui/profile/ProfileViewModel;", "Landroidx/lifecycle/ViewModel;", "()V", "_email", "Landroidx/lifecycle/MutableLiveData;", "", "_gender", "_health", "_height", "_isLoading", "", "_userName", "_weight", "auth", "Lcom/google/firebase/auth/FirebaseAuth;", "email", "Landroidx/lifecycle/LiveData;", "getEmail", "()Landroidx/lifecycle/LiveData;", "firestore", "Lcom/google/firebase/firestore/FirebaseFirestore;", "gender", "getGender", "health", "getHealth", "height", "getHeight", "isLoading", "userName", "getUserName", "weight", "getWeight", "loadUserData", "", "logout", "app_debug"})
+@kotlin.Metadata(mv = {1, 9, 0}, k = 1, xi = 48, d1 = {"\u0000>\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\b\u0002\n\u0002\u0018\u0002\n\u0002\u0010\u000b\n\u0000\n\u0002\u0010\u000e\n\u0002\b\u0003\n\u0002\u0018\u0002\n\u0002\b\u0007\n\u0002\u0018\u0002\n\u0002\b\u0007\n\u0002\u0018\u0002\n\u0002\b\t\n\u0002\u0010\u0002\n\u0002\b\u0005\u0018\u00002\u00020\u0001B\u0005\u00a2\u0006\u0002\u0010\u0002J\u0010\u0010#\u001a\u00020\u00072\u0006\u0010\u000e\u001a\u00020\u0007H\u0002J\b\u0010$\u001a\u00020%H\u0002J\u0006\u0010&\u001a\u00020%J\u0006\u0010\'\u001a\u00020%J\u000e\u0010(\u001a\u00020%2\u0006\u0010)\u001a\u00020\u0005R\u0014\u0010\u0003\u001a\b\u0012\u0004\u0012\u00020\u00050\u0004X\u0082\u0004\u00a2\u0006\u0002\n\u0000R\u0017\u0010\u0006\u001a\b\u0012\u0004\u0012\u00020\u00070\u0004\u00a2\u0006\b\n\u0000\u001a\u0004\b\b\u0010\tR\u000e\u0010\n\u001a\u00020\u000bX\u0082\u0004\u00a2\u0006\u0002\n\u0000R\u0017\u0010\f\u001a\b\u0012\u0004\u0012\u00020\u00070\u0004\u00a2\u0006\b\n\u0000\u001a\u0004\b\r\u0010\tR\u0017\u0010\u000e\u001a\b\u0012\u0004\u0012\u00020\u00070\u0004\u00a2\u0006\b\n\u0000\u001a\u0004\b\u000f\u0010\tR\u0017\u0010\u0010\u001a\b\u0012\u0004\u0012\u00020\u00070\u0004\u00a2\u0006\b\n\u0000\u001a\u0004\b\u0011\u0010\tR\u000e\u0010\u0012\u001a\u00020\u0013X\u0082\u0004\u00a2\u0006\u0002\n\u0000R\u0017\u0010\u0014\u001a\b\u0012\u0004\u0012\u00020\u00070\u0004\u00a2\u0006\b\n\u0000\u001a\u0004\b\u0015\u0010\tR\u0017\u0010\u0016\u001a\b\u0012\u0004\u0012\u00020\u00070\u0004\u00a2\u0006\b\n\u0000\u001a\u0004\b\u0017\u0010\tR\u0017\u0010\u0018\u001a\b\u0012\u0004\u0012\u00020\u00070\u0004\u00a2\u0006\b\n\u0000\u001a\u0004\b\u0019\u0010\tR\u0017\u0010\u001a\u001a\b\u0012\u0004\u0012\u00020\u00050\u001b\u00a2\u0006\b\n\u0000\u001a\u0004\b\u001a\u0010\u001cR\u0017\u0010\u001d\u001a\b\u0012\u0004\u0012\u00020\u00050\u0004\u00a2\u0006\b\n\u0000\u001a\u0004\b\u001e\u0010\tR\u0017\u0010\u001f\u001a\b\u0012\u0004\u0012\u00020\u00070\u0004\u00a2\u0006\b\n\u0000\u001a\u0004\b \u0010\tR\u0017\u0010!\u001a\b\u0012\u0004\u0012\u00020\u00070\u0004\u00a2\u0006\b\n\u0000\u001a\u0004\b\"\u0010\t\u00a8\u0006*"}, d2 = {"Lcom/habithive/app/ui/profile/ProfileViewModel;", "Landroidx/lifecycle/ViewModel;", "()V", "_isLoading", "Landroidx/lifecycle/MutableLiveData;", "", "age", "", "getAge", "()Landroidx/lifecycle/MutableLiveData;", "auth", "Lcom/google/firebase/auth/FirebaseAuth;", "bmi", "getBmi", "dateOfBirth", "getDateOfBirth", "email", "getEmail", "firestore", "Lcom/google/firebase/firestore/FirebaseFirestore;", "gender", "getGender", "health", "getHealth", "height", "getHeight", "isLoading", "Landroidx/lifecycle/LiveData;", "()Landroidx/lifecycle/LiveData;", "shareGoal", "getShareGoal", "userName", "getUserName", "weight", "getWeight", "calculateAge", "calculateAndSetBmi", "", "loadUserData", "logout", "updateShareGoalPreference", "share", "app_debug"})
 public final class ProfileViewModel extends androidx.lifecycle.ViewModel {
     @org.jetbrains.annotations.NotNull
     private final com.google.firebase.auth.FirebaseAuth auth = null;
@@ -17,29 +17,25 @@ public final class ProfileViewModel extends androidx.lifecycle.ViewModel {
     @org.jetbrains.annotations.NotNull
     private final androidx.lifecycle.LiveData<java.lang.Boolean> isLoading = null;
     @org.jetbrains.annotations.NotNull
-    private final androidx.lifecycle.MutableLiveData<java.lang.String> _userName = null;
+    private final androidx.lifecycle.MutableLiveData<java.lang.String> userName = null;
     @org.jetbrains.annotations.NotNull
-    private final androidx.lifecycle.LiveData<java.lang.String> userName = null;
+    private final androidx.lifecycle.MutableLiveData<java.lang.String> email = null;
     @org.jetbrains.annotations.NotNull
-    private final androidx.lifecycle.MutableLiveData<java.lang.String> _email = null;
+    private final androidx.lifecycle.MutableLiveData<java.lang.String> gender = null;
     @org.jetbrains.annotations.NotNull
-    private final androidx.lifecycle.LiveData<java.lang.String> email = null;
+    private final androidx.lifecycle.MutableLiveData<java.lang.String> health = null;
     @org.jetbrains.annotations.NotNull
-    private final androidx.lifecycle.MutableLiveData<java.lang.String> _gender = null;
+    private final androidx.lifecycle.MutableLiveData<java.lang.String> height = null;
     @org.jetbrains.annotations.NotNull
-    private final androidx.lifecycle.LiveData<java.lang.String> gender = null;
+    private final androidx.lifecycle.MutableLiveData<java.lang.String> weight = null;
     @org.jetbrains.annotations.NotNull
-    private final androidx.lifecycle.MutableLiveData<java.lang.String> _health = null;
+    private final androidx.lifecycle.MutableLiveData<java.lang.String> dateOfBirth = null;
     @org.jetbrains.annotations.NotNull
-    private final androidx.lifecycle.LiveData<java.lang.String> health = null;
+    private final androidx.lifecycle.MutableLiveData<java.lang.String> age = null;
     @org.jetbrains.annotations.NotNull
-    private final androidx.lifecycle.MutableLiveData<java.lang.String> _height = null;
+    private final androidx.lifecycle.MutableLiveData<java.lang.String> bmi = null;
     @org.jetbrains.annotations.NotNull
-    private final androidx.lifecycle.LiveData<java.lang.String> height = null;
-    @org.jetbrains.annotations.NotNull
-    private final androidx.lifecycle.MutableLiveData<java.lang.String> _weight = null;
-    @org.jetbrains.annotations.NotNull
-    private final androidx.lifecycle.LiveData<java.lang.String> weight = null;
+    private final androidx.lifecycle.MutableLiveData<java.lang.Boolean> shareGoal = null;
     
     public ProfileViewModel() {
         super();
@@ -51,36 +47,66 @@ public final class ProfileViewModel extends androidx.lifecycle.ViewModel {
     }
     
     @org.jetbrains.annotations.NotNull
-    public final androidx.lifecycle.LiveData<java.lang.String> getUserName() {
+    public final androidx.lifecycle.MutableLiveData<java.lang.String> getUserName() {
         return null;
     }
     
     @org.jetbrains.annotations.NotNull
-    public final androidx.lifecycle.LiveData<java.lang.String> getEmail() {
+    public final androidx.lifecycle.MutableLiveData<java.lang.String> getEmail() {
         return null;
     }
     
     @org.jetbrains.annotations.NotNull
-    public final androidx.lifecycle.LiveData<java.lang.String> getGender() {
+    public final androidx.lifecycle.MutableLiveData<java.lang.String> getGender() {
         return null;
     }
     
     @org.jetbrains.annotations.NotNull
-    public final androidx.lifecycle.LiveData<java.lang.String> getHealth() {
+    public final androidx.lifecycle.MutableLiveData<java.lang.String> getHealth() {
         return null;
     }
     
     @org.jetbrains.annotations.NotNull
-    public final androidx.lifecycle.LiveData<java.lang.String> getHeight() {
+    public final androidx.lifecycle.MutableLiveData<java.lang.String> getHeight() {
         return null;
     }
     
     @org.jetbrains.annotations.NotNull
-    public final androidx.lifecycle.LiveData<java.lang.String> getWeight() {
+    public final androidx.lifecycle.MutableLiveData<java.lang.String> getWeight() {
+        return null;
+    }
+    
+    @org.jetbrains.annotations.NotNull
+    public final androidx.lifecycle.MutableLiveData<java.lang.String> getDateOfBirth() {
+        return null;
+    }
+    
+    @org.jetbrains.annotations.NotNull
+    public final androidx.lifecycle.MutableLiveData<java.lang.String> getAge() {
+        return null;
+    }
+    
+    @org.jetbrains.annotations.NotNull
+    public final androidx.lifecycle.MutableLiveData<java.lang.String> getBmi() {
+        return null;
+    }
+    
+    @org.jetbrains.annotations.NotNull
+    public final androidx.lifecycle.MutableLiveData<java.lang.Boolean> getShareGoal() {
         return null;
     }
     
     public final void loadUserData() {
+    }
+    
+    public final void updateShareGoalPreference(boolean share) {
+    }
+    
+    private final java.lang.String calculateAge(java.lang.String dateOfBirth) {
+        return null;
+    }
+    
+    private final void calculateAndSetBmi() {
     }
     
     public final void logout() {

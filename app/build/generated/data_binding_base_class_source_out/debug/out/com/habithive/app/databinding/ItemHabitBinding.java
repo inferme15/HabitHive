@@ -4,7 +4,7 @@ package com.habithive.app.databinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,7 +21,7 @@ public final class ItemHabitBinding implements ViewBinding {
   private final MaterialCardView rootView;
 
   @NonNull
-  public final CheckBox checkboxCompleted;
+  public final ImageView menuMore;
 
   @NonNull
   public final TextView textDescription;
@@ -38,11 +38,11 @@ public final class ItemHabitBinding implements ViewBinding {
   @NonNull
   public final TextView textType;
 
-  private ItemHabitBinding(@NonNull MaterialCardView rootView, @NonNull CheckBox checkboxCompleted,
+  private ItemHabitBinding(@NonNull MaterialCardView rootView, @NonNull ImageView menuMore,
       @NonNull TextView textDescription, @NonNull TextView textFrequency,
       @NonNull TextView textPoints, @NonNull TextView textTitle, @NonNull TextView textType) {
     this.rootView = rootView;
-    this.checkboxCompleted = checkboxCompleted;
+    this.menuMore = menuMore;
     this.textDescription = textDescription;
     this.textFrequency = textFrequency;
     this.textPoints = textPoints;
@@ -77,9 +77,9 @@ public final class ItemHabitBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
-      id = R.id.checkboxCompleted;
-      CheckBox checkboxCompleted = ViewBindings.findChildViewById(rootView, id);
-      if (checkboxCompleted == null) {
+      id = R.id.menuMore;
+      ImageView menuMore = ViewBindings.findChildViewById(rootView, id);
+      if (menuMore == null) {
         break missingId;
       }
 
@@ -113,7 +113,7 @@ public final class ItemHabitBinding implements ViewBinding {
         break missingId;
       }
 
-      return new ItemHabitBinding((MaterialCardView) rootView, checkboxCompleted, textDescription,
+      return new ItemHabitBinding((MaterialCardView) rootView, menuMore, textDescription,
           textFrequency, textPoints, textTitle, textType);
     }
     String missingId = rootView.getResources().getResourceName(id);

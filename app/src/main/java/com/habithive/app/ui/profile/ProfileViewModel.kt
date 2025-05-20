@@ -14,71 +14,100 @@ class ProfileViewModel : ViewModel() {
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
-    private val _userName = MutableLiveData<String>()
-    val userName: LiveData<String> = _userName
-
-    private val _email = MutableLiveData<String>()
-    val email: LiveData<String> = _email
-
-    private val _gender = MutableLiveData<String>()
-    val gender: LiveData<String> = _gender
-
-    private val _health = MutableLiveData<String>()
-    val health: LiveData<String> = _health
-
-    private val _height = MutableLiveData<String>()
-    val height: LiveData<String> = _height
-
-    private val _weight = MutableLiveData<String>()
-    val weight: LiveData<String> = _weight
+    val userName = MutableLiveData<String>()
+    val email = MutableLiveData<String>()
+    val gender = MutableLiveData<String>()
+    val health = MutableLiveData<String>()
+    val height = MutableLiveData<String>()
+    val weight = MutableLiveData<String>()
+    val dateOfBirth = MutableLiveData<String>()
+    val age = MutableLiveData<String>()
+    val bmi = MutableLiveData<String>()
+    val shareGoal = MutableLiveData<Boolean>() // ✅ Added this
 
     init {
-        // Initialize with current user's email
         auth.currentUser?.let { user ->
-            _email.value = user.email ?: ""
+            email.value = user.email ?: ""
         }
     }
 
     fun loadUserData() {
-        val userId = auth.currentUser?.uid
-        if (userId != null) {
-            _isLoading.value = true
+        val userId = auth.currentUser?.uid ?: return
+        _isLoading.value = true
 
-            firestore.collection("users").document(userId)
-                .get()
-                .addOnSuccessListener { document ->
-                    if (document != null && document.exists()) {
-                        _userName.value = document.getString("name") ?: ""
-                        _email.value = document.getString("email") ?: ""
-                        _gender.value = document.getString("gender") ?: ""
-                        _health.value = document.getString("health") ?: ""
+        firestore.collection("users").document(userId)
+            .get()
+            .addOnSuccessListener { doc ->
+                userName.value = doc.getString("name") ?: ""
+                email.value = doc.getString("email") ?: ""
+                gender.value = doc.getString("gender") ?: ""
+                health.value = doc.getString("health") ?: ""
+                dateOfBirth.value = doc.getString("dateOfBirth") ?: ""
+                shareGoal.value = doc.getBoolean("shareGoal") ?: false
 
-                        // Handle height which might be a number
-                        try {
-                            // Try to get as number first
-                            val heightValue = document.get("height")
-                            _height.value = heightValue?.toString() ?: ""
-                        } catch (e: Exception) {
-                            // Fallback to empty string on error
-                            _height.value = ""
-                        }
+                height.value = doc.get("height")?.toString() ?: ""
+                weight.value = doc.get("weight")?.toString() ?: ""
 
-                        // Handle weight which might be a number
-                        try {
-                            // Try to get as number first
-                            val weightValue = document.get("weight")
-                            _weight.value = weightValue?.toString() ?: ""
-                        } catch (e: Exception) {
-                            // Fallback to empty string on error
-                            _weight.value = ""
-                        }
-                    }
-                    _isLoading.value = false
+                doc.getString("dateOfBirth")?.let {
+                    age.value = calculateAge(it)
                 }
-                .addOnFailureListener { e ->
-                    // Handle error
-                    _isLoading.value = false
+
+                calculateAndSetBmi()
+                _isLoading.value = false
+            }
+            .addOnFailureListener {
+                _isLoading.value = false
+            }
+    }
+
+    fun updateShareGoalPreference(share: Boolean) {
+        val userId = auth.currentUser?.uid ?: return
+
+        firestore.collection("users").document(userId)
+            .update("shareGoal", share)
+            .addOnSuccessListener {
+                shareGoal.value = share
+            }
+    }
+
+    private fun calculateAge(dateOfBirth: String): String {
+        try {
+            val parts = dateOfBirth.split("/")
+            if (parts.size == 3) {
+                val year = parts[2].toInt()
+                val month = parts[1].toInt() - 1
+                val day = parts[0].toInt()
+
+                val dobCal = java.util.Calendar.getInstance().apply {
+                    set(year, month, day)
                 }
+
+                val today = java.util.Calendar.getInstance()
+                var age = today.get(java.util.Calendar.YEAR) - dobCal.get(java.util.Calendar.YEAR)
+                if (today.get(java.util.Calendar.DAY_OF_YEAR) < dobCal.get(java.util.Calendar.DAY_OF_YEAR)) {
+                    age--
+                }
+
+                return "$age years"
+            }
+        } catch (_: Exception) { }
+        return ""
+    }
+
+    private fun calculateAndSetBmi() {
+        try {
+            val h = height.value?.toDoubleOrNull()?.div(100) ?: return
+            val w = weight.value?.toDoubleOrNull() ?: return
+            val bmiVal = w / (h * h)
+            val category = when {
+                bmiVal < 18.5 -> "Underweight"
+                bmiVal < 25.0 -> "Normal"
+                bmiVal < 30.0 -> "Overweight"
+                else -> "Obese"
+            }
+            bmi.value = String.format("%.1f", bmiVal) + " ($category)"
+        } catch (e: Exception) {
+            bmi.value = "Not available"
         }
     }
 

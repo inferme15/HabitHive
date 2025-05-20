@@ -29,9 +29,16 @@ public class FragmentProfileBindingImpl extends FragmentProfileBinding  {
         sViewsWithIds.put(R.id.textHeight, 13);
         sViewsWithIds.put(R.id.textWeightLabel, 14);
         sViewsWithIds.put(R.id.textWeight, 15);
-        sViewsWithIds.put(R.id.buttonEditProfile, 16);
-        sViewsWithIds.put(R.id.buttonLogout, 17);
-        sViewsWithIds.put(R.id.progressBar, 18);
+        sViewsWithIds.put(R.id.textDobLabel, 16);
+        sViewsWithIds.put(R.id.textDob, 17);
+        sViewsWithIds.put(R.id.textAgeLabel, 18);
+        sViewsWithIds.put(R.id.textAge, 19);
+        sViewsWithIds.put(R.id.textBmiLabel, 20);
+        sViewsWithIds.put(R.id.textBmi, 21);
+        sViewsWithIds.put(R.id.switchShareGoal, 22);
+        sViewsWithIds.put(R.id.buttonEditProfile, 23);
+        sViewsWithIds.put(R.id.buttonLogout, 24);
+        sViewsWithIds.put(R.id.progressBar, 25);
     }
     // views
     @NonNull
@@ -42,15 +49,22 @@ public class FragmentProfileBindingImpl extends FragmentProfileBinding  {
     // Inverse Binding Event Handlers
 
     public FragmentProfileBindingImpl(@Nullable androidx.databinding.DataBindingComponent bindingComponent, @NonNull View root) {
-        this(bindingComponent, root, mapBindings(bindingComponent, root, 19, sIncludes, sViewsWithIds));
+        this(bindingComponent, root, mapBindings(bindingComponent, root, 26, sIncludes, sViewsWithIds));
     }
     private FragmentProfileBindingImpl(androidx.databinding.DataBindingComponent bindingComponent, View root, Object[] bindings) {
         super(bindingComponent, root, 0
-            , (android.widget.Button) bindings[16]
-            , (android.widget.Button) bindings[17]
+            , (android.widget.Button) bindings[23]
+            , (android.widget.Button) bindings[24]
             , (com.google.android.material.card.MaterialCardView) bindings[6]
             , (com.google.android.material.card.MaterialCardView) bindings[1]
-            , (android.widget.ProgressBar) bindings[18]
+            , (android.widget.ProgressBar) bindings[25]
+            , (androidx.appcompat.widget.SwitchCompat) bindings[22]
+            , (android.widget.TextView) bindings[19]
+            , (android.widget.TextView) bindings[18]
+            , (android.widget.TextView) bindings[21]
+            , (android.widget.TextView) bindings[20]
+            , (android.widget.TextView) bindings[17]
+            , (android.widget.TextView) bindings[16]
             , (android.widget.TextView) bindings[5]
             , (android.widget.TextView) bindings[4]
             , (android.widget.TextView) bindings[9]

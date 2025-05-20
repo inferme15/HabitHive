@@ -23,7 +23,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.habithive.app.databinding.ActivityMainBinding
 import com.habithive.app.notifications.NotificationReceiver
 import com.habithive.app.ui.MainViewModel
-import com.habithive.app.ui.exercise.ExerciseActivity
 import com.habithive.app.ui.settings.NotificationSettingsActivity
 import com.habithive.app.utils.KEY_NOTIFICATIONS_ENABLED
 import com.habithive.app.utils.PREFS_NOTIFICATION_SETTINGS
@@ -40,15 +39,12 @@ class MainActivity : AppCompatActivity() {
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted: Boolean ->
+        val prefs = getSharedPreferences(PREFS_NOTIFICATION_SETTINGS, Context.MODE_PRIVATE)
+        prefs.edit().putBoolean(KEY_NOTIFICATIONS_ENABLED, isGranted).apply()
+
         if (isGranted) {
-            // Permission granted, set notifications as enabled in preferences
-            val prefs = getSharedPreferences(PREFS_NOTIFICATION_SETTINGS, Context.MODE_PRIVATE)
-            prefs.edit().putBoolean(KEY_NOTIFICATIONS_ENABLED, true).apply()
             Log.d(TAG, "Notification permission granted")
         } else {
-            // Permission denied, set notifications as disabled in preferences
-            val prefs = getSharedPreferences(PREFS_NOTIFICATION_SETTINGS, Context.MODE_PRIVATE)
-            prefs.edit().putBoolean(KEY_NOTIFICATIONS_ENABLED, false).apply()
             Log.d(TAG, "Notification permission denied")
         }
     }
@@ -69,11 +65,6 @@ class MainActivity : AppCompatActivity() {
         val navView: BottomNavigationView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
 
-        // In your MainActivity or relevant Fragment
-        val intent = Intent(this, ExerciseActivity::class.java)
-        startActivity(intent)
-
-        // Setup Action Bar with nav controller
         val appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.navigation_home,
@@ -98,7 +89,6 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_notification_settings -> {
-                // Navigate to notification settings
                 val intent = Intent(this, NotificationSettingsActivity::class.java)
                 startActivity(intent)
                 true
@@ -112,9 +102,6 @@ class MainActivity : AppCompatActivity() {
         return navController.navigateUp() || super.onSupportNavigateUp()
     }
 
-    /**
-     * Check if notification permission is granted and request if needed
-     */
     private fun checkNotificationPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             when {
@@ -122,32 +109,23 @@ class MainActivity : AppCompatActivity() {
                     this,
                     Manifest.permission.POST_NOTIFICATIONS
                 ) == PackageManager.PERMISSION_GRANTED -> {
-                    // Permission already granted
                     Log.d(TAG, "Notification permission already granted")
                 }
                 shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS) -> {
-                    // Explain why the app needs this permission
                     Log.d(TAG, "Should show notification permission rationale")
-                    // For simplicity, just request the permission again
                     requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
                 }
                 else -> {
-                    // First time asking for permission
                     Log.d(TAG, "Requesting notification permission")
                     requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
                 }
             }
         } else {
-            // Permission not required for Android < 13
             Log.d(TAG, "Notification permission not required for this Android version")
         }
     }
 
-    /**
-     * Register the device to receive boot completed broadcasts
-     */
     private fun registerBootReceiver() {
-        // Note: This is handled in the manifest with the BOOT_COMPLETED intent filter
-        // See NotificationReceiver for implementation
+        // Defined in Manifest — nothing to do here
     }
 }

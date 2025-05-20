@@ -4,6 +4,8 @@ package com.habithive.app.databinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,10 +22,24 @@ public final class ActivitySplashBinding implements ViewBinding {
   private final ConstraintLayout rootView;
 
   @NonNull
+  public final ImageView imageLogo;
+
+  @NonNull
+  public final ProgressBar progressBar;
+
+  @NonNull
+  public final TextView textSubtitle;
+
+  @NonNull
   public final TextView textTitle;
 
-  private ActivitySplashBinding(@NonNull ConstraintLayout rootView, @NonNull TextView textTitle) {
+  private ActivitySplashBinding(@NonNull ConstraintLayout rootView, @NonNull ImageView imageLogo,
+      @NonNull ProgressBar progressBar, @NonNull TextView textSubtitle,
+      @NonNull TextView textTitle) {
     this.rootView = rootView;
+    this.imageLogo = imageLogo;
+    this.progressBar = progressBar;
+    this.textSubtitle = textSubtitle;
     this.textTitle = textTitle;
   }
 
@@ -54,13 +70,32 @@ public final class ActivitySplashBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
+      id = R.id.imageLogo;
+      ImageView imageLogo = ViewBindings.findChildViewById(rootView, id);
+      if (imageLogo == null) {
+        break missingId;
+      }
+
+      id = R.id.progressBar;
+      ProgressBar progressBar = ViewBindings.findChildViewById(rootView, id);
+      if (progressBar == null) {
+        break missingId;
+      }
+
+      id = R.id.textSubtitle;
+      TextView textSubtitle = ViewBindings.findChildViewById(rootView, id);
+      if (textSubtitle == null) {
+        break missingId;
+      }
+
       id = R.id.textTitle;
       TextView textTitle = ViewBindings.findChildViewById(rootView, id);
       if (textTitle == null) {
         break missingId;
       }
 
-      return new ActivitySplashBinding((ConstraintLayout) rootView, textTitle);
+      return new ActivitySplashBinding((ConstraintLayout) rootView, imageLogo, progressBar,
+          textSubtitle, textTitle);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

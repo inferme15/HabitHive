@@ -4,7 +4,7 @@ package com.habithive.app.databinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
@@ -22,7 +22,7 @@ public final class ItemGoalBinding implements ViewBinding {
   private final CardView rootView;
 
   @NonNull
-  public final CheckBox checkboxGoalCompleted;
+  public final ImageView imageGoalStatus;
 
   @NonNull
   public final ProgressBar progressGoal;
@@ -51,14 +51,14 @@ public final class ItemGoalBinding implements ViewBinding {
   @NonNull
   public final TextView textGoalTitle;
 
-  private ItemGoalBinding(@NonNull CardView rootView, @NonNull CheckBox checkboxGoalCompleted,
+  private ItemGoalBinding(@NonNull CardView rootView, @NonNull ImageView imageGoalStatus,
       @NonNull ProgressBar progressGoal, @NonNull TextView textGoalDescription,
       @NonNull TextView textGoalDuration, @NonNull TextView textGoalProgress,
       @NonNull TextView textGoalQuote, @NonNull TextView textGoalShared,
       @NonNull TextView textGoalTargetCalories, @NonNull TextView textGoalTargetPoints,
       @NonNull TextView textGoalTitle) {
     this.rootView = rootView;
-    this.checkboxGoalCompleted = checkboxGoalCompleted;
+    this.imageGoalStatus = imageGoalStatus;
     this.progressGoal = progressGoal;
     this.textGoalDescription = textGoalDescription;
     this.textGoalDuration = textGoalDuration;
@@ -97,9 +97,9 @@ public final class ItemGoalBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
-      id = R.id.checkbox_goal_completed;
-      CheckBox checkboxGoalCompleted = ViewBindings.findChildViewById(rootView, id);
-      if (checkboxGoalCompleted == null) {
+      id = R.id.image_goal_status;
+      ImageView imageGoalStatus = ViewBindings.findChildViewById(rootView, id);
+      if (imageGoalStatus == null) {
         break missingId;
       }
 
@@ -157,7 +157,7 @@ public final class ItemGoalBinding implements ViewBinding {
         break missingId;
       }
 
-      return new ItemGoalBinding((CardView) rootView, checkboxGoalCompleted, progressGoal,
+      return new ItemGoalBinding((CardView) rootView, imageGoalStatus, progressGoal,
           textGoalDescription, textGoalDuration, textGoalProgress, textGoalQuote, textGoalShared,
           textGoalTargetCalories, textGoalTargetPoints, textGoalTitle);
     }

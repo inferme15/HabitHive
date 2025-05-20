@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.habithive.app.R
+import com.google.firebase.auth.FirebaseAuth
 import com.habithive.app.databinding.FragmentProfileBinding
 import com.habithive.app.ui.auth.LoginActivity
 
@@ -42,7 +42,6 @@ class ProfileFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        // Refresh user data when fragment becomes visible again
         viewModel.loadUserData()
     }
 
@@ -53,39 +52,33 @@ class ProfileFragment : Fragment() {
         }
 
         binding.buttonEditProfile.setOnClickListener {
-            // Navigate to edit profile screen
             val intent = Intent(requireContext(), EditProfileActivity::class.java)
             startActivity(intent)
+        }
+
+        binding.switchShareGoal.setOnCheckedChangeListener { _, isChecked ->
+            viewModel.updateShareGoalPreference(isChecked)
         }
     }
 
     private fun observeViewModel() {
-        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
-            binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+        viewModel.isLoading.observe(viewLifecycleOwner) {
+            binding.progressBar.visibility = if (it) View.VISIBLE else View.GONE
         }
 
-        viewModel.userName.observe(viewLifecycleOwner) { name ->
-            binding.textName.text = name
-        }
+        viewModel.userName.observe(viewLifecycleOwner) { binding.textName.text = it }
+        viewModel.email.observe(viewLifecycleOwner) { binding.textEmail.text = it }
+        viewModel.gender.observe(viewLifecycleOwner) { binding.textGender.text = it }
+        viewModel.health.observe(viewLifecycleOwner) { binding.textHealth.text = it }
+        viewModel.height.observe(viewLifecycleOwner) { binding.textHeight.text = it }
+        viewModel.weight.observe(viewLifecycleOwner) { binding.textWeight.text = it }
+        viewModel.dateOfBirth.observe(viewLifecycleOwner) { binding.textDob.text = it }
+        viewModel.age.observe(viewLifecycleOwner) { binding.textAge.text = it }
+        viewModel.bmi.observe(viewLifecycleOwner) { binding.textBmi.text = it }
 
-        viewModel.email.observe(viewLifecycleOwner) { email ->
-            binding.textEmail.text = email
-        }
-
-        viewModel.gender.observe(viewLifecycleOwner) { gender ->
-            binding.textGender.text = gender
-        }
-
-        viewModel.health.observe(viewLifecycleOwner) { health ->
-            binding.textHealth.text = health
-        }
-
-        viewModel.height.observe(viewLifecycleOwner) { height ->
-            binding.textHeight.text = height
-        }
-
-        viewModel.weight.observe(viewLifecycleOwner) { weight ->
-            binding.textWeight.text = weight
+        // ✅ Observe Share Goal
+        viewModel.shareGoal.observe(viewLifecycleOwner) { shared ->
+            binding.switchShareGoal.isChecked = shared
         }
     }
 
@@ -93,6 +86,7 @@ class ProfileFragment : Fragment() {
         val intent = Intent(requireContext(), LoginActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
+        requireActivity().finish()
     }
 
     override fun onDestroyView() {

@@ -13,7 +13,6 @@ import androidx.annotation.Nullable;
 import androidx.databinding.Bindable;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
-import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.habithive.app.R;
@@ -59,9 +58,6 @@ public abstract class ActivityAddGoalBinding extends ViewDataBinding {
   public final Spinner spinnerDuration;
 
   @NonNull
-  public final SwitchMaterial switchShare;
-
-  @NonNull
   public final TextView textDurationLabel;
 
   @NonNull
@@ -76,8 +72,8 @@ public abstract class ActivityAddGoalBinding extends ViewDataBinding {
       TextInputEditText editTextTitle, TextInputLayout inputLayoutDescription,
       TextInputLayout inputLayoutTargetCalories, TextInputLayout inputLayoutTargetPoints,
       TextInputLayout inputLayoutTitle, ProgressBar progressBar,
-      LayoutMotivationalQuoteBinding quoteCard, Spinner spinnerDuration, SwitchMaterial switchShare,
-      TextView textDurationLabel, TextView textTitle) {
+      LayoutMotivationalQuoteBinding quoteCard, Spinner spinnerDuration, TextView textDurationLabel,
+      TextView textTitle) {
     super(_bindingComponent, _root, _localFieldCount);
     this.buttonSave = buttonSave;
     this.editTextDescription = editTextDescription;
@@ -91,7 +87,6 @@ public abstract class ActivityAddGoalBinding extends ViewDataBinding {
     this.progressBar = progressBar;
     this.quoteCard = quoteCard;
     this.spinnerDuration = spinnerDuration;
-    this.switchShare = switchShare;
     this.textDurationLabel = textDurationLabel;
     this.textTitle = textTitle;
   }

@@ -5,119 +5,104 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.habithive.app.utils.QuotesUtil
-import java.util.Date
+import com.habithive.app.model.Goal
+import com.google.firebase.Timestamp
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class AddGoalViewModel : ViewModel() {
-
-    private val auth: FirebaseAuth = FirebaseAuth.getInstance()
-    private val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
 
     val title = MutableLiveData<String>()
     val description = MutableLiveData<String>()
     val targetPoints = MutableLiveData<String>()
     val targetCalories = MutableLiveData<String>()
     val durationPosition = MutableLiveData<Int>()
-    val isShared = MutableLiveData<Boolean>()
+    val isLoading = MutableLiveData<Boolean>()
+    val saveStatus = MutableLiveData<SaveStatus>()
 
-    private val _saveStatus = MutableLiveData<SaveStatus>()
-    val saveStatus: LiveData<SaveStatus> = _saveStatus
+    val motivationalQuote = MutableLiveData<String>()
 
-    private val _isLoading = MutableLiveData<Boolean>()
-    val isLoading: LiveData<Boolean> = _isLoading
+    private val auth = FirebaseAuth.getInstance()
+    private val firestore = FirebaseFirestore.getInstance()
 
-    // Motivational quote functionality
-    private val _currentQuote = MutableLiveData<String>()
-    val currentQuote: LiveData<String> = _currentQuote
-
-    init {
-        // Initialize default values
-        durationPosition.value = 0
-        isShared.value = false
-
-        // Initialize with a random motivational quote
-        _currentQuote.value = QuotesUtil.getRandomQuote(QuotesUtil.QuoteCategory.MOTIVATION)
+    enum class SaveStatus {
+        SUCCESS,
+        ERROR_EMPTY_TITLE,
+        ERROR_NOT_AUTHENTICATED,
+        ERROR_SAVE_FAILED
     }
 
     fun saveGoal() {
-        _isLoading.value = true
-
-        // Validate input
-        if (title.value.isNullOrEmpty()) {
-            _saveStatus.value = SaveStatus.ERROR_EMPTY_TITLE
-            _isLoading.value = false
-            return
-        }
-
         val userId = auth.currentUser?.uid
         if (userId == null) {
-            _saveStatus.value = SaveStatus.ERROR_NOT_AUTHENTICATED
-            _isLoading.value = false
+            saveStatus.value = SaveStatus.ERROR_NOT_AUTHENTICATED
             return
         }
 
-        // Convert string inputs to appropriate types
-        val points = targetPoints.value?.toIntOrNull() ?: 0
-        val calories = targetCalories.value?.toIntOrNull() ?: 0
+        val goalTitle = title.value.orEmpty().trim()
+        val goalDescription = description.value.orEmpty().trim()
+        val points = targetPoints.value.orEmpty().toIntOrNull() ?: 0
+        val calories = targetCalories.value.orEmpty().toIntOrNull() ?: 0
+        val duration = getDurationInDays(durationPosition.value ?: 0)
+        val quote = motivationalQuote.value.orEmpty()
 
-        // Create goal object (explicitly typed to avoid type mismatch)
-        val goal: HashMap<String, Any?> = hashMapOf(
-            "userId" to userId,
-            "title" to title.value.orEmpty(),
-            "description" to description.value.orEmpty(),
-            "targetPoints" to points,
-            "targetCalories" to calories,
-            "duration" to getDurationInDays(durationPosition.value ?: 0),
-            "shared" to (isShared.value ?: false),
-            "currentPoints" to 0,
-            "currentCalories" to 0,
-            "progress" to 0.0,
-            "createdAt" to Date(),
-            "completedAt" to null
+        if (goalTitle.isEmpty()) {
+            saveStatus.value = SaveStatus.ERROR_EMPTY_TITLE
+            return
+        }
+
+        isLoading.value = true
+
+        val goal = Goal(
+            id = "",
+            userId = userId,
+            title = goalTitle,
+            description = goalDescription,
+            targetPoints = points,
+            targetCalories = calories,
+            duration = duration,
+            shared = false,
+            currentPoints = 0,
+            currentCalories = 0,
+            progress = 0.0,
+            createdAt = Timestamp.now(),
+            completedAt = null,
+            completed = false,
+            inspirationalQuote = quote
         )
 
-        // Include the motivational quote with the goal data
-        val goalWithQuote = includeQuoteWithGoal(goal)
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                firestore.collection("goals")
+                    .add(goal)
+                    .addOnSuccessListener {
+                        saveStatus.postValue(SaveStatus.SUCCESS)
+                        isLoading.postValue(false)
+                    }
+                    .addOnFailureListener {
+                        saveStatus.postValue(SaveStatus.ERROR_SAVE_FAILED)
+                        isLoading.postValue(false)
+                    }
+            } catch (e: Exception) {
+                saveStatus.postValue(SaveStatus.ERROR_SAVE_FAILED)
+                isLoading.postValue(false)
+            }
+        }
+    }
 
-        // Save to Firestore
-        firestore.collection("goals")
-            .add(goalWithQuote)
-            .addOnSuccessListener {
-                _saveStatus.value = SaveStatus.SUCCESS
-                _isLoading.value = false
-            }
-            .addOnFailureListener {
-                _saveStatus.value = SaveStatus.ERROR_SAVE_FAILED
-                _isLoading.value = false
-            }
+    fun updateQuote(quote: String) {
+        motivationalQuote.value = quote
     }
 
     private fun getDurationInDays(position: Int): Int {
         return when (position) {
-            0 -> 7     // One week
-            1 -> 14    // Two weeks
-            2 -> 30    // One month
-            3 -> 90    // Three months
-            else -> 7  // Default to one week
+            0 -> 1  // Daily = 1 day
+            1 -> 7
+            2 -> 14
+            3 -> 30
+            4 -> 90
+            else -> 7
         }
-    }
-
-    sealed class SaveStatus {
-        object SUCCESS : SaveStatus()
-        object ERROR_EMPTY_TITLE : SaveStatus()
-        object ERROR_NOT_AUTHENTICATED : SaveStatus()
-        object ERROR_SAVE_FAILED : SaveStatus()
-    }
-
-    fun updateQuote(quote: String) {
-        _currentQuote.value = quote
-    }
-
-    private fun includeQuoteWithGoal(goalData: HashMap<String, Any?>): HashMap<String, Any?> {
-        val currentQuoteValue = _currentQuote.value
-        if (!currentQuoteValue.isNullOrEmpty()) {
-            goalData["inspirationalQuote"] = currentQuoteValue
-        }
-        return goalData
     }
 }

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="4dp"
@@ -17,26 +16,22 @@
             android:id="@+id/textTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
             android:textColor="@color/colorText"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/checkboxCompleted"
+            app:layout_constraintEnd_toStartOf="@+id/menuMore"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Morning Run" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textDescription"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:layout_marginEnd="8dp"
             android:textColor="@color/colorTextSecondary"
-            app:layout_constraintEnd_toStartOf="@+id/checkboxCompleted"
+            app:layout_constraintEnd_toStartOf="@+id/menuMore"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textTitle"
-            tools:text="Run for 30 minutes every morning to start the day energized" />
+            app:layout_constraintTop_toBottomOf="@+id/textTitle" />
 
         <TextView
             android:id="@+id/textType"
@@ -48,8 +43,7 @@
             android:paddingVertical="2dp"
             android:textSize="12sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textDescription"
-            tools:text="Running" />
+            app:layout_constraintTop_toBottomOf="@+id/textDescription" />
 
         <TextView
             android:id="@+id/textFrequency"
@@ -61,8 +55,7 @@
             android:paddingVertical="2dp"
             android:textSize="12sp"
             app:layout_constraintStart_toEndOf="@+id/textType"
-            app:layout_constraintTop_toTopOf="@+id/textType"
-            tools:text="Daily" />
+            app:layout_constraintTop_toTopOf="@+id/textType" />
 
         <TextView
             android:id="@+id/textPoints"
@@ -73,16 +66,16 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/textFrequency"
             app:layout_constraintStart_toEndOf="@+id/textFrequency"
-            app:layout_constraintTop_toTopOf="@+id/textFrequency"
-            tools:text="15 points" />
+            app:layout_constraintTop_toTopOf="@+id/textFrequency" />
 
-        <CheckBox
-            android:id="@+id/checkboxCompleted"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/habit_completed"
-            android:minWidth="48dp"
-            android:minHeight="48dp"
+        <ImageView
+            android:id="@+id/menuMore"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="8dp"
+            android:contentDescription="Options"
+            android:src="@drawable/ic_more_vert"
+            android:background="?selectableItemBackgroundBorderless"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

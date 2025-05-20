@@ -5,18 +5,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
+import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.habithive.app.R
 import com.habithive.app.adapters.GoalAdapter
 import com.habithive.app.model.Goal
 import com.habithive.app.ui.goals.add.AddGoalActivity
-import android.widget.ProgressBar
-import android.widget.TextView
-import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class GoalsFragment : Fragment() {
 
@@ -32,51 +33,43 @@ class GoalsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val root = inflater.inflate(R.layout.fragment_goals, container, false)
-        
-        // Initialize views
+
         recyclerView = root.findViewById(R.id.recycler_goals)
         emptyTextView = root.findViewById(R.id.text_empty_goals)
         progressBar = root.findViewById(R.id.progress_goals)
         addButton = root.findViewById(R.id.fab_add_goal)
-        
-        // Setup RecyclerView
+
         recyclerView.layoutManager = LinearLayoutManager(context)
-        
-        // Initialize ViewModel
-        goalsViewModel = ViewModelProvider(this).get(GoalsViewModel::class.java)
-        
-        // Observe goals data
+
+        goalsViewModel = ViewModelProvider(this)[GoalsViewModel::class.java]
+
         goalsViewModel.goals.observe(viewLifecycleOwner) { goals ->
             updateGoalsList(goals)
         }
-        
-        // Observe loading state
+
         goalsViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
             progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
         }
-        
-        // Observe error messages
+
         goalsViewModel.errorMessage.observe(viewLifecycleOwner) { message ->
             message?.let {
                 Toast.makeText(context, it, Toast.LENGTH_LONG).show()
             }
         }
-        
-        // Setup add button
+
         addButton.setOnClickListener {
             val intent = Intent(context, AddGoalActivity::class.java)
             startActivity(intent)
         }
-        
+
         return root
     }
-    
+
     override fun onResume() {
         super.onResume()
-        // Reload goals when fragment becomes visible
         goalsViewModel.loadGoals()
     }
-    
+
     private fun updateGoalsList(goals: List<Goal>) {
         if (goals.isEmpty()) {
             recyclerView.visibility = View.GONE
@@ -84,11 +77,52 @@ class GoalsFragment : Fragment() {
         } else {
             recyclerView.visibility = View.VISIBLE
             emptyTextView.visibility = View.GONE
-            
-            val adapter = GoalAdapter(goals) { goal, completed ->
-                goalsViewModel.updateGoalCompletion(goal, completed)
+
+            val adapter = GoalAdapter(goals) { selectedGoal ->
+                val options = arrayOf("Share", "Delete")
+                AlertDialog.Builder(requireContext())
+                    .setTitle("Goal Options")
+                    .setItems(options) { _, which ->
+                        when (which) {
+                            0 -> shareGoal(selectedGoal)
+                            1 -> confirmDeleteGoal(selectedGoal)
+                        }
+                    }
+                    .show()
             }
+
             recyclerView.adapter = adapter
         }
     }
+
+    private fun confirmDeleteGoal(goal: Goal) {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Delete Goal")
+            .setMessage("Are you sure you want to delete this goal?")
+            .setPositiveButton("Yes") { _, _ ->
+                goalsViewModel.deleteGoal(goal)
+            }
+            .setNegativeButton("No", null)
+            .show()
+    }
+
+    private fun shareGoal(goal: Goal) {
+        val shareText = """
+        🎯 Goal: ${goal.title}
+        🔥 Progress: ${goal.getProgressPercentage()}%
+        ✅ ${goal.currentCalories}/${goal.targetCalories} calories burned
+        💪 ${goal.currentPoints}/${goal.targetPoints} points earned
+        📅 Time left: ${goal.getRemainingDays()} day(s)
+    """.trimIndent()
+
+        val shareIntent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, shareText)
+            type = "text/plain"
+        }
+
+        startActivity(Intent.createChooser(shareIntent, "Share your goal via"))
+    }
+
+
 }

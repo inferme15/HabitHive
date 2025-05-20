@@ -1,20 +1,25 @@
 package com.habithive.app.ui.profile
 
+import android.app.DatePickerDialog
 import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
+import android.widget.DatePicker
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.habithive.app.R
 import com.habithive.app.databinding.ActivityEditProfileBinding
+import java.text.SimpleDateFormat
+import java.util.*
 
 class EditProfileActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityEditProfileBinding
     private lateinit var auth: FirebaseAuth
     private lateinit var firestore: FirebaseFirestore
+    private var selectedDate: Calendar? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,12 +38,121 @@ class EditProfileActivity : AppCompatActivity() {
         // Setup gender spinner
         setupGenderSpinner()
 
+        // Setup date picker
+        setupDatePicker()
+
+        // Setup BMI calculation
+        setupBmiCalculation()
+
         // Load current user data
         loadUserData()
 
         // Setup save button
         binding.buttonSave.setOnClickListener {
             saveUserData()
+        }
+    }
+
+    private fun setupDatePicker() {
+        binding.editTextDob.setOnClickListener {
+            val calendar = Calendar.getInstance()
+
+            // Use existing date if available, otherwise use current date
+            val initialCalendar = selectedDate ?: calendar
+
+            val datePickerDialog = DatePickerDialog(
+                this,
+                { _, year, month, day ->
+                    // Save selected date
+                    selectedDate = Calendar.getInstance().apply {
+                        set(Calendar.YEAR, year)
+                        set(Calendar.MONTH, month)
+                        set(Calendar.DAY_OF_MONTH, day)
+                    }
+
+                    // Update date display
+                    val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                    binding.editTextDob.setText(dateFormat.format(selectedDate!!.time))
+
+                    // Calculate and display age
+                    calculateAndDisplayAge()
+                },
+                initialCalendar.get(Calendar.YEAR),
+                initialCalendar.get(Calendar.MONTH),
+                initialCalendar.get(Calendar.DAY_OF_MONTH)
+            )
+
+            // Set max date to today
+            datePickerDialog.datePicker.maxDate = calendar.timeInMillis
+
+            datePickerDialog.show()
+        }
+    }
+
+    private fun calculateAndDisplayAge() {
+        selectedDate?.let { dob ->
+            val today = Calendar.getInstance()
+
+            var age = today.get(Calendar.YEAR) - dob.get(Calendar.YEAR)
+
+            // Adjust age if birthday hasn't occurred yet this year
+            if (today.get(Calendar.DAY_OF_YEAR) < dob.get(Calendar.DAY_OF_YEAR)) {
+                age--
+            }
+
+            binding.textAge.text = "Age: $age"
+        }
+    }
+
+    private fun setupBmiCalculation() {
+        binding.buttonCalculateBmi.setOnClickListener {
+            calculateAndDisplayBmi()
+        }
+
+        // Auto-calculate BMI when height or weight changes
+        binding.editTextHeight.setOnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus) calculateAndDisplayBmi()
+        }
+
+        binding.editTextWeight.setOnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus) calculateAndDisplayBmi()
+        }
+    }
+
+    private fun calculateAndDisplayBmi() {
+        try {
+            val heightText = binding.editTextHeight.text.toString()
+            val weightText = binding.editTextWeight.text.toString()
+            val gender = binding.spinnerGender.selectedItem.toString()
+
+            if (heightText.isNotEmpty() && weightText.isNotEmpty()) {
+                val height = heightText.toDouble() / 100 // Convert cm to m
+                val weight = weightText.toDouble()
+
+                if (height > 0 && weight > 0) {
+                    val bmiValue = weight / (height * height)
+                    val bmiFormatted = String.format("%.1f", bmiValue)
+
+                    val category = when {
+                        bmiValue < 18.5 -> "Underweight"
+                        bmiValue < 25.0 -> "Normal"
+                        bmiValue < 30.0 -> "Overweight"
+                        else -> "Obese"
+                    }
+
+                    binding.textBmiValue.text = "BMI: $bmiFormatted"
+                    binding.textBmiCategory.text = "($category)"
+                } else {
+                    binding.textBmiValue.text = "BMI: N/A"
+                    binding.textBmiCategory.text = ""
+                }
+            } else {
+                binding.textBmiValue.text = "BMI: N/A"
+                binding.textBmiCategory.text = ""
+            }
+        } catch (e: Exception) {
+            binding.textBmiValue.text = "BMI: N/A"
+            binding.textBmiCategory.text = ""
         }
     }
 
@@ -84,6 +198,36 @@ class EditProfileActivity : AppCompatActivity() {
                         // Handle weight which might be a number
                         val weightValue = document.get("weight")
                         binding.editTextWeight.setText(weightValue?.toString() ?: "")
+
+                        // Handle date of birth
+                        val dob = document.getString("dateOfBirth")
+                        if (!dob.isNullOrEmpty()) {
+                            binding.editTextDob.setText(dob)
+
+                            // Parse the date to setup the selectedDate
+                            try {
+                                val parts = dob.split("/")
+                                if (parts.size == 3) {
+                                    val day = parts[0].toInt()
+                                    val month = parts[1].toInt() - 1 // 0-based month
+                                    val year = parts[2].toInt()
+
+                                    selectedDate = Calendar.getInstance().apply {
+                                        set(Calendar.YEAR, year)
+                                        set(Calendar.MONTH, month)
+                                        set(Calendar.DAY_OF_MONTH, day)
+                                    }
+
+                                    // Update age display
+                                    calculateAndDisplayAge()
+                                }
+                            } catch (e: Exception) {
+                                // Ignore parsing error
+                            }
+                        }
+
+                        // Calculate BMI
+                        calculateAndDisplayBmi()
                     }
                     binding.progressBar.visibility = View.GONE
                 }
@@ -109,6 +253,7 @@ class EditProfileActivity : AppCompatActivity() {
             val health = binding.editTextHealth.text.toString().trim()
             val heightText = binding.editTextHeight.text.toString().trim()
             val weightText = binding.editTextWeight.text.toString().trim()
+            val dobText = binding.editTextDob.text.toString().trim()
 
             binding.progressBar.visibility = View.VISIBLE
 
@@ -117,6 +262,25 @@ class EditProfileActivity : AppCompatActivity() {
                 put("name", name)
                 put("gender", gender)
                 put("health", health)
+
+                // Add date of birth
+                if (dobText.isNotEmpty()) {
+                    put("dateOfBirth", dobText)
+                }
+
+                // Calculate BMI for storage
+                if (heightText.isNotEmpty() && weightText.isNotEmpty()) {
+                    try {
+                        val height = heightText.toDouble() / 100 // Convert cm to m
+                        val weight = weightText.toDouble()
+                        if (height > 0 && weight > 0) {
+                            val bmi = weight / (height * height)
+                            put("bmi", bmi)
+                        }
+                    } catch (e: Exception) {
+                        // Skip BMI calculation on error
+                    }
+                }
 
                 // Convert height to Double if possible
                 try {

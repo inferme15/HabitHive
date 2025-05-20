@@ -44,7 +44,17 @@
     <color name="colorWarning">#FF9800</color>
     <string name="add_goal">Add a goal</string>
     <string name="add_habit">Add a new habit</string>
+    <string name="age">Age</string>
     <string name="app_name">HabitHive</string>
+    <string name="bmi">BMI</string>
+    <string name="bmi_calculation">BMI Calculation</string>
+    <string name="bmi_category_normal">Normal</string>
+    <string name="bmi_category_obese">Obese</string>
+    <string name="bmi_category_overweight">Overweight</string>
+    <string name="bmi_category_underweight">Underweight</string>
+    <string name="bmi_info_format">Your BMI category (%s) is used to calculate calories</string>
+    <string name="bmi_not_available">BMI data not available. Using standard calculations.</string>
+    <string name="bmi_status_format">Your BMI: %.1f</string>
     <string name="burn_rate">Burn Rate:</string>
     <string name="burn_rate_explanation">HabitHive calculates calories burned based on exercise type and duration. Each exercise has a unique burn rate (calories per minute).</string>
     <string name="burn_rate_info_title">Exercise Burn Rates</string>
@@ -52,6 +62,7 @@
     <string name="burn_rate_table_title">Burn Rates by Exercise Type</string>
     <string name="burn_rate_value">%1$d cal/min</string>
     <string name="calculate">Calculate</string>
+    <string name="calculate_bmi">Calculate BMI</string>
     <string name="calorie_formula">Formula: burn rate × duration</string>
     <string name="calories_burned">Calories Burned:</string>
     <string name="calories_value">%1$d cal</string>
@@ -63,6 +74,8 @@
     <string name="confirm_password">Confirm Password</string>
     <string name="daily_leaderboard">Daily Leaderboard</string>
     <string name="daily_score">Daily Score</string>
+    <string name="date_of_birth">Date of Birth</string>
+    <string name="dob_hint">DD/MM/YYYY</string>
     <string name="duration_minutes">Duration (minutes)</string>
     <string name="duration_value">%1$d min</string>
     <string name="edit_profile">Edit Profile</string>
@@ -82,6 +95,7 @@
     <string name="exercise_history_list">List of your past exercises</string>
     <string name="exercise_type">Exercise Type</string>
     <string name="female">Female</string>
+    <string name="filter_by_date">Filter by date</string>
     <string name="firebase_index_error">This error is related to database setup. An index needs to be created in Firebase Console.</string>
     <string name="friday">Friday</string>
     <string name="gcm_defaultSenderId" translatable="false">318709033357</string>
@@ -96,6 +110,10 @@
     <string name="goal_saved_successfully">Goal saved successfully</string>
     <string name="goal_share">Share Goal</string>
     <string name="goal_shared">Shared</string>
+    <string name="goal_status_happy">Happy</string>
+    <string name="goal_status_indicator">Goal status indicator</string>
+    <string name="goal_status_neutral">Neutral</string>
+    <string name="goal_status_sad">Sad</string>
     <string name="goal_target_calories">Target Calories</string>
     <string name="goal_target_points">Target Points</string>
     <string name="goal_title">Goal Title</string>
@@ -147,6 +165,7 @@
     <string name="other">Other</string>
     <string name="password">Password</string>
     <string name="personal_information">Personal Information</string>
+    <string name="physical_information">Physical Information</string>
     <string name="points_earned">Points Earned:</string>
     <string name="points_formula">Points: 1 point per 10 calories</string>
     <string name="points_value">%1$d pts</string>
@@ -156,6 +175,7 @@
     <string name="progress_chart">Progress Chart</string>
     <string name="project_id" translatable="false">habithive-a5d16</string>
     <string name="quote_icon">Quote icon</string>
+    <string name="quote_loading">Loading quote...</string>
     <string name="quote_refresh_success">Quote refreshed!</string>
     <string name="rank">Rank</string>
     <string name="refresh_quote">Refresh quote</string>
@@ -194,10 +214,16 @@
     <string name="weight">Weight</string>
     <string name="weight_kg">Weight (kg)</string>
     <string name="welcome_message">Welcome to HabitHive!</string>
+    <string name="welcome_to_habithive">Welcome to HabitHive!</string>
+    <string name="zero">0</string>
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+    </style>
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
     <style name="Button.Primary" parent="Widget.MaterialComponents.Button">
         <item name="android:textColor">@color/colorText</item>

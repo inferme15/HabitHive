@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.Spinner;
@@ -25,7 +26,13 @@ public final class ActivityEditProfileBinding implements ViewBinding {
   private final ScrollView rootView;
 
   @NonNull
+  public final Button buttonCalculateBmi;
+
+  @NonNull
   public final Button buttonSave;
+
+  @NonNull
+  public final TextInputEditText editTextDob;
 
   @NonNull
   public final TextInputEditText editTextHealth;
@@ -40,6 +47,9 @@ public final class ActivityEditProfileBinding implements ViewBinding {
   public final TextInputEditText editTextWeight;
 
   @NonNull
+  public final TextInputLayout inputLayoutDob;
+
+  @NonNull
   public final TextInputLayout inputLayoutHealth;
 
   @NonNull
@@ -52,37 +62,78 @@ public final class ActivityEditProfileBinding implements ViewBinding {
   public final TextInputLayout inputLayoutWeight;
 
   @NonNull
+  public final LinearLayout layoutBmi;
+
+  @NonNull
+  public final LinearLayout layoutDob;
+
+  @NonNull
   public final ProgressBar progressBar;
 
   @NonNull
   public final Spinner spinnerGender;
 
   @NonNull
+  public final TextView textAge;
+
+  @NonNull
+  public final TextView textBmiCategory;
+
+  @NonNull
+  public final TextView textBmiLabel;
+
+  @NonNull
+  public final TextView textBmiValue;
+
+  @NonNull
+  public final TextView textDobLabel;
+
+  @NonNull
   public final TextView textGenderLabel;
+
+  @NonNull
+  public final TextView textPhysicalInfoLabel;
 
   @NonNull
   public final TextView textTitle;
 
-  private ActivityEditProfileBinding(@NonNull ScrollView rootView, @NonNull Button buttonSave,
-      @NonNull TextInputEditText editTextHealth, @NonNull TextInputEditText editTextHeight,
-      @NonNull TextInputEditText editTextName, @NonNull TextInputEditText editTextWeight,
+  private ActivityEditProfileBinding(@NonNull ScrollView rootView,
+      @NonNull Button buttonCalculateBmi, @NonNull Button buttonSave,
+      @NonNull TextInputEditText editTextDob, @NonNull TextInputEditText editTextHealth,
+      @NonNull TextInputEditText editTextHeight, @NonNull TextInputEditText editTextName,
+      @NonNull TextInputEditText editTextWeight, @NonNull TextInputLayout inputLayoutDob,
       @NonNull TextInputLayout inputLayoutHealth, @NonNull TextInputLayout inputLayoutHeight,
       @NonNull TextInputLayout inputLayoutName, @NonNull TextInputLayout inputLayoutWeight,
-      @NonNull ProgressBar progressBar, @NonNull Spinner spinnerGender,
-      @NonNull TextView textGenderLabel, @NonNull TextView textTitle) {
+      @NonNull LinearLayout layoutBmi, @NonNull LinearLayout layoutDob,
+      @NonNull ProgressBar progressBar, @NonNull Spinner spinnerGender, @NonNull TextView textAge,
+      @NonNull TextView textBmiCategory, @NonNull TextView textBmiLabel,
+      @NonNull TextView textBmiValue, @NonNull TextView textDobLabel,
+      @NonNull TextView textGenderLabel, @NonNull TextView textPhysicalInfoLabel,
+      @NonNull TextView textTitle) {
     this.rootView = rootView;
+    this.buttonCalculateBmi = buttonCalculateBmi;
     this.buttonSave = buttonSave;
+    this.editTextDob = editTextDob;
     this.editTextHealth = editTextHealth;
     this.editTextHeight = editTextHeight;
     this.editTextName = editTextName;
     this.editTextWeight = editTextWeight;
+    this.inputLayoutDob = inputLayoutDob;
     this.inputLayoutHealth = inputLayoutHealth;
     this.inputLayoutHeight = inputLayoutHeight;
     this.inputLayoutName = inputLayoutName;
     this.inputLayoutWeight = inputLayoutWeight;
+    this.layoutBmi = layoutBmi;
+    this.layoutDob = layoutDob;
     this.progressBar = progressBar;
     this.spinnerGender = spinnerGender;
+    this.textAge = textAge;
+    this.textBmiCategory = textBmiCategory;
+    this.textBmiLabel = textBmiLabel;
+    this.textBmiValue = textBmiValue;
+    this.textDobLabel = textDobLabel;
     this.textGenderLabel = textGenderLabel;
+    this.textPhysicalInfoLabel = textPhysicalInfoLabel;
     this.textTitle = textTitle;
   }
 
@@ -113,9 +164,21 @@ public final class ActivityEditProfileBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
+      id = R.id.buttonCalculateBmi;
+      Button buttonCalculateBmi = ViewBindings.findChildViewById(rootView, id);
+      if (buttonCalculateBmi == null) {
+        break missingId;
+      }
+
       id = R.id.buttonSave;
       Button buttonSave = ViewBindings.findChildViewById(rootView, id);
       if (buttonSave == null) {
+        break missingId;
+      }
+
+      id = R.id.editTextDob;
+      TextInputEditText editTextDob = ViewBindings.findChildViewById(rootView, id);
+      if (editTextDob == null) {
         break missingId;
       }
 
@@ -143,6 +206,12 @@ public final class ActivityEditProfileBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.inputLayoutDob;
+      TextInputLayout inputLayoutDob = ViewBindings.findChildViewById(rootView, id);
+      if (inputLayoutDob == null) {
+        break missingId;
+      }
+
       id = R.id.inputLayoutHealth;
       TextInputLayout inputLayoutHealth = ViewBindings.findChildViewById(rootView, id);
       if (inputLayoutHealth == null) {
@@ -167,6 +236,18 @@ public final class ActivityEditProfileBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.layoutBmi;
+      LinearLayout layoutBmi = ViewBindings.findChildViewById(rootView, id);
+      if (layoutBmi == null) {
+        break missingId;
+      }
+
+      id = R.id.layoutDob;
+      LinearLayout layoutDob = ViewBindings.findChildViewById(rootView, id);
+      if (layoutDob == null) {
+        break missingId;
+      }
+
       id = R.id.progressBar;
       ProgressBar progressBar = ViewBindings.findChildViewById(rootView, id);
       if (progressBar == null) {
@@ -179,9 +260,45 @@ public final class ActivityEditProfileBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.textAge;
+      TextView textAge = ViewBindings.findChildViewById(rootView, id);
+      if (textAge == null) {
+        break missingId;
+      }
+
+      id = R.id.textBmiCategory;
+      TextView textBmiCategory = ViewBindings.findChildViewById(rootView, id);
+      if (textBmiCategory == null) {
+        break missingId;
+      }
+
+      id = R.id.textBmiLabel;
+      TextView textBmiLabel = ViewBindings.findChildViewById(rootView, id);
+      if (textBmiLabel == null) {
+        break missingId;
+      }
+
+      id = R.id.textBmiValue;
+      TextView textBmiValue = ViewBindings.findChildViewById(rootView, id);
+      if (textBmiValue == null) {
+        break missingId;
+      }
+
+      id = R.id.textDobLabel;
+      TextView textDobLabel = ViewBindings.findChildViewById(rootView, id);
+      if (textDobLabel == null) {
+        break missingId;
+      }
+
       id = R.id.textGenderLabel;
       TextView textGenderLabel = ViewBindings.findChildViewById(rootView, id);
       if (textGenderLabel == null) {
+        break missingId;
+      }
+
+      id = R.id.textPhysicalInfoLabel;
+      TextView textPhysicalInfoLabel = ViewBindings.findChildViewById(rootView, id);
+      if (textPhysicalInfoLabel == null) {
         break missingId;
       }
 
@@ -191,10 +308,11 @@ public final class ActivityEditProfileBinding implements ViewBinding {
         break missingId;
       }
 
-      return new ActivityEditProfileBinding((ScrollView) rootView, buttonSave, editTextHealth,
-          editTextHeight, editTextName, editTextWeight, inputLayoutHealth, inputLayoutHeight,
-          inputLayoutName, inputLayoutWeight, progressBar, spinnerGender, textGenderLabel,
-          textTitle);
+      return new ActivityEditProfileBinding((ScrollView) rootView, buttonCalculateBmi, buttonSave,
+          editTextDob, editTextHealth, editTextHeight, editTextName, editTextWeight, inputLayoutDob,
+          inputLayoutHealth, inputLayoutHeight, inputLayoutName, inputLayoutWeight, layoutBmi,
+          layoutDob, progressBar, spinnerGender, textAge, textBmiCategory, textBmiLabel,
+          textBmiValue, textDobLabel, textGenderLabel, textPhysicalInfoLabel, textTitle);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

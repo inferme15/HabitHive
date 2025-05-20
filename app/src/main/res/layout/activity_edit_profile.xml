@@ -80,6 +80,64 @@
                 android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <!-- Date of Birth Section -->
+        <TextView
+            android:id="@+id/textDobLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Date of Birth"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/inputLayoutHealth" />
+
+        <LinearLayout
+            android:id="@+id/layoutDob"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@+id/textDobLabel">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inputLayoutDob"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextDob"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="DD/MM/YYYY"
+                    android:focusable="false"
+                    android:clickable="true"
+                    android:inputType="none" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/textAge"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                tools:text="Age: 25" />
+        </LinearLayout>
+
+        <!-- Physical Information Section -->
+        <TextView
+            android:id="@+id/textPhysicalInfoLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Physical Information"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layoutDob" />
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/inputLayoutHeight"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -90,7 +148,7 @@
             app:layout_constraintEnd_toStartOf="@+id/inputLayoutWeight"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/inputLayoutHealth">
+            app:layout_constraintTop_toBottomOf="@+id/textPhysicalInfoLabel">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editTextHeight"
@@ -119,6 +177,51 @@
                 android:inputType="numberDecimal" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <!-- BMI Section -->
+        <TextView
+            android:id="@+id/textBmiLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="BMI Calculation"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/inputLayoutHeight" />
+
+        <LinearLayout
+            android:id="@+id/layoutBmi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@+id/textBmiLabel">
+
+            <TextView
+                android:id="@+id/textBmiValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                tools:text="BMI: 24.5" />
+
+            <TextView
+                android:id="@+id/textBmiCategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:textSize="16sp"
+                tools:text="(Normal)" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/buttonCalculateBmi"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Calculate BMI"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layoutBmi" />
+
         <Button
             android:id="@+id/buttonSave"
             android:layout_width="match_parent"
@@ -127,7 +230,7 @@
             android:text="@string/save"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/inputLayoutHeight" />
+            app:layout_constraintTop_toBottomOf="@+id/buttonCalculateBmi" />
 
         <ProgressBar
             android:id="@+id/progressBar"

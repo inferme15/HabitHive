@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import com.habithive.app.R;
+import com.google.firebase.auth.FirebaseAuth;
 import com.habithive.app.databinding.FragmentProfileBinding;
 import com.habithive.app.ui.auth.LoginActivity;
 

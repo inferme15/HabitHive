@@ -59,22 +59,20 @@ class AddGoalActivity : AppCompatActivity() {
     }
 
     private fun setupDurationSpinner() {
-        val durationOptions = arrayOf("1 week", "2 weeks", "1 month", "3 months")
+        val durationOptions = arrayOf("Daily", "1 week", "2 weeks", "1 month", "3 months")
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, durationOptions)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.spinnerDuration.adapter = adapter
 
-        // Set selection change listener
         binding.spinnerDuration.onItemSelectedListener = object : android.widget.AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: android.widget.AdapterView<*>?, view: View?, position: Int, id: Long) {
                 viewModel.durationPosition.value = position
             }
 
-            override fun onNothingSelected(parent: android.widget.AdapterView<*>?) {
-                // Do nothing
-            }
+            override fun onNothingSelected(parent: android.widget.AdapterView<*>?) {}
         }
     }
+
 
     private fun saveGoal() {
         // Transfer UI input to ViewModel
@@ -83,7 +81,6 @@ class AddGoalActivity : AppCompatActivity() {
         viewModel.targetPoints.value = binding.editTextTargetPoints.text.toString()
         viewModel.targetCalories.value = binding.editTextTargetCalories.text.toString()
         viewModel.durationPosition.value = binding.spinnerDuration.selectedItemPosition
-        viewModel.isShared.value = binding.switchShare.isChecked
 
         // Call save
         viewModel.saveGoal()

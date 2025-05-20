@@ -9,6 +9,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.databinding.Bindable;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
@@ -33,6 +34,27 @@ public abstract class FragmentProfileBinding extends ViewDataBinding {
 
   @NonNull
   public final ProgressBar progressBar;
+
+  @NonNull
+  public final SwitchCompat switchShareGoal;
+
+  @NonNull
+  public final TextView textAge;
+
+  @NonNull
+  public final TextView textAgeLabel;
+
+  @NonNull
+  public final TextView textBmi;
+
+  @NonNull
+  public final TextView textBmiLabel;
+
+  @NonNull
+  public final TextView textDob;
+
+  @NonNull
+  public final TextView textDobLabel;
 
   @NonNull
   public final TextView textEmail;
@@ -78,17 +100,25 @@ public abstract class FragmentProfileBinding extends ViewDataBinding {
 
   protected FragmentProfileBinding(Object _bindingComponent, View _root, int _localFieldCount,
       Button buttonEditProfile, Button buttonLogout, MaterialCardView cardPersonal,
-      MaterialCardView cardProfile, ProgressBar progressBar, TextView textEmail,
-      TextView textEmailLabel, TextView textGender, TextView textGenderLabel, TextView textHealth,
-      TextView textHealthLabel, TextView textHeight, TextView textHeightLabel, TextView textName,
-      TextView textNameLabel, TextView textPersonalInfoTitle, TextView textWeight,
-      TextView textWeightLabel) {
+      MaterialCardView cardProfile, ProgressBar progressBar, SwitchCompat switchShareGoal,
+      TextView textAge, TextView textAgeLabel, TextView textBmi, TextView textBmiLabel,
+      TextView textDob, TextView textDobLabel, TextView textEmail, TextView textEmailLabel,
+      TextView textGender, TextView textGenderLabel, TextView textHealth, TextView textHealthLabel,
+      TextView textHeight, TextView textHeightLabel, TextView textName, TextView textNameLabel,
+      TextView textPersonalInfoTitle, TextView textWeight, TextView textWeightLabel) {
     super(_bindingComponent, _root, _localFieldCount);
     this.buttonEditProfile = buttonEditProfile;
     this.buttonLogout = buttonLogout;
     this.cardPersonal = cardPersonal;
     this.cardProfile = cardProfile;
     this.progressBar = progressBar;
+    this.switchShareGoal = switchShareGoal;
+    this.textAge = textAge;
+    this.textAgeLabel = textAgeLabel;
+    this.textBmi = textBmi;
+    this.textBmiLabel = textBmiLabel;
+    this.textDob = textDob;
+    this.textDobLabel = textDobLabel;
     this.textEmail = textEmail;
     this.textEmailLabel = textEmailLabel;
     this.textGender = textGender;

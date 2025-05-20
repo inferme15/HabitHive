@@ -5,18 +5,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.habithive.app.adapters.HabitAdapter
+import com.habithive.app.data.model.Exercise
 import com.habithive.app.databinding.FragmentHabitsBinding
-import com.habithive.app.model.Habit
-import com.habithive.app.utils.PointsCalculator
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
+import com.habithive.app.ui.exercise.ExerciseActivity
+import java.util.*
 
 class HabitsFragment : Fragment() {
 
@@ -26,11 +26,10 @@ class HabitsFragment : Fragment() {
     private lateinit var auth: FirebaseAuth
     private lateinit var firestore: FirebaseFirestore
     private lateinit var habitAdapter: HabitAdapter
-    private val habitsList = mutableListOf<Habit>()
+    private val todayExerciseList = mutableListOf<Exercise>()
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
+        inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHabitsBinding.inflate(inflater, container, false)
@@ -42,16 +41,16 @@ class HabitsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
-        loadHabits()
+        listenToTodayExercises()
 
         binding.fabAddHabit.setOnClickListener {
-            startActivity(Intent(requireContext(), AddHabitActivity::class.java))
+            startActivity(Intent(requireContext(), ExerciseActivity::class.java))
         }
     }
 
     private fun setupRecyclerView() {
-        habitAdapter = HabitAdapter(habitsList) { habit, isCompleted ->
-            updateHabitCompletion(habit, isCompleted)
+        habitAdapter = HabitAdapter(todayExerciseList) { exerciseToDelete ->
+            confirmAndDeleteExercise(exerciseToDelete)
         }
 
         binding.recyclerHabits.apply {
@@ -60,72 +59,78 @@ class HabitsFragment : Fragment() {
         }
     }
 
-    private fun loadHabits() {
+    private fun listenToTodayExercises() {
         val userId = auth.currentUser?.uid ?: return
 
-        binding.progressBar.visibility = View.VISIBLE
+        val calendar = Calendar.getInstance()
+        calendar.set(Calendar.HOUR_OF_DAY, 0)
+        calendar.set(Calendar.MINUTE, 0)
+        calendar.set(Calendar.SECOND, 0)
+        calendar.set(Calendar.MILLISECOND, 0)
+        val todayStart = calendar.time
 
-        firestore.collection("habits")
+        firestore.collection("exercises")
             .whereEqualTo("userId", userId)
-            .orderBy("createdAt", Query.Direction.DESCENDING)
-            .addSnapshotListener { snapshot, e ->
-                binding.progressBar.visibility = View.GONE
+            .whereGreaterThanOrEqualTo("date", todayStart)
+            .orderBy("date", Query.Direction.DESCENDING)
+            .addSnapshotListener { snapshot, error ->
+                if (error != null) {
+                    Toast.makeText(requireContext(), "Error loading exercises", Toast.LENGTH_SHORT).show()
+                    return@addSnapshotListener
+                }
 
-                if (e != null) return@addSnapshotListener
-
-                habitsList.clear()
-                snapshot?.documents?.forEach { document ->
-                    val habit = document.toObject(Habit::class.java)
-                    habit?.let { habitsList.add(it) }
+                todayExerciseList.clear()
+                snapshot?.documents?.forEach { doc ->
+                    doc.toObject(Exercise::class.java)?.let {
+                        todayExerciseList.add(it.copy(id = doc.id))
+                    }
                 }
 
                 habitAdapter.notifyDataSetChanged()
-                binding.textEmpty.visibility = if (habitsList.isEmpty()) View.VISIBLE else View.GONE
+                binding.textEmpty.visibility = if (todayExerciseList.isEmpty()) View.VISIBLE else View.GONE
             }
     }
 
-    private fun updateHabitCompletion(habit: Habit, isCompleted: Boolean) {
-        viewLifecycleOwner.lifecycleScope.launch {
-            try {
-                val userId = auth.currentUser?.uid ?: return@launch
-                val habitRef = firestore.collection("habits").document(habit.id)
-
-                habitRef.update("completed", isCompleted)
-
-                if (isCompleted) {
-                    // Assumed defaults — replace with real user input later
-                    val weightKg = 70
-                    val durationMin = 30
-
-                    val caloriesBurned = PointsCalculator.calculateCaloriesBurned(
-                        habit.title.lowercase(),
-                        weightKg,
-                        durationMin
-                    )
-
-                    val points = PointsCalculator.calculatePointsFromCalories(caloriesBurned)
-
-                    val achievementRef = firestore.collection("achievements").document(userId)
-                    val achievementDoc = achievementRef.get().await()
-
-                    val totalPoints = achievementDoc.getLong("totalPoints")?.toInt() ?: 0
-                    val existingCalories = achievementDoc.getLong("caloriesBurned")?.toInt() ?: 0
-                    val dailyScore = achievementDoc.getLong("dailyScore")?.toInt() ?: 0
-                    val weeklyScore = achievementDoc.getLong("weeklyScore")?.toInt() ?: 0
-
-                    achievementRef.update(
-                        mapOf(
-                            "totalPoints" to totalPoints + points,
-                            "caloriesBurned" to existingCalories + caloriesBurned,
-                            "dailyScore" to dailyScore + points,
-                            "weeklyScore" to weeklyScore + points
-                        )
-                    )
-                }
-
-            } catch (e: Exception) {
-                // Log or handle error
+    private fun confirmAndDeleteExercise(exercise: Exercise) {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Delete Exercise")
+            .setMessage("Are you sure you want to delete this exercise?")
+            .setPositiveButton("Yes") { _, _ ->
+                deleteExerciseWithAchievementsUpdate(exercise)
             }
+            .setNegativeButton("No", null)
+            .show()
+    }
+
+    private fun deleteExerciseWithAchievementsUpdate(exercise: Exercise) {
+        val userId = auth.currentUser?.uid ?: return
+
+        firestore.collection("exercises").document(exercise.id)
+            .delete()
+            .addOnSuccessListener {
+                updateAchievementsAfterDelete(userId, exercise.caloriesBurned, exercise.pointsEarned)
+                Toast.makeText(requireContext(), "Exercise deleted", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener {
+                Toast.makeText(requireContext(), "Failed to delete exercise", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    private fun updateAchievementsAfterDelete(userId: String, caloriesToSubtract: Int, pointsToSubtract: Int) {
+        val ref = firestore.collection("achievements").document(userId)
+        firestore.runTransaction { transaction ->
+            val snapshot = transaction.get(ref)
+            val totalPoints = (snapshot.getLong("totalPoints") ?: 0L) - pointsToSubtract
+            val calories = (snapshot.getLong("caloriesBurned") ?: 0L) - caloriesToSubtract
+            val dailyScore = (snapshot.getLong("dailyScore") ?: 0L) - pointsToSubtract
+            val weeklyScore = (snapshot.getLong("weeklyScore") ?: 0L) - pointsToSubtract
+
+            transaction.update(ref, mapOf(
+                "totalPoints" to totalPoints.coerceAtLeast(0),
+                "caloriesBurned" to calories.coerceAtLeast(0),
+                "dailyScore" to dailyScore.coerceAtLeast(0),
+                "weeklyScore" to weeklyScore.coerceAtLeast(0)
+            ))
         }
     }
 

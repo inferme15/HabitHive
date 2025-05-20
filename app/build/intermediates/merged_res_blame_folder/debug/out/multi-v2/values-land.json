@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "com.habithive.app-mergeDebugResources-81:/values-land/values-land.xml",
+            "outputFile": "com.habithive.app-mergeDebugResources-3:/values-land/values-land.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\drspk\\.gradle\\caches\\transforms-3\\76605392cfcc72db6aa9a78e829d97e8\\transformed\\material-1.11.0\\res\\values-land\\values-land.xml",
+                    "source": "C:\\Users\\drspk\\Pictures\\Camera Roll\\Documents\\HabitHive\\HabitHive\\caches\\transforms-3\\76605392cfcc72db6aa9a78e829d97e8\\transformed\\material-1.11.0\\res\\values-land\\values-land.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,26,35,40",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -23,7 +23,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\drspk\\.gradle\\caches\\transforms-3\\74635a9d81530fece8b64e6e57e444fe\\transformed\\appcompat-1.6.1\\res\\values-land\\values-land.xml",
+                    "source": "C:\\Users\\drspk\\Pictures\\Camera Roll\\Documents\\HabitHive\\HabitHive\\caches\\transforms-3\\74635a9d81530fece8b64e6e57e444fe\\transformed\\appcompat-1.6.1\\res\\values-land\\values-land.xml",
                     "from": {
                         "startLines": "2,3,4",
                         "startColumns": "4,4,4",

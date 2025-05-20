@@ -5,7 +5,13 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
-    
+
+    <!-- No Action Bar theme - required by multiple activities in the manifest -->
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
     <!-- Splash screen theme -->
     <style name="SplashTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="android:windowBackground">@drawable/splash_background</item>
@@ -14,40 +20,40 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:statusBarColor">@color/colorPrimaryDark</item>
     </style>
-    
+
     <!-- Text styles -->
     <style name="TextAppearance.Title" parent="TextAppearance.MaterialComponents.Headline6">
         <item name="android:textColor">@color/colorText</item>
         <item name="android:textSize">18sp</item>
         <item name="android:textStyle">bold</item>
     </style>
-    
+
     <style name="TextAppearance.Subtitle" parent="TextAppearance.MaterialComponents.Subtitle1">
         <item name="android:textColor">@color/colorTextSecondary</item>
         <item name="android:textSize">16sp</item>
     </style>
-    
+
     <style name="TextAppearance.Body" parent="TextAppearance.MaterialComponents.Body1">
         <item name="android:textColor">@color/colorText</item>
         <item name="android:textSize">14sp</item>
     </style>
-    
+
     <style name="TextAppearance.Caption" parent="TextAppearance.MaterialComponents.Caption">
         <item name="android:textColor">@color/colorTextSecondary</item>
         <item name="android:textSize">12sp</item>
     </style>
-    
+
     <!-- Button styles -->
     <style name="Button.Primary" parent="Widget.MaterialComponents.Button">
         <item name="android:textColor">@color/colorText</item>
         <item name="backgroundTint">@color/colorPrimary</item>
     </style>
-    
+
     <style name="Button.Secondary" parent="Widget.MaterialComponents.Button.OutlinedButton">
         <item name="android:textColor">@color/colorPrimary</item>
         <item name="strokeColor">@color/colorPrimary</item>
     </style>
-    
+
     <!-- Card styles -->
     <style name="Card" parent="Widget.MaterialComponents.CardView">
         <item name="cardElevation">4dp</item>

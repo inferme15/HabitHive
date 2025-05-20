@@ -7,5 +7,5 @@ data class User(
     val gender: String = "",
     val health: String = "",
     val height: Double = 0.0,
-    val weight: Double = 0.0
+    val weight: Double = 0.0,val shareGoal: Boolean = false // ✅ Added this field
 )

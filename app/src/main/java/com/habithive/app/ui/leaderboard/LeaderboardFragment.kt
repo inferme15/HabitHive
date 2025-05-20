@@ -9,138 +9,169 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.tabs.TabLayout
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
+import com.google.firebase.firestore.*
 import com.habithive.app.adapters.LeaderboardAdapter
 import com.habithive.app.databinding.FragmentLeaderboardBinding
 import com.habithive.app.model.LeaderboardUser
 
 class LeaderboardFragment : Fragment() {
-    
+
     private var _binding: FragmentLeaderboardBinding? = null
     private val binding get() = _binding!!
-    
+
     private lateinit var auth: FirebaseAuth
     private lateinit var firestore: FirebaseFirestore
     private lateinit var leaderboardAdapter: LeaderboardAdapter
     private val leaderboardUsers = mutableListOf<LeaderboardUser>()
-    
+    private var achievementListener: ListenerRegistration? = null
+    private var selectedType: String = "daily"
+    private var isLoading = false
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentLeaderboardBinding.inflate(inflater, container, false)
-        
-        // Initialize Firebase
         auth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
-        
         return binding.root
     }
-    
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        
-        // Setup RecyclerView
         setupRecyclerView()
-        
-        // Setup tabs
         setupTabs()
-        
-        // Load daily leaderboard by default
-        loadLeaderboard("daily")
-        
-        // Setup refresh
+        loadLeaderboard(selectedType)
+        listenForLeaderboardUpdates()
+
         binding.swipeRefresh.setOnRefreshListener {
-            val tabPosition = binding.tabLayout.selectedTabPosition
-            val type = if (tabPosition == 0) "daily" else "weekly"
-            loadLeaderboard(type)
+            loadLeaderboard(selectedType)
         }
     }
-    
+
     private fun setupRecyclerView() {
         leaderboardAdapter = LeaderboardAdapter(leaderboardUsers, auth.currentUser?.uid ?: "")
-        
         binding.recyclerLeaderboard.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = leaderboardAdapter
         }
     }
-    
+
     private fun setupTabs() {
         binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
-                when (tab?.position) {
-                    0 -> loadLeaderboard("daily")
-                    1 -> loadLeaderboard("weekly")
-                }
+                selectedType = if (tab?.position == 0) "daily" else "weekly"
+                achievementListener?.remove()
+                loadLeaderboard(selectedType)
+                listenForLeaderboardUpdates()
             }
-            
+
             override fun onTabUnselected(tab: TabLayout.Tab?) {}
-            
             override fun onTabReselected(tab: TabLayout.Tab?) {}
         })
     }
-    
+
     private fun loadLeaderboard(type: String) {
+        if (!isAdded || _binding == null || isLoading) return
+        isLoading = true
+
         binding.progressBar.visibility = View.VISIBLE
-        
-        // Determine which score field to use for sorting
+        leaderboardUsers.clear()
+        leaderboardAdapter.notifyDataSetChanged()
+
+        val currentUserId = auth.currentUser?.uid ?: return
         val scoreField = if (type == "daily") "dailyScore" else "weeklyScore"
-        
-        firestore.collection("achievements")
-            .orderBy(scoreField, Query.Direction.DESCENDING)
-            .limit(50)
+
+        firestore.collection("users").document(currentUserId)
             .get()
-            .addOnSuccessListener { documents ->
-                binding.progressBar.visibility = View.GONE
-                binding.swipeRefresh.isRefreshing = false
-                
-                leaderboardUsers.clear()
-                var rank = 1
-                
-                // Process achievements
-                for (doc in documents) {
-                    val userId = doc.id
-                    val score = doc.getLong(scoreField)?.toInt() ?: 0
-                    
-                    // Get user name from users collection
+            .addOnSuccessListener { userDoc ->
+                val shareGoal = userDoc.getBoolean("shareGoal") ?: false
+
+                val achievementQuery = if (shareGoal) {
+                    firestore.collection("achievements")
+                        .orderBy(scoreField, Query.Direction.DESCENDING)
+                        .limit(50)
+                } else {
+                    firestore.collection("achievements")
+                        .whereEqualTo(FieldPath.documentId(), currentUserId)
+                }
+
+                achievementQuery.get().addOnSuccessListener { documents ->
+                    val achievements = documents.map { doc ->
+                        val userId = doc.id
+                        val score = doc.getLong(scoreField)?.toInt() ?: 0
+                        userId to score
+                    }
+
+                    val usersToFetch = achievements.map { it.first }.toSet()
+
                     firestore.collection("users")
-                        .document(userId)
+                        .whereIn(FieldPath.documentId(), usersToFetch.toList())
                         .get()
-                        .addOnSuccessListener { userDoc ->
-                            val name = userDoc.getString("name") ?: "Unknown"
-                            
-                            val leaderboardUser = LeaderboardUser(
-                                id = userId,
-                                name = name,
-                                score = score,
-                                rank = rank++
-                            )
-                            
-                            leaderboardUsers.add(leaderboardUser)
-                            leaderboardUsers.sortByDescending { it.score }
-                            leaderboardAdapter.notifyDataSetChanged()
-                            
-                            // Update empty state
-                            if (leaderboardUsers.isEmpty()) {
-                                binding.textEmpty.visibility = View.VISIBLE
-                            } else {
-                                binding.textEmpty.visibility = View.GONE
+                        .addOnSuccessListener { userDocs ->
+                            if (!isAdded || _binding == null) return@addOnSuccessListener
+
+                            val userMap = userDocs.associateBy { it.id }
+                            val results = mutableListOf<LeaderboardUser>()
+
+                            for ((userId, score) in achievements) {
+                                val uDoc = userMap[userId]
+                                val name = uDoc?.getString("name") ?: "Unknown"
+                                val uShare = uDoc?.getBoolean("shareGoal") ?: false
+
+                                if (shareGoal) {
+                                    if (uShare || userId == currentUserId) {
+                                        results.add(LeaderboardUser(userId, name, score, 0))
+                                    }
+                                } else if (userId == currentUserId) {
+                                    results.add(LeaderboardUser(userId, name, score, 0))
+                                }
                             }
+
+                            results.sortByDescending { it.score }
+                            results.forEachIndexed { index, user -> user.rank = index + 1 }
+
+                            leaderboardUsers.clear()
+                            leaderboardUsers.addAll(results)
+                            leaderboardAdapter.notifyDataSetChanged()
+
+                            binding.textEmpty.visibility = if (results.isEmpty()) View.VISIBLE else View.GONE
+                            binding.progressBar.visibility = View.GONE
+                            binding.swipeRefresh.isRefreshing = false
+                            isLoading = false
                         }
+                        .addOnFailureListener { showError(it.message) }
+                }.addOnFailureListener { showError(it.message) }
+            }
+            .addOnFailureListener { showError(it.message) }
+    }
+
+    private fun listenForLeaderboardUpdates() {
+        achievementListener?.remove()
+        val currentUserId = auth.currentUser?.uid ?: return
+
+        achievementListener = firestore.collection("achievements")
+            .document(currentUserId)
+            .addSnapshotListener { _, error ->
+                if (error == null && isAdded && _binding != null) {
+                    loadLeaderboard(selectedType)
                 }
             }
-            .addOnFailureListener { e ->
-                binding.progressBar.visibility = View.GONE
-                binding.swipeRefresh.isRefreshing = false
-                Toast.makeText(requireContext(), "Error loading leaderboard: ${e.message}", Toast.LENGTH_SHORT).show()
-            }
     }
-    
+
+    private fun showError(message: String?) {
+        if (_binding != null && isAdded) {
+            binding.progressBar.visibility = View.GONE
+            binding.swipeRefresh.isRefreshing = false
+            Toast.makeText(requireContext(), "Error loading leaderboard: $message", Toast.LENGTH_SHORT).show()
+        }
+        isLoading = false
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        achievementListener?.remove()
     }
 }

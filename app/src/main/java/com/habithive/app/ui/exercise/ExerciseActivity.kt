@@ -8,99 +8,101 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.google.firebase.Timestamp
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FieldValue
+import com.google.firebase.firestore.FirebaseFirestore
 import com.habithive.app.R
-import com.habithive.app.databinding.ActivityExerciseBinding
 import com.habithive.app.data.model.Exercise
+import com.habithive.app.databinding.ActivityExerciseBinding
 import com.habithive.app.ui.auth.LoginActivity
-import java.util.Date
+import java.util.*
 
-/**
- * Activity for logging exercise
- * Tracks exercise type, duration, and notes
- * Calculates calories burned and points earned
- */
 class ExerciseActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityExerciseBinding
     private lateinit var viewModel: ExerciseViewModel
+    private var isSaving = false // ✅ Prevent double-save
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        // Initialize view binding
         binding = ActivityExerciseBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        // Initialize ViewModel
         viewModel = ViewModelProvider(this)[ExerciseViewModel::class.java]
 
-        // Setup action bar
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        // Setup exercise types spinner
         setupSpinner()
-
-        // Setup listeners
         setupListeners()
-
-        // Observe ViewModel
         observeViewModel()
 
-        // Setup View History button
         binding.buttonViewHistory.setOnClickListener {
-            val intent = Intent(this, ExerciseHistoryActivity::class.java)
-            startActivity(intent)
+            startActivity(Intent(this, ExerciseHistoryActivity::class.java))
         }
 
-        // Add burn rate info button click
-        binding.cardCalculation.setOnClickListener {
-            val intent = Intent(this, BurnRateInfoActivity::class.java)
-            startActivity(intent)
+        binding.buttonBurnRateInfo.setOnClickListener {
+            startActivity(Intent(this, BurnRateInfoActivity::class.java))
         }
     }
 
     private fun setupSpinner() {
-        val exerciseTypes = resources.getStringArray(R.array.exercise_types)
-        val adapter = ArrayAdapter(
+        ArrayAdapter.createFromResource(
             this,
-            android.R.layout.simple_spinner_item,
-            exerciseTypes
-        )
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding.spinnerExerciseType.adapter = adapter
+            R.array.exercise_types,
+            android.R.layout.simple_spinner_item
+        ).also { adapter ->
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            binding.spinnerExerciseType.adapter = adapter
+        }
 
-        // Update burn rate when exercise type changes, but DON'T calculate calories automatically
         binding.spinnerExerciseType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                val exerciseType = exerciseTypes[position]
-                val burnRate = viewModel.getBurnRateForExerciseType(exerciseType)
-                binding.textBurnRateValue.text = getString(R.string.burn_rate_value, burnRate)
-
-                // Removed automatic calculation here
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                binding.textCaloriesValue.text = "0"
+                binding.textPointsValue.text = "0"
             }
 
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                // Do nothing
-            }
+            override fun onNothingSelected(parent: AdapterView<*>) {}
         }
     }
 
     private fun setupListeners() {
-        // Calculate button click - This is now the ONLY place where calculation happens
         binding.buttonCalculate.setOnClickListener {
             calculateCaloriesAndPoints()
         }
 
-        // Save button click
         binding.buttonSave.setOnClickListener {
             if (binding.textCaloriesValue.text.toString() == "0") {
                 Toast.makeText(this, "Please calculate calories first", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
+
+            if (isSaving) return@setOnClickListener
+            isSaving = true
+            binding.buttonSave.isEnabled = false
             saveExercise()
         }
+    }
 
-        // Removed duration focus change listener to prevent automatic calculation
+    private fun observeViewModel() {
+        viewModel.saveResult.observe(this) { success ->
+            isSaving = false
+            binding.buttonSave.isEnabled = true
+            if (success) {
+                Toast.makeText(this, "Exercise saved successfully!", Toast.LENGTH_SHORT).show()
+                binding.editTextDuration.text.clear()
+                binding.editTextNotes.text.clear()
+                binding.textCaloriesValue.text = "0"
+                binding.textPointsValue.text = "0"
+            }
+        }
+
+        viewModel.error.observe(this) { errorMsg ->
+            isSaving = false
+            binding.buttonSave.isEnabled = true
+            errorMsg?.let {
+                Toast.makeText(this, it, Toast.LENGTH_LONG).show()
+            }
+        }
     }
 
     private fun calculateCaloriesAndPoints() {
@@ -117,52 +119,26 @@ class ExerciseActivity : AppCompatActivity() {
         }
 
         val exerciseType = binding.spinnerExerciseType.selectedItem.toString()
-
-        // Calculate calories and points
         val calories = viewModel.calculateCaloriesBurned(exerciseType, duration)
         val points = viewModel.calculatePointsEarned(calories)
 
-        // Update UI
         binding.textCaloriesValue.text = calories.toString()
         binding.textPointsValue.text = points.toString()
     }
 
     private fun saveExercise() {
-        // Check if user is authenticated (will delegate to ViewModel)
         if (!viewModel.isUserAuthenticated()) {
             Toast.makeText(this, "You must be logged in to save exercises", Toast.LENGTH_SHORT).show()
-            // Navigate to login screen
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
-            return
-        }
-
-        val durationText = binding.editTextDuration.text.toString()
-        if (durationText.isEmpty()) {
-            Toast.makeText(this, "Please enter duration", Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        val duration = durationText.toIntOrNull() ?: 0
-        if (duration <= 0) {
-            Toast.makeText(this, "Duration must be greater than 0", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this, LoginActivity::class.java))
             return
         }
 
         val exerciseType = binding.spinnerExerciseType.selectedItem.toString()
-        val notes = binding.editTextNotes.text.toString()
-
-        // Get the calculated calories and points from the UI
+        val duration = binding.editTextDuration.text.toString().toIntOrNull() ?: 0
         val calories = binding.textCaloriesValue.text.toString().toIntOrNull() ?: 0
         val points = binding.textPointsValue.text.toString().toIntOrNull() ?: 0
+        val notes = binding.editTextNotes.text.toString()
 
-        // Ensure calories have been calculated
-        if (calories <= 0) {
-            Toast.makeText(this, "Please calculate calories first", Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        // Create exercise object
         val exercise = Exercise(
             type = exerciseType,
             durationMinutes = duration,
@@ -172,47 +148,68 @@ class ExerciseActivity : AppCompatActivity() {
             date = Date()
         )
 
-        // Show loading indicator
-        binding.progressBar.visibility = View.VISIBLE
-
-        // Save exercise
         viewModel.saveExercise(exercise)
-    }
 
-    private fun observeViewModel() {
-        // Observe save result
-        viewModel.saveResult.observe(this) { success ->
-            binding.progressBar.visibility = View.GONE
+        val firestore = FirebaseFirestore.getInstance()
+        val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
+        val timestamp = Timestamp.now()
 
-            if (success) {
-                Toast.makeText(
-                    this,
-                    "Exercise saved successfully!",
-                    Toast.LENGTH_SHORT
-                ).show()
+        // ✅ Save to Habits
+        val habitData = hashMapOf(
+            "userId" to userId,
+            "title" to exerciseType,
+            "description" to notes,
+            "type" to "exercise",
+            "frequency" to 1,
+            "points" to points,
+            "caloriesBurnedPerCompletion" to calories,
+            "completed" to true,
+            "createdAt" to timestamp,
+            "date" to Date(),
+            "completions" to listOf(timestamp)
+        )
+        firestore.collection("habits").add(habitData)
 
-                // Reset form
-                binding.editTextDuration.text?.clear()
-                binding.editTextNotes.text?.clear()
-                binding.spinnerExerciseType.setSelection(0)
-                binding.textCaloriesValue.text = "0"
-                binding.textPointsValue.text = "0"
-            } else {
-                Toast.makeText(
-                    this,
-                    "Failed to save exercise. Please try again.",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
+        // ✅ Update Achievements using FieldValue.increment()
+        val userDoc = firestore.collection("achievements").document(userId)
+        firestore.runTransaction { transaction ->
+            transaction.update(userDoc, mapOf(
+                "totalPoints" to FieldValue.increment(points.toLong()),
+                "dailyScore" to FieldValue.increment(points.toLong()),
+                "weeklyScore" to FieldValue.increment(points.toLong()),
+                "caloriesBurned" to FieldValue.increment(calories.toLong())
+            ))
         }
 
-        // Observe error
-        viewModel.error.observe(this) { errorMessage ->
-            if (!errorMessage.isNullOrEmpty()) {
-                binding.progressBar.visibility = View.GONE
-                Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
+        // ✅ Update Goals
+        firestore.collection("goals")
+            .whereEqualTo("userId", userId)
+            .whereEqualTo("completed", false)
+            .get()
+            .addOnSuccessListener { goalsSnapshot ->
+                for (doc in goalsSnapshot) {
+                    val goal = doc.data
+                    val targetCalories = (goal["targetCalories"] as? Long)?.toInt() ?: continue
+                    val targetPoints = (goal["targetPoints"] as? Long)?.toInt() ?: 0
+                    val currentCalories = (goal["currentCalories"] as? Long)?.toInt() ?: 0
+                    val currentPoints = (goal["currentPoints"] as? Long)?.toInt() ?: 0
+
+                    val newCalories = currentCalories + calories
+                    val newPoints = currentPoints + points
+
+                    val updates = mutableMapOf<String, Any>(
+                        "currentCalories" to newCalories,
+                        "currentPoints" to newPoints
+                    )
+
+                    if (newCalories >= targetCalories && newPoints >= targetPoints) {
+                        updates["completed"] = true
+                        updates["completedAt"] = Timestamp.now()
+                    }
+
+                    doc.reference.update(updates)
+                }
             }
-        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

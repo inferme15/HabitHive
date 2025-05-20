@@ -4,14 +4,16 @@ package com.habithive.app.databinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.databinding.Bindable;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
-import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.LineChart;
 import com.google.android.material.card.MaterialCardView;
 import com.habithive.app.R;
 import com.habithive.app.ui.home.HomeViewModel;
@@ -19,6 +21,9 @@ import java.lang.Deprecated;
 import java.lang.Object;
 
 public abstract class FragmentHomeBinding extends ViewDataBinding {
+  @NonNull
+  public final ImageButton buttonRefreshQuote;
+
   @NonNull
   public final MaterialCardView cardChart;
 
@@ -29,13 +34,13 @@ public abstract class FragmentHomeBinding extends ViewDataBinding {
   public final MaterialCardView cardStats;
 
   @NonNull
-  public final BarChart chartProgress;
+  public final LineChart chartProgress;
 
   @NonNull
   public final ProgressBar progressCompletion;
 
   @NonNull
-  public final WidgetMotivationalQuoteBinding quoteWidget;
+  public final CardView quoteCard;
 
   @NonNull
   public final TextView textCaloriesBurned;
@@ -47,13 +52,10 @@ public abstract class FragmentHomeBinding extends ViewDataBinding {
   public final TextView textCompletedHabits;
 
   @NonNull
-  public final TextView textCompletedLabel;
+  public final TextView textCompletedHabitsLabel;
 
   @NonNull
   public final TextView textCompletionRate;
-
-  @NonNull
-  public final TextView textCompletionRateLabel;
 
   @NonNull
   public final TextView textDailyScore;
@@ -65,10 +67,16 @@ public abstract class FragmentHomeBinding extends ViewDataBinding {
   public final TextView textHabitsCount;
 
   @NonNull
-  public final TextView textHabitsLabel;
+  public final TextView textHabitsCountLabel;
 
   @NonNull
   public final TextView textProgressTitle;
+
+  @NonNull
+  public final TextView textQuote;
+
+  @NonNull
+  public final TextView textQuoteAuthor;
 
   @NonNull
   public final TextView textStatsTitle;
@@ -92,33 +100,35 @@ public abstract class FragmentHomeBinding extends ViewDataBinding {
   protected HomeViewModel mViewModel;
 
   protected FragmentHomeBinding(Object _bindingComponent, View _root, int _localFieldCount,
-      MaterialCardView cardChart, MaterialCardView cardHabits, MaterialCardView cardStats,
-      BarChart chartProgress, ProgressBar progressCompletion,
-      WidgetMotivationalQuoteBinding quoteWidget, TextView textCaloriesBurned,
-      TextView textCaloriesBurnedLabel, TextView textCompletedHabits, TextView textCompletedLabel,
-      TextView textCompletionRate, TextView textCompletionRateLabel, TextView textDailyScore,
-      TextView textDailyScoreLabel, TextView textHabitsCount, TextView textHabitsLabel,
-      TextView textProgressTitle, TextView textStatsTitle, TextView textTotalPoints,
+      ImageButton buttonRefreshQuote, MaterialCardView cardChart, MaterialCardView cardHabits,
+      MaterialCardView cardStats, LineChart chartProgress, ProgressBar progressCompletion,
+      CardView quoteCard, TextView textCaloriesBurned, TextView textCaloriesBurnedLabel,
+      TextView textCompletedHabits, TextView textCompletedHabitsLabel, TextView textCompletionRate,
+      TextView textDailyScore, TextView textDailyScoreLabel, TextView textHabitsCount,
+      TextView textHabitsCountLabel, TextView textProgressTitle, TextView textQuote,
+      TextView textQuoteAuthor, TextView textStatsTitle, TextView textTotalPoints,
       TextView textTotalPointsLabel, TextView textWeeklyScore, TextView textWeeklyScoreLabel,
       TextView textWelcome) {
     super(_bindingComponent, _root, _localFieldCount);
+    this.buttonRefreshQuote = buttonRefreshQuote;
     this.cardChart = cardChart;
     this.cardHabits = cardHabits;
     this.cardStats = cardStats;
     this.chartProgress = chartProgress;
     this.progressCompletion = progressCompletion;
-    this.quoteWidget = quoteWidget;
+    this.quoteCard = quoteCard;
     this.textCaloriesBurned = textCaloriesBurned;
     this.textCaloriesBurnedLabel = textCaloriesBurnedLabel;
     this.textCompletedHabits = textCompletedHabits;
-    this.textCompletedLabel = textCompletedLabel;
+    this.textCompletedHabitsLabel = textCompletedHabitsLabel;
     this.textCompletionRate = textCompletionRate;
-    this.textCompletionRateLabel = textCompletionRateLabel;
     this.textDailyScore = textDailyScore;
     this.textDailyScoreLabel = textDailyScoreLabel;
     this.textHabitsCount = textHabitsCount;
-    this.textHabitsLabel = textHabitsLabel;
+    this.textHabitsCountLabel = textHabitsCountLabel;
     this.textProgressTitle = textProgressTitle;
+    this.textQuote = textQuote;
+    this.textQuoteAuthor = textQuoteAuthor;
     this.textStatsTitle = textStatsTitle;
     this.textTotalPoints = textTotalPoints;
     this.textTotalPointsLabel = textTotalPointsLabel;

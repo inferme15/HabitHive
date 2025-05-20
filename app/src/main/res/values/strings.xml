@@ -1,6 +1,14 @@
 <resources>
     <string name="app_name">HabitHive</string>
 
+        <string name="goal_status_happy">Happy</string>
+        <string name="goal_status_sad">Sad</string>
+        <string name="goal_status_neutral">Neutral</string>
+
+    <string name="welcome_to_habithive">Welcome to HabitHive!</string>
+    <string name="quote_loading">Loading quote...</string>
+    <string name="zero">0</string>
+
     <!-- Common -->
     <string name="save">Save</string>
     <string name="cancel">Cancel</string>
@@ -12,6 +20,7 @@
     <string name="welcome_message">Welcome to HabitHive!</string>
     <string name="password">Password</string>
     <string name="confirm_password">Confirm Password</string>
+    <string name="goal_status_indicator">Goal status indicator</string>
 
     <!-- Navigation -->
     <string name="home">Home</string>
@@ -45,6 +54,17 @@
     <string name="weight">Weight</string>
     <string name="logout">Logout</string>
     <string name="personal_information">Personal Information</string>
+    <string name="date_of_birth">Date of Birth</string>
+    <string name="dob_hint">DD/MM/YYYY</string>
+    <string name="age">Age</string>
+    <string name="bmi">BMI</string>
+    <string name="bmi_calculation">BMI Calculation</string>
+    <string name="calculate_bmi">Calculate BMI</string>
+    <string name="bmi_category_underweight">Underweight</string>
+    <string name="bmi_category_normal">Normal</string>
+    <string name="bmi_category_overweight">Overweight</string>
+    <string name="bmi_category_obese">Obese</string>
+    <string name="physical_information">Physical Information</string>
     <string-array name="gender_array">
         <item>Male</item>
         <item>Female</item>
@@ -81,6 +101,7 @@
     <string name="calories_value">%1$d cal</string>
     <string name="points_value">%1$d pts</string>
     <string name="view_history">View History</string>
+    <string name="filter_by_date">Filter by date</string>
 
     <!-- Burn Rate Info -->
     <string name="burn_rate_info_title">Exercise Burn Rates</string>
@@ -207,4 +228,10 @@
     <string name="retry">Retry</string>
     <string name="error_icon">Error Icon</string>
     <string name="firebase_index_error">This error is related to database setup. An index needs to be created in Firebase Console.</string>
+
+    <!-- New strings for BMI-based calorie calculations -->
+    <string name="bmi_status_format">Your BMI: %.1f</string>
+    <string name="bmi_info_format">Your BMI category (%s) is used to calculate calories</string>
+    <string name="bmi_not_available">BMI data not available. Using standard calculations.</string>
 </resources>
+

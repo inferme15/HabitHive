@@ -26,9 +26,8 @@ public class ActivityAddGoalBindingImpl extends ActivityAddGoalBinding  {
         sViewsWithIds.put(R.id.editTextTargetCalories, 11);
         sViewsWithIds.put(R.id.textDurationLabel, 12);
         sViewsWithIds.put(R.id.spinnerDuration, 13);
-        sViewsWithIds.put(R.id.switchShare, 14);
-        sViewsWithIds.put(R.id.buttonSave, 15);
-        sViewsWithIds.put(R.id.progressBar, 16);
+        sViewsWithIds.put(R.id.buttonSave, 14);
+        sViewsWithIds.put(R.id.progressBar, 15);
     }
     // views
     @NonNull
@@ -41,11 +40,11 @@ public class ActivityAddGoalBindingImpl extends ActivityAddGoalBinding  {
     // Inverse Binding Event Handlers
 
     public ActivityAddGoalBindingImpl(@Nullable androidx.databinding.DataBindingComponent bindingComponent, @NonNull View root) {
-        this(bindingComponent, root, mapBindings(bindingComponent, root, 17, sIncludes, sViewsWithIds));
+        this(bindingComponent, root, mapBindings(bindingComponent, root, 16, sIncludes, sViewsWithIds));
     }
     private ActivityAddGoalBindingImpl(androidx.databinding.DataBindingComponent bindingComponent, View root, Object[] bindings) {
         super(bindingComponent, root, 0
-            , (android.widget.Button) bindings[15]
+            , (android.widget.Button) bindings[14]
             , (com.google.android.material.textfield.TextInputEditText) bindings[7]
             , (com.google.android.material.textfield.TextInputEditText) bindings[11]
             , (com.google.android.material.textfield.TextInputEditText) bindings[9]
@@ -54,10 +53,9 @@ public class ActivityAddGoalBindingImpl extends ActivityAddGoalBinding  {
             , (com.google.android.material.textfield.TextInputLayout) bindings[10]
             , (com.google.android.material.textfield.TextInputLayout) bindings[8]
             , (com.google.android.material.textfield.TextInputLayout) bindings[4]
-            , (android.widget.ProgressBar) bindings[16]
+            , (android.widget.ProgressBar) bindings[15]
             , (bindings[2] != null) ? com.habithive.app.databinding.LayoutMotivationalQuoteBinding.bind((android.view.View) bindings[2]) : null
             , (android.widget.Spinner) bindings[13]
-            , (com.google.android.material.switchmaterial.SwitchMaterial) bindings[14]
             , (android.widget.TextView) bindings[12]
             , (android.widget.TextView) bindings[3]
             );

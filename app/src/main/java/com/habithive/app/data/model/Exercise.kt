@@ -15,5 +15,6 @@ data class Exercise(
     val caloriesBurned: Int = 0,  // Total calories burned
     val pointsEarned: Int = 0,    // Points earned (1 point per 10 calories)
     val notes: String = "",       // Optional notes
-    val date: Date = Date()       // Date and time of exercise
+    val date: Date = Date() ,      // Date and time of exercise
+    val completed: Boolean = true // ✅ Add this line
 )
