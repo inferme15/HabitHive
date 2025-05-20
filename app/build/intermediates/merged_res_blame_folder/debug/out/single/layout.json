@@ -1,0 +1,98 @@
+[
+    {
+        "merged": "C:\\Users\\drspk\\Pictures\\Camera Roll\\Documents\\HabitHive\\HabitHive\\daemon\\8.2\\com.habithive.app-mergeDebugResources-4:\\layout\\item_leaderboard.xml",
+        "source": "C:\\Users\\drspk\\Pictures\\Camera Roll\\Documents\\HabitHive\\HabitHive\\daemon\\8.2\\com.habithive.app-main-7:\\layout\\item_leaderboard.xml"
+    },
+    {
+        "merged": "C:\\Users\\drspk\\Pictures\\Camera Roll\\Documents\\HabitHive\\HabitHive\\daemon\\8.2\\com.habithive.app-mergeDebugResources-4:\\layout\\activity_notification_settings.xml",
+        "source": "C:\\Users\\drspk\\Pictures\\Camera Roll\\Documents\\HabitHive\\HabitHive\\daemon\\8.2\\com.habithive.app-main-7:\\layout\\activity_notification_settings.xml"
+    },
+    {
+        "merged": "C:\\Users\\drspk\\Pictures\\Camera Roll\\Documents\\HabitHive\\HabitHive\\daemon\\8.2\\com.habithive.app-mergeDebugResources-4:\\layout\\fragment_goals.xml",
+        "source": "C:\\Users\\drspk\\Pictures\\Camera Roll\\Documents\\HabitHive\\HabitHive\\daemon\\8.2\\com.habithive.app-main-7:\\layout\\fragment_goals.xml"
+    },
+    {
+        "merged": "C:\\Users\\drspk\\Pictures\\Camera Roll\\Documents\\HabitHive\\HabitHive\\daemon\\8.2\\com.habithive.app-mergeDebugResources-4:\\layout\\activity_burn_rate_info.xml",
+        "source": "C:\\Users\\drspk\\Pictures\\Camera Roll\\Documents\\HabitHive\\HabitHive\\daemon\\8.2\\com.habithive.app-main-7:\\layout\\activity_burn_rate_info.xml"
+    },
+    {
+        "merged": "C:\\Users\\drspk\\Pictures\\Camera Roll\\Documents\\HabitHive\\HabitHive\\daemon\\8.2\\com.habithive.app-mergeDebugResources-4:\\layout\\activity_login.xml",
+        "source": "C:\\Users\\drspk\\Pictures\\Camera Roll\\Documents\\HabitHive\\HabitHive\\daemon\\8.2\\com.habithive.app-main-7:\\layout\\activity_login.xml"
+    },
+    {
+        "merged": "C:\\Users\\drspk\\Pictures\\Camera Roll\\Documents\\HabitHive\\HabitHive\\daemon\\8.2\\com.habithive.app-mergeDebugResources-4:\\layout\\fragment_home.xml",
+        "source": "C:\\Users\\drspk\\Pictures\\Camera Roll\\Documents\\HabitHive\\HabitHive\\daemon\\8.2\\com.habithive.app-main-7:\\layout\\fragment_home.xml"
+    },
+    {
+        "merged": "C:\\Users\\drspk\\Pictures\\Camera Roll\\Documents\\HabitHive\\HabitHive\\daemon\\8.2\\com.habithive.app-mergeDebugResources-4:\\layout\\activity_add_habit.xml",
+        "source": "C:\\Users\\drspk\\Pictures\\Camera Roll\\Documents\\HabitHive\\HabitHive\\daemon\\8.2\\com.habithive.app-main-7:\\layout\\activity_add_habit.xml"
+    },
+    {
+        "merged": "C:\\Users\\drspk\\Pictures\\Camera Roll\\Documents\\HabitHive\\HabitHive\\daemon\\8.2\\com.habithive.app-mergeDebugResources-4:\\layout\\activity_exercise.xml",
+        "source": "C:\\Users\\drspk\\Pictures\\Camera Roll\\Documents\\HabitHive\\HabitHive\\daemon\\8.2\\com.habithive.app-main-7:\\layout\\activity_exercise.xml"
+    },
+    {
+        "merged": "C:\\Users\\drspk\\Pictures\\Camera Roll\\Documents\\HabitHive\\HabitHive\\daemon\\8.2\\com.habithive.app-mergeDebugResources-4:\\layout\\activity_edit_profile.xml",
+        "source": "C:\\Users\\drspk\\Pictures\\Camera Roll\\Documents\\HabitHive\\HabitHive\\daemon\\8.2\\com.habithive.app-main-7:\\layout\\activity_edit_profile.xml"
+    },
+    {
+        "merged": "C:\\Users\\drspk\\Pictures\\Camera Roll\\Documents\\HabitHive\\HabitHive\\daemon\\8.2\\com.habithive.app-mergeDebugResources-4:\\layout\\activity_register.xml",
+        "source": "C:\\Users\\drspk\\Pictures\\Camera Roll\\Documents\\HabitHive\\HabitHive\\daemon\\8.2\\com.habithive.app-main-7:\\layout\\activity_register.xml"
+    },
+    {
+        "merged": "C:\\Users\\drspk\\Pictures\\Camera Roll\\Documents\\HabitHive\\HabitHive\\daemon\\8.2\\com.habithive.app-mergeDebugResources-4:\\layout\\item_burn_rate_info.xml",
+        "source": "C:\\Users\\drspk\\Pictures\\Camera Roll\\Documents\\HabitHive\\HabitHive\\daemon\\8.2\\com.habithive.app-main-7:\\layout\\item_burn_rate_info.xml"
+    },
+    {
+        "merged": "C:\\Users\\drspk\\Pictures\\Camera Roll\\Documents\\HabitHive\\HabitHive\\daemon\\8.2\\com.habithive.app-mergeDebugResources-4:\\layout\\fragment_profile.xml",
+        "source": "C:\\Users\\drspk\\Pictures\\Camera Roll\\Documents\\HabitHive\\HabitHive\\daemon\\8.2\\com.habithive.app-main-7:\\layout\\fragment_profile.xml"
+    },
+    {
+        "merged": "C:\\Users\\drspk\\Pictures\\Camera Roll\\Documents\\HabitHive\\HabitHive\\daemon\\8.2\\com.habithive.app-mergeDebugResources-4:\\layout\\activity_splash.xml",
+        "source": "C:\\Users\\drspk\\Pictures\\Camera Roll\\Documents\\HabitHive\\HabitHive\\daemon\\8.2\\com.habithive.app-main-7:\\layout\\activity_splash.xml"
+    },
+    {
+        "merged": "C:\\Users\\drspk\\Pictures\\Camera Roll\\Documents\\HabitHive\\HabitHive\\daemon\\8.2\\com.habithive.app-mergeDebugResources-4:\\layout\\fragment_leaderboard.xml",
+        "source": "C:\\Users\\drspk\\Pictures\\Camera Roll\\Documents\\HabitHive\\HabitHive\\daemon\\8.2\\com.habithive.app-main-7:\\layout\\fragment_leaderboard.xml"
+    },
+    {
+        "merged": "C:\\Users\\drspk\\Pictures\\Camera Roll\\Documents\\HabitHive\\HabitHive\\daemon\\8.2\\com.habithive.app-mergeDebugResources-4:\\layout\\activity_main.xml",
+        "source": "C:\\Users\\drspk\\Pictures\\Camera Roll\\Documents\\HabitHive\\HabitHive\\daemon\\8.2\\com.habithive.app-main-7:\\layout\\activity_main.xml"
+    },
+    {
+        "merged": "C:\\Users\\drspk\\Pictures\\Camera Roll\\Documents\\HabitHive\\HabitHive\\daemon\\8.2\\com.habithive.app-mergeDebugResources-4:\\layout\\activity_add_goal.xml",
+        "source": "C:\\Users\\drspk\\Pictures\\Camera Roll\\Documents\\HabitHive\\HabitHive\\daemon\\8.2\\com.habithive.app-main-7:\\layout\\activity_add_goal.xml"
+    },
+    {
+        "merged": "C:\\Users\\drspk\\Pictures\\Camera Roll\\Documents\\HabitHive\\HabitHive\\daemon\\8.2\\com.habithive.app-mergeDebugResources-4:\\layout\\activity_exercise_history.xml",
+        "source": "C:\\Users\\drspk\\Pictures\\Camera Roll\\Documents\\HabitHive\\HabitHive\\daemon\\8.2\\com.habithive.app-main-7:\\layout\\activity_exercise_history.xml"
+    },
+    {
+        "merged": "com.habithive.app-mergeDebugResources-4:/layout/fragment_home.xml",
+        "source": "com.habithive.app-main-7:/layout/fragment_home.xml"
+    },
+    {
+        "merged": "C:\\Users\\drspk\\Pictures\\Camera Roll\\Documents\\HabitHive\\HabitHive\\daemon\\8.2\\com.habithive.app-mergeDebugResources-4:\\layout\\item_goal.xml",
+        "source": "C:\\Users\\drspk\\Pictures\\Camera Roll\\Documents\\HabitHive\\HabitHive\\daemon\\8.2\\com.habithive.app-main-7:\\layout\\item_goal.xml"
+    },
+    {
+        "merged": "C:\\Users\\drspk\\Pictures\\Camera Roll\\Documents\\HabitHive\\HabitHive\\daemon\\8.2\\com.habithive.app-mergeDebugResources-4:\\layout\\fragment_habits.xml",
+        "source": "C:\\Users\\drspk\\Pictures\\Camera Roll\\Documents\\HabitHive\\HabitHive\\daemon\\8.2\\com.habithive.app-main-7:\\layout\\fragment_habits.xml"
+    },
+    {
+        "merged": "C:\\Users\\drspk\\Pictures\\Camera Roll\\Documents\\HabitHive\\HabitHive\\daemon\\8.2\\com.habithive.app-mergeDebugResources-4:\\layout\\item_exercise_history.xml",
+        "source": "C:\\Users\\drspk\\Pictures\\Camera Roll\\Documents\\HabitHive\\HabitHive\\daemon\\8.2\\com.habithive.app-main-7:\\layout\\item_exercise_history.xml"
+    },
+    {
+        "merged": "C:\\Users\\drspk\\Pictures\\Camera Roll\\Documents\\HabitHive\\HabitHive\\daemon\\8.2\\com.habithive.app-mergeDebugResources-4:\\layout\\layout_motivational_quote.xml",
+        "source": "C:\\Users\\drspk\\Pictures\\Camera Roll\\Documents\\HabitHive\\HabitHive\\daemon\\8.2\\com.habithive.app-main-7:\\layout\\layout_motivational_quote.xml"
+    },
+    {
+        "merged": "C:\\Users\\drspk\\Pictures\\Camera Roll\\Documents\\HabitHive\\HabitHive\\daemon\\8.2\\com.habithive.app-mergeDebugResources-4:\\layout\\widget_motivational_quote.xml",
+        "source": "C:\\Users\\drspk\\Pictures\\Camera Roll\\Documents\\HabitHive\\HabitHive\\daemon\\8.2\\com.habithive.app-main-7:\\layout\\widget_motivational_quote.xml"
+    },
+    {
+        "merged": "C:\\Users\\drspk\\Pictures\\Camera Roll\\Documents\\HabitHive\\HabitHive\\daemon\\8.2\\com.habithive.app-mergeDebugResources-4:\\layout\\item_habit.xml",
+        "source": "C:\\Users\\drspk\\Pictures\\Camera Roll\\Documents\\HabitHive\\HabitHive\\daemon\\8.2\\com.habithive.app-main-7:\\layout\\item_habit.xml"
+    }
+]
